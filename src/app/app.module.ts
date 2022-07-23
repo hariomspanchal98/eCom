@@ -45,7 +45,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     JwPaginationModule,
     Ng2SearchPipeModule,
     AvatarModule,
-    IvyCarouselModule
+    IvyCarouselModule,
   ],
   providers: [AuthGuard,
   {

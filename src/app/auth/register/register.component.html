@@ -1,0 +1,48 @@
+<div class="parent" *ngIf="register">
+
+  <form class="child" [formGroup]="myForm">
+    <h4 style="text-align: center; font-weight: bold;">New Registration</h4>
+    <hr>
+    <br>
+    <label >Full name</label>
+    <input type="text" class="validate" placeholder="Enter full name" formControlName="name">
+
+    <label>Company</label>
+    <input type="text" placeholder="Enter Company Name" formControlName="company">
+
+    <label>Email</label>
+    <input type="email" placeholder="Enter your Email" formControlName="email">
+
+    <label>Password</label>
+    <input type="password" placeholder="Enter password here" formControlName="password">
+
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+      {{errorMsg}}
+    </div>
+
+    <!-- <button (click)="executeImportantAction()">ReCaptcha</button> -->
+    <br>
+
+    <button type="button" class="btn green" [disabled]="myForm.invalid" (click)="submit()">Submit</button>
+    <button class="btn red">Reset</button>
+
+    <br>
+    <p>Already have an account, sign in <a [routerLink]="['/auth/login']" style="cursor: pointer;">here</a></p>
+  </form>
+</div>
+
+<div class="parent" *ngIf="verify">
+  <div class="child" style="text-align: center;">
+  <!-- <div class="spinner-border text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div> -->
+  <br>
+  <p>Please check your email to verify email address. </p><br>
+  <br>
+  <p> Click
+    <a [routerLink]="['/auth/login']" style="cursor: pointer;"> here </a>
+    , to go to login page.
+  </p>
+</div>
+</div>
+

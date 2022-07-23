@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+<form [formGroup]="myForm">
+  <label>Name</label>
+  <input type="text" formControlName="name">
+
+  <label>Images</label>
+  <input type="file" (change)="onFileSelected($event)">
+
+  <label>Description</label>
+  <input type="text" formControlName="description">
+
+  <button class="btn green" (click)="submit()">Add Product</button>
+</form>

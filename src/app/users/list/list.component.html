@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+
+<div style="
+    width: 25%;
+    display: flex;">
+  <input type="text" class="searchTerm" placeholder="Search Name" [(ngModel)]="searchTerm" (input)="search(searchTerm)">
+  <i class="material-icons" style="cursor: pointer;">search</i>
+</div>
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Created@</th>
+        <th colspan="2" style="text-align: center;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users?.results | searchFilter: searchTerm;let i=index">
+        <td>{{i+1}}</td>
+        <td><a [routerLink]="['/users/details', user?._id]">{{user?.name}}</a></td>
+        <td>{{user?.email}}</td>
+        <td>{{user?.role}}</td>
+        <td>{{user?.createdAt | date}}</td>
+        <td><a [routerLink]="['/users/update', user?._id]">Update</a></td>
+        <td><a (click)="remove(user?._id)" style="color: Red; cursor:pointer;">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <p>{{users?.totalResults}}</p> -->
+
+<mat-paginator [length]=length [pageSize]=pageSize [pageSizeOptions]="[5, 10, 25, 100, length]" aria-label="Select page"
+  (page)="changeTable($event)">
+
+</mat-paginator>
+
+<!-- <ul class="pagination"> -->
+<!-- <div *ngFor="ler user of users"></div> -->
+<!-- <li>{{}}</li> -->
+<!-- <li class="disabled"><a href="#!"><i class="material-icons"><</i></a></li>
+  <li class="active"><a href="#!">1</a></li>
+  <li class="waves-effect"><a>2</a></li>
+  <li class="waves-effect"><a>3</a></li>
+  <li class="waves-effect"><a>4</a></li>
+  <li class="waves-effect"><a>5</a></li>
+  <li class="waves-effect"><a><i class="material-icons">></i></a></li> -->
+<!-- </ul> -->
+
+
+<!-- <p>{{users}}</p> -->

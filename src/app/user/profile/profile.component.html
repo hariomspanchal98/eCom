@@ -1,0 +1,52 @@
+<nav>
+  <div class="nav-wrapper black">
+    <img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+      style="height: 70%; margin-left: 20px;">
+    <a class="brand-logo center">MyProfile</a>
+
+    <ul id="nav-mobile" class="right">
+      <li><a [routerLink]="['/products/allproducts']">All Products</a></li>
+      <li><a [routerLink]="['/users/create']">Create User</a></li>
+      <li><a [routerLink]="['/users/list']">All Users</a></li>
+      <li><a (click)="clear()">logOut</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- <p>fgsd</p> -->
+<!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
+
+<div class="parent">
+  <div class="child">
+    <div style="display: contents;">
+      <ngx-avatar class="my-avatar" size="76" name={{profileData?.name}}></ngx-avatar>
+    </div>
+    <table>
+
+      <tr>
+        <td>Name :</td>
+        <td>{{profileData?.name}}</td>
+      </tr>
+      <tr>
+        <td>Email :</td>
+        <td>{{profileData?.email}}</td>
+      </tr>
+      <tr>
+        <td>ID :</td>
+        <td>{{profileData?._id}}</td>
+      </tr>
+      <tr>
+        <td>Role :</td>
+        <td>{{profileData?.role}}</td>
+      </tr>
+      <tr>
+        <td>Email Verification:</td>
+        <td style="color: green;" *ngIf="profileData?.isEmailVerified">Done</td>
+        <td style="color: red;" *ngIf="!profileData?.isEmailVerified">Pending</td>
+      </tr>
+      <tr>
+        <td>Company :</td>
+        <td>{{profileData?._org.name}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

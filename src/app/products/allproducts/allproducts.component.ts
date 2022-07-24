@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AllproductsComponent implements OnInit {
   products;
   i=0;
 
-  constructor(private service:HttpService) { }
+  constructor(private service:HttpService, private router:Router) { }
 
   ngOnInit(): void {
     this.tempToken = (localStorage.getItem('token'));
@@ -32,6 +33,10 @@ export class AllproductsComponent implements OnInit {
       // this.registerForm.markAsPristine();
     },
     );
+  }
+
+  clk(){
+    console.log("clicked");
   }
 
 }

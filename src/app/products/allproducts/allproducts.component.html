@@ -13,7 +13,9 @@
         <h5 class="card-title">{{product?.name}}</h5>
         <p class="card-text">{{product?.description}}</p>
         {{product?._id}}
-        <a  [routerLink]="['/products/productdetails', product._id]">View Details</a>
+        <!-- [routerLink]="['/products/productdetails', product._id]" -->
+        <a (click)="clk()">View Details</a>
+        <button (click)="clk()">View Details</button>
       </div>
     </div>
   </div>

@@ -24,7 +24,7 @@ export class AllproductsComponent implements OnInit {
       // let output = JSON.parse(res)
       this.products = res;
       // console.log('profile data from service:- ',this.profileData);
-      console.table(this.products?.results)
+      // console.table(this.products?.results)
     },
     (error) => {
       console.log('Error in login is: ', error)

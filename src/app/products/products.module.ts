@@ -9,14 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { TrialComponent } from './trial/trial.component';
-import { DetailsComponent } from './details/details.component';
+import { ProductdetailsComponent } from './productdetails/productdetails.component';
 
 @NgModule({
   declarations: [
     AllproductsComponent,
     CreateproductComponent,
     TrialComponent,
-    DetailsComponent
+    ProductdetailsComponent,
   ],
   imports: [
     CommonModule,

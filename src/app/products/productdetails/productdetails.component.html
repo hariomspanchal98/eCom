@@ -1,2 +1,17 @@
 <app-navbar></app-navbar>
-<p>productdetails works!</p>
+
+
+<div style="display: flex;">
+  <carousel style="height: 500px;margin: 20px;padding: 20px;">
+    <div class="carousel-cell" *ngFor="let image of product?.images">
+      <img class="cardimg" src={{image?.url}}>
+    </div>
+  </carousel>
+  <div>
+    <p style="text-align: right;"> <a style="cursor: pointer;color: red;" (click)="remove(product?._id)">Delete</a></p>
+    <h2>{{product?.name}}</h2>
+    <p>{{product?.description}}</p>
+    <p>{{product?._id}}</p>
+    <button class="btn green" [routerLink]="['/products/updateproduct', product?._id]">Update</button>
+  </div>
+</div>

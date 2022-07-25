@@ -31,6 +31,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     RegisterComponent,
     ProfileComponent,
     VerifyComponent,
+    
   ],
   imports: [
     BrowserModule,

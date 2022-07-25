@@ -10,6 +10,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { TrialComponent } from './trial/trial.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
+import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ProductdetailsComponent } from './productdetails/productdetails.compone
     CreateproductComponent,
     TrialComponent,
     ProductdetailsComponent,
+    UpdateproductComponent,
   ],
   imports: [
     CommonModule,

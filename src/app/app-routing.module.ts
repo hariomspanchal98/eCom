@@ -1,10 +1,5 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-import { LoginComponent } from './auth/login/login.component';
-import { ProfileComponent } from './user/profile/profile.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { VerifyComponent } from './auth/verify/verify.component';
 
 const routes: Routes = [
   // {path: '',redirectTo:'auth', pathMatch: 'full'},

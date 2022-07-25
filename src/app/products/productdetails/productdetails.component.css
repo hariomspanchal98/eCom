@@ -1,0 +1,16 @@
+carousel{
+  height: 500px;
+  width: 50%;
+  padding: 10px;
+  margin: 10px;
+
+}
+carousel-cell
+{
+  height: 500px;
+  width: 400px;
+}
+.cardimg{
+  height: 500px;
+  width: 400px;
+}

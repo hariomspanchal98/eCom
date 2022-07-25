@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+
+<form [formGroup]="myForm">
+  <label>Product Name</label>
+  <input type="text" formControlName="name" value={{this.product?.name}}>
+
+  <label>Product Description</label>
+  <input type="text" formControlName="description" value={{this.product?.description}}>
+
+  <button class="btn green" (click)="update()">Update</button>
+</form>

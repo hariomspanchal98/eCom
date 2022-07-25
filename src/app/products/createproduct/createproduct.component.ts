@@ -62,7 +62,7 @@ export class CreateproductComponent implements OnInit {
         console.log('added');
       },
       (error: any) => {
-        console.log('Error in login is: ', error.message);
+        // console.log('Error in login is: ', error.message);
         this.errorMsg = error.message;
         // console.log(error);
         // this.registerForm.markAsPristine();

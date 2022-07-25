@@ -17,7 +17,7 @@ export class AllproductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tempToken = (localStorage.getItem('token'));
-    // console.log("token is",this.tempToken);
+    console.log("token is",this.tempToken);
     // this.service.get("auth/self",this.tempToken)
     // this.service.getProfileData(this.tempToken)
     this.service.secureGet('products',this.tempToken).subscribe((res:any)=>{

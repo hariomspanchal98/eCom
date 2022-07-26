@@ -4,7 +4,7 @@
             flex-wrap: wrap;">
   <div *ngFor="let product of products?.results">
     <div class="card" style="width: 18rem;" >
-      <carousel>
+      <carousel [width]="210" [cellWidth]="210">
         <div class="carousel-cell" *ngFor="let image of product?.images">
           <img class="cardimg" src={{image?.url}}>
         </div>

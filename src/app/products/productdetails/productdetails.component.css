@@ -1,16 +1,29 @@
 carousel{
-  height: 50%;
-  width: 50%;
   padding: 10px;
   margin: 10px;
-
+  height: 50%;
 }
 carousel-cell
 {
-  height: 50%;
-  width: 50%;
+  width: auto;
 }
 .cardimg{
-  height: 50%;
-  width: 50%;
+  height: 30%;
+  border: 1px solid;
+}
+
+.card{
+  padding: 50px;
+  height: auto;
+  width: 800px;
+  justify-content: center;
+  margin: 20px;
+}
+.preview{
+  width: 300px;
+  height: auto;
+  border: 1px solid;
+}
+.left{
+  width: 350px;
 }

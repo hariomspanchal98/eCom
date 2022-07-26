@@ -16,13 +16,16 @@
   </div>
 </div>
 
-<div class="container bcontent">
-  <div class="card" style="display: flex; flex-direction: row;">
-    <img style="width: 50%;height: 50px;" src=previewImgUrl>
-    <carousel style="height: 500px;margin: 20px;padding: 20px;">
-      <div class="carousel-cell" *ngFor="let image of product?.images">
-        <img class="cardimg" src={{image?.url}}>
+<div class="card" style="display: flex;flex-direction: row;">
+  <div class="left">
+    <img class="preview" [src]=previewImgUrl>
+    <carousel [height]="100" [width]="100">
+      <div  class="carousel-cell" *ngFor="let image of product?.images">
+        <img class="cardimg" src={{image?.url}} (click)="previewImgUrl=image?.url">
       </div>
     </carousel>
+  </div>
+  <div>
+    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et molestias quod eligendi perferendis, ullam eum fugiat in sapiente odit temporibus fugit assumenda dolorem possimus sequi cum, asperiores praesentium, est provident.</P>
   </div>
 </div>

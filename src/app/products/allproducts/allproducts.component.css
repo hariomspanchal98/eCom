@@ -5,7 +5,7 @@
   margin-left: 40px;
 }
 .cardimg{
-  width: 190px;
+  width: 230px;
   justify-content: center;
   justify-self: center;
   margin: auto;
@@ -15,6 +15,6 @@ img{
   margin: 20px;
 }
 carousel{
-  padding: 10px;
+  padding: 20px;
   margin: 10px;
 }

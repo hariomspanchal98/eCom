@@ -40,21 +40,29 @@ export class CreateproductComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
+    if(event.target.files && event.target.files[0])
+    {
+      const image = event.target.files;
+      // console.log(imageS);
+      this.myForm.controls['images'].setValue(image);
+    }
 
   }
 
   submit() {
     // console.log(this.myForm.value);
-    console.log(this.selectedFile);
+    // console.log(this.selectedFile);
     // console.log(this.myForm.value.name);
     this.fd = new FormData();
-    this.fd.append('images', this.selectedFile);
-    // this.fd.append('name', this.myForm.value.name);
-    // this.fd.append('description', this.myForm.value.description);
+    for (let i = 0; i < this.myForm.value.images.length; i++) {
+      this.fd.append('images', this.myForm.value.images[i]);
+    }
+    // this.fd.append('images', this.selectedFile);
+    this.fd.append('name', this.myForm.value.name);
+    this.fd.append('description', this.myForm.value.description);
 
 
-    console.log(this.fd);
+    // console.log(this.fd);
 
     console.log(this.myForm.value);
     this.service.securePost('products', this.tempToken, this.fd).subscribe(

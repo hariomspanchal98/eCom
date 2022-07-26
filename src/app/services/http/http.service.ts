@@ -52,6 +52,14 @@ export class HttpService {
     return this.http.patch(environment.baseUrl + url, data, {headers})
   }
 
+  patchImg(url:string, data:any, token:any){
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.patch(environment.baseUrl + url, data, {headers})
+  }
+
   del(url:string, token:any){
 
     const headers = new HttpHeaders({
@@ -75,12 +83,11 @@ export class HttpService {
   setHeaders(token){
     // console.log(token);
     return new HttpHeaders({
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     });
     // const requestOptions = {headers:headers};
     // console.log('');
-
   }
 
   // getToken(){

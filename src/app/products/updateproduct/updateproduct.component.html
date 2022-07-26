@@ -7,5 +7,26 @@
   <label>Product Description</label>
   <input type="text" formControlName="description" value={{this.product?.description}}>
 
+  <div style="display: flex;
+              flex-wrap: wrap;">
+  <div class="card" style="width: 18rem;" *ngFor='let image of product?.images; let i = index'>
+    <img class="card-img-top" [src]="image?.url" alt="Card image cap">
+    <div class="card-body">
+      <a (click)="removeImage(i)" class="btn btn-xs btn-danger">Remove</a>
+    </div>
+  </div>
+</div>
+
+  <!-- <div class="col-md-2 productAddfromImages" *ngFor='let image of product?.images; let i = index'>
+    <img class="img-fluid" [src]="image?.url">
+    <a (click)="removeImage(i)" class="btn btn-xs btn-danger">Remove</a>
+  </div> -->
+
+  <div class="mb-3">
+    <label for="formFileMultiple" class="form-label">Choose Images</label>
+    <input class="form-control" type="file" id="formFileMultiple" multiple (change)="onFileSelected($event)">
+    <button class="btn" (click)="add()">Add</button>
+  </div>
+
   <button class="btn green" (click)="update()">Update</button>
 </form>

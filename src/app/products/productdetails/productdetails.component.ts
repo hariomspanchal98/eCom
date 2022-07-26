@@ -15,6 +15,7 @@ export class ProductdetailsComponent implements OnInit {
 
   id:any;
   product:any;
+  previewImgUrl;
 
   ngOnInit(): void {
     this.tempToken = (localStorage.getItem('token'));
@@ -26,6 +27,8 @@ export class ProductdetailsComponent implements OnInit {
     this.service.get('products/'+this.id).subscribe((data:any)=>{
       console.log(data);
       this.product=data;
+      this.previewImgUrl= this.product?.images[0].url;
+      console.log(this.previewImgUrl);
       // console.log(this.user);
     })
   }

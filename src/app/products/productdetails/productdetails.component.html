@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 
-<div style="display: flex;">
+<div style="display: flex;" *ngIf="0">
   <carousel style="height: 500px;margin: 20px;padding: 20px;">
     <div class="carousel-cell" *ngFor="let image of product?.images">
       <img class="cardimg" src={{image?.url}}>
@@ -13,5 +13,16 @@
     <p>{{product?.description}}</p>
     <p>{{product?._id}}</p>
     <button class="btn green" [routerLink]="['/products/updateproduct', product?._id]">Update</button>
+  </div>
+</div>
+
+<div class="container bcontent">
+  <div class="card" style="display: flex; flex-direction: row;">
+    <img style="width: 50%;height: 50px;" src=previewImgUrl>
+    <carousel style="height: 500px;margin: 20px;padding: 20px;">
+      <div class="carousel-cell" *ngFor="let image of product?.images">
+        <img class="cardimg" src={{image?.url}}>
+      </div>
+    </carousel>
   </div>
 </div>

@@ -1,5 +1,5 @@
 carousel{
-  height: 500px;
+  height: 50%;
   width: 50%;
   padding: 10px;
   margin: 10px;
@@ -7,10 +7,10 @@ carousel{
 }
 carousel-cell
 {
-  height: 500px;
-  width: 400px;
+  height: 50%;
+  width: 50%;
 }
 .cardimg{
-  height: 500px;
-  width: 400px;
+  height: 50%;
+  width: 50%;
 }

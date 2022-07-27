@@ -3,19 +3,26 @@
 <div style="display: flex;
             flex-wrap: wrap;">
   <div *ngFor="let product of products?.results">
-    <div class="card" style="width: 17rem; height: 380px;" >
-      <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" [arrowsOutside]="true" *ngIf="(product?.images.length>1)" >
+    <div class="card" style="width: 17rem; height: 380px;">
+      <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" *ngIf="(product?.images.length>1)">
         <div class="carousel-cell" *ngFor="let image of product?.images">
           <img class="cardimg" src={{image?.url}}>
         </div>
-      </carousel><div class="carousel-cell">
-      <img style=" max-width: fit-content;" class="single" *ngIf="(product?.images.length<=1)" [src]=product?.images[0].url ></div>
-      <div class="card-body">
-        <h5 class="card-title">{{product?.name}}</h5>
-        <p class="card-text">{{product?.description}}</p>
-        <!-- {{product?._id}} -->
-        <button class="btn blue" [routerLink]="['/products/productdetails', product?._id]">View Details</button>
+      </carousel>
+      <div class="carousel-cell">
+        <img style=" max-width: fit-content;" class="single" *ngIf="(product?.images.length<=1)"
+          [src]=product?.images[0].url>
       </div>
+      <div class="card-body" >
+        <div style="overflow: hidden;
+        text-overflow:ellipsis;height: 150px; padding: 3px;" >
+        <h5 class="card-title" style="font-weight: 500;">{{product?.name}}</h5>
+        <p class="card-text" >{{product?.description}}</p>
+        <!-- {{product?._id}} -->
+        </div>
+
+      </div>
+      <button class="btn blue" [routerLink]="['/products/productdetails', product?._id]">View Details</button>
     </div>
   </div>
 </div>

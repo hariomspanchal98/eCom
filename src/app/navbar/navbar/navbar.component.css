@@ -5,6 +5,7 @@ p{
 nav
 {
   margin-bottom: 35px;
+  z-index: 200000;
 }
 dropdown-menu
 {

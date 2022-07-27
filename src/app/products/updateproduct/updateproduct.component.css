@@ -35,8 +35,7 @@ button
 
 img
 {
-  display: block;
-
+  /* display: block; */
   height: 50px;
   margin: 5px;
   padding: 3px;

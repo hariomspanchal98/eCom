@@ -2,6 +2,7 @@ carousel{
   padding: 10px;
   margin: 10px;
   /* height: 50%; */
+  z-index: 0;
 }
 carousel-cell
 {
@@ -10,16 +11,19 @@ carousel-cell
 
 
 .card{
-  padding: 50px;
+  padding: 20px;
   height: auto;
+  width: auto;
   justify-content: center;
   margin: 20px;
 }
 .preview{
   /* width: 100%; */
-  height: 250px;
   height: auto;
   border: 1px solid;
+  margin: 10px;
+  width: 100%;
+  padding: 10px;
 }
 .left{
   width: 350px;
@@ -27,4 +31,11 @@ carousel-cell
 .card-image
 {
   width: 50%;
+  height: auto;
+  padding: 10px;
+}
+.abc
+{
+  display: flex;
+  justify-content: center;
 }

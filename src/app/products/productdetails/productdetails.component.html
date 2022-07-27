@@ -1,10 +1,12 @@
 <app-navbar></app-navbar>
 
-<div class="col s12 m7">
+<div class="col">
   <h2 class="header">{{product?.name}}</h2>
   <div class="card horizontal" style="display: flex;flex-direction: row;">
     <div class="card-image">
-      <img class="preview" src={{previewImgUrl}}>
+      <div class="abc">
+        <img class="preview" src={{previewImgUrl}}>
+      </div>
       <carousel [height]="50" [cellWidth]="40" [loop]="true">
         <div class="carousel-cell" *ngFor="let image of product?.images">
           <img class="cardimg" (click)="(previewImgUrl = image?.url)" src={{image?.url}}>
@@ -13,6 +15,7 @@
     </div>
     <div class="card-stacked">
       <div class="card-content">
+        <h2>{{product?.name}}</h2>
         <p>{{product?.description}}</p>
       </div>
       <div class="card-action">

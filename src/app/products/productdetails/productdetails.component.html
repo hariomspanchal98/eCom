@@ -1,5 +1,26 @@
 <app-navbar></app-navbar>
 
+<div class="col s12 m7">
+  <h2 class="header">{{product?.name}}</h2>
+  <div class="card horizontal" style="display: flex;flex-direction: row;">
+    <div class="card-image">
+      <img class="preview" src={{previewImgUrl}}>
+      <carousel [height]="50" [cellWidth]="40" [loop]="true">
+        <div class="carousel-cell" *ngFor="let image of product?.images">
+          <img class="cardimg" (click)="(previewImgUrl = image?.url)" src={{image?.url}}>
+        </div>
+      </carousel>
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>{{product?.description}}</p>
+      </div>
+      <div class="card-action">
+        <button class="btn green" [routerLink]="['/products/updateproduct', product?._id]">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div style="display: flex;" *ngIf="0">
   <carousel style="height: 500px;margin: 20px;padding: 20px;">
@@ -16,16 +37,20 @@
   </div>
 </div>
 
-<div class="card" style="display: flex;flex-direction: row;">
+<div class="card" style="display: flex;flex-direction: row;" *ngIf="0">
   <div class="left">
     <img class="preview" [src]=previewImgUrl>
     <carousel [height]="100" [width]="100">
-      <div  class="carousel-cell" *ngFor="let image of product?.images">
+      <div class="carousel-cell" *ngFor="let image of product?.images">
         <img class="cardimg" src={{image?.url}} (click)="previewImgUrl=image?.url">
       </div>
     </carousel>
   </div>
   <div>
-    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et molestias quod eligendi perferendis, ullam eum fugiat in sapiente odit temporibus fugit assumenda dolorem possimus sequi cum, asperiores praesentium, est provident.</P>
+    <p> <a style="cursor: pointer;color: red;" (click)="remove(product?._id)">Delete</a></p>
+    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et molestias quod eligendi perferendis, ullam eum fugiat
+      in sapiente odit temporibus fugit assumenda dolorem possimus sequi cum, asperiores praesentium, est provident.</P>
+
+    <button class="btn green" [routerLink]="['/products/updateproduct', product?._id]">Update</button>
   </div>
 </div>

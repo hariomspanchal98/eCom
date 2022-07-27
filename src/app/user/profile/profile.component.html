@@ -1,20 +1,32 @@
 <nav>
   <div class="nav-wrapper black">
-    <img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
-      style="height: 70%; margin-left: 20px;">
-    <a class="brand-logo center">MyProfile</a>
+    <a class="brand-logo center" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <!-- <a class="brand-logo center">MyProfile</a> -->
+    <!-- <a class="brand-logo center" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a> -->
+    <ul id="nav-mobile" class="left">
 
-    <ul id="nav-mobile" class="right">
-      <li><a [routerLink]="['/products/allproducts']">All Products</a></li>
-      <li><a [routerLink]="['/users/create']">Create User</a></li>
-      <li><a [routerLink]="['/users/list']">All Users</a></li>
-      <li><a (click)="clear()">logOut</a></li>
+      <div class="dropdown">
+        <button style="background-color: black;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px;" class="large material-icons">menu</i>
+        </button>
+        <div style="justify-content: end;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['/users/list']" >All Users</a>
+          <a class="dropdown-item" [routerLink]="['/products/createproduct']">Create User</a>
+          <a class="dropdown-item" [routerLink]="['/products/allproducts']">All Products</a>
+          <a class="dropdown-item" [routerLink]="['/products/createproduct']">Create Product</a>
+        </div>
+      </div>
+
+    </ul>
+    <ul class="right">
+      <a style="color: red;" (click)="clear()" >LogOut</a>
     </ul>
   </div>
 </nav>
+<p><a [routerLink]="['/products/trial']" >Trial</a></p>
 <!-- <p>fgsd</p> -->
 <!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
-
+<h1 style="text-align: center; font-weight: bold;">My Profile</h1>
 <div class="parent">
   <div class="child">
     <div style="display: contents;">

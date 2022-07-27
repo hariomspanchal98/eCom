@@ -24,6 +24,7 @@
     "@types/jquery": "^2.0.47",
     "angular-in-memory-web-api": "^0.13.0",
     "angular-responsive-carousel": "^2.1.2",
+    "bootstrap": "^5.2.0",
     "jquery": "^3.6.0",
     "jw-angular-pagination": "^1.2.0",
     "mdb-angular-ui-kit": "^2.3.0",

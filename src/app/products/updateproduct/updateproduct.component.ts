@@ -22,6 +22,7 @@ export class UpdateproductComponent implements OnInit {
   myForm: any;
   imageForm: any;
   publicId=[];
+  errorMsg:any;
 
   ngOnInit(): void {
     this.tempToken = localStorage.getItem('token');
@@ -106,6 +107,8 @@ export class UpdateproductComponent implements OnInit {
           console.log(error.error.message);
         }
       );
+
+      this.imageForm.reset();
   }
 
   update() {

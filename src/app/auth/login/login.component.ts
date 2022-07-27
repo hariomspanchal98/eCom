@@ -154,6 +154,7 @@ export class LoginComponent implements OnInit {
       // console.log('LogIn dkjsfhsiudghfo');
       this.router.navigateByUrl('/user/profile');
       this.executeImportantAction();
+  
       },
       (error:any)=>
       {

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class CreateproductComponent implements OnInit {
   fd;
   errorMsg;
 
-  constructor(private service: HttpService, private http: HttpClient) {}
+  constructor(private service: HttpService, private http: HttpClient,
+    private router:Router) {}
 
   ngOnInit(): void {
     this.tempToken = localStorage.getItem('token');
@@ -68,6 +70,8 @@ export class CreateproductComponent implements OnInit {
     this.service.securePost('products', this.tempToken, this.fd).subscribe(
       () => {
         console.log('added');
+        this.router.navigateByUrl('/products/allproducts');
+
       },
       (error: any) => {
         // console.log('Error in login is: ', error.message);
@@ -76,5 +80,7 @@ export class CreateproductComponent implements OnInit {
         // this.registerForm.markAsPristine();
       }
     );
+
+
   }
 }

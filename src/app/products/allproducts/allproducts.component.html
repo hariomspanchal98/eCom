@@ -3,12 +3,13 @@
 <div style="display: flex;
             flex-wrap: wrap;">
   <div *ngFor="let product of products?.results">
-    <div class="card" style="width: 18rem;" >
-      <carousel [width]="210" [cellWidth]="210">
+    <div class="card" style="width: 17rem; height: 380px;" >
+      <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" [arrowsOutside]="true" *ngIf="(product?.images.length>1)" >
         <div class="carousel-cell" *ngFor="let image of product?.images">
           <img class="cardimg" src={{image?.url}}>
         </div>
-      </carousel>
+      </carousel><div class="carousel-cell">
+      <img style=" max-width: fit-content;" class="single" *ngIf="(product?.images.length<=1)" [src]=product?.images[0].url ></div>
       <div class="card-body">
         <h5 class="card-title">{{product?.name}}</h5>
         <p class="card-text">{{product?.description}}</p>

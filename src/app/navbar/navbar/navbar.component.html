@@ -1,5 +1,36 @@
 <nav>
   <div class="nav-wrapper black">
+    <a class="brand-logo center" [routerLink]="['/auth/login']" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <ul id="nav-mobile" class="left">
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button"
+        style="background-color: black;"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px;" class="large material-icons">menu</i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['/auth/login']" >My Profile</a>
+          <a class="dropdown-item" [routerLink]="['/users/list']" >All Users</a>
+          <a class="dropdown-item" [routerLink]="['/users/create']">Create User</a>
+          <a class="dropdown-item" [routerLink]="['/products/allproducts']">All Products</a>
+          <a class="dropdown-item" [routerLink]="['/products/createproduct']">Create Product</a>
+        </div>
+      </div>
+
+    </ul>
+    <ul class="right">
+      <a style="color: red;" (click)="clear()" >LogOut</a>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+<!-- <nav>
+  <div class="nav-wrapper black">
     <a [routerLink]="['/auth/login']" style="margin-left: 20px;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
     <ul id="nav-mobile" class="right">
 
@@ -14,4 +45,4 @@
 <p><a [routerLink]="['/auth/login']">MyProfile</a></p>
 <p><a [routerLink]="['/products/allproducts']">All Products</a></p>
 <p><a [routerLink]="['/products/createproduct']">Create Product</a></p>
-<p><a [routerLink]="['/products/trial']" >Trial</a></p>
+<p><a [routerLink]="['/products/trial']" >Trial</a></p> -->

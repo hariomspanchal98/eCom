@@ -11,3 +11,11 @@ dropdown-menu
 {
   z-index: 00000;
 }
+a
+{
+  display: flex;
+}
+i
+{
+  margin-right: 15px;
+}

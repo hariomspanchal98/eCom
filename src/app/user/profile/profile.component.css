@@ -46,3 +46,11 @@ button
   margin: 10px;
 }
 
+a
+{
+  display: flex;
+}
+i
+{
+  margin-right: 15px;
+}

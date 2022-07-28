@@ -1,29 +1,36 @@
 <nav>
   <div class="nav-wrapper black">
-    <a class="brand-logo center" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <a class="brand-logo center" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 70%;"></a>
     <!-- <a class="brand-logo center">MyProfile</a> -->
     <!-- <a class="brand-logo center" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a> -->
     <ul id="nav-mobile" class="left">
 
       <div class="dropdown">
-        <button style="background-color: black;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i style="margin-top: -22px;" class="large material-icons">menu</i>
+        <button style="background-color: black;" class="btn btn-secondary dropdown-toggle" type="button"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px; margin-right: 0;" class="large material-icons">menu</i>
         </button>
         <div style="justify-content: end;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" [routerLink]="['/users/list']" >All Users</a>
-          <a class="dropdown-item" [routerLink]="['/products/createproduct']">Create User</a>
-          <a class="dropdown-item" [routerLink]="['/products/allproducts']">All Products</a>
-          <a class="dropdown-item" [routerLink]="['/products/createproduct']">Create Product</a>
+          <a class="dropdown-item" [routerLink]="['/users/list']"> <i class="large material-icons">group</i>All
+            Users</a>
+          <a class="dropdown-item" [routerLink]="['/users/create']"> <i
+              class="large material-icons">person_add</i>Create User</a>
+          <a class="dropdown-item" [routerLink]="['/products/allproducts']"> <i
+              class="large material-icons">view_module</i> All Products</a>
+          <a class="dropdown-item" [routerLink]="['/products/createproduct']"> <i
+              class="large material-icons">add_shopping_cart</i> Create Product</a>
         </div>
       </div>
 
     </ul>
     <ul class="right">
-      <a style="color: red;" (click)="clear()" >LogOut</a>
+      <a style="color: red;" (click)="clear()">LogOut</a>
     </ul>
   </div>
 </nav>
-<p><a [routerLink]="['/products/trial']" >Trial</a></p>
+<p><a [routerLink]="['/products/trial']">Trial</a></p>
 <!-- <p>fgsd</p> -->
 <!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
 <h1 style="text-align: center; font-weight: bold;">My Profile</h1>

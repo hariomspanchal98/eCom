@@ -5,12 +5,14 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { AllproductsComponent } from './allproducts/allproducts.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { CreateproductComponent } from './createproduct/createproduct.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { TrialComponent } from './trial/trial.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { SearchfilterPipe } from '../searchfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { UpdateproductComponent } from './updateproduct/updateproduct.component'
     TrialComponent,
     ProductdetailsComponent,
     UpdateproductComponent,
+    SearchfilterPipe,
   ],
   imports: [
     CommonModule,
@@ -27,6 +30,8 @@ import { UpdateproductComponent } from './updateproduct/updateproduct.component'
     ReactiveFormsModule,
     IvyCarouselModule,
     MdbCarouselModule,
+    MatPaginatorModule,
+    FormsModule
   ]
 })
 export class ProductsModule { }

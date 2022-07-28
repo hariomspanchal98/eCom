@@ -15,6 +15,7 @@
     </div>
     <div class="card-stacked">
       <div class="card-content">
+        <p style="text-align: right;"> <a style="cursor: pointer;color: red;" (click)="remove(product?._id)">Delete</a></p>
         <h2>{{product?.name}}</h2>
         <p>{{product?.description}}</p>
       </div>

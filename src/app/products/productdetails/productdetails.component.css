@@ -15,7 +15,7 @@ carousel-cell
   height: auto;
   width: auto;
   justify-content: center;
-  margin: 20px;
+  margin: 20px 70px 20px 70px;
 }
 .preview{
   /* width: 100%; */
@@ -24,6 +24,7 @@ carousel-cell
   margin: 10px;
   width: 100%;
   padding: 10px;
+  max-height: 250px;
 }
 .left{
   width: 350px;
@@ -36,6 +37,7 @@ carousel-cell
 }
 .abc
 {
+  height: 300px;
   display: flex;
   justify-content: center;
 }

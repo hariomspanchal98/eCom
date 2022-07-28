@@ -11,6 +11,8 @@ export class HttpService {
     return localStorage.getItem('token');
   }
   headers:any;
+  pageNo=1;
+  limitNo=10;
 
   constructor(private http:HttpClient ) {
     //   this.headers = new HttpHeaders({

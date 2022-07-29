@@ -17,6 +17,11 @@
         <a class="remove-image" style="display: inline;" (click)="removeImage(i)">&#215;</a>
 
       </div>
+      <div *ngFor="let image of photosArr; let i = index" class="preview">
+        <img [src]=image>
+        <a class="remove-image" style="display: inline;" (click)="removeImg(i)">&#215;</a>
+
+      </div>
     </div>
     <!-- <div style="display: flex;
               flex-wrap: wrap;">

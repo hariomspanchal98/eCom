@@ -10,7 +10,8 @@ import { HttpService } from 'src/app/services/http/http.service';
 })
 export class UpdateproductComponent implements OnInit {
   tempToken: any;
-
+  newPhotos = [];
+  photosArr = [];
   constructor(
     private _Activatedroute: ActivatedRoute,
     private router: Router,
@@ -70,12 +71,29 @@ export class UpdateproductComponent implements OnInit {
     return this.imageForm.get('photos');
   }
 
+  // onFileSelected(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const image = event.target.files;
+  //     // console.log(imageS);
+  //     this.imageForm.controls['photos'].setValue(image);
+  //   }
+  // }
+
   onFileSelected(event) {
-    if (event.target.files && event.target.files[0]) {
-      const image = event.target.files;
-      // console.log(imageS);
-      this.imageForm.controls['photos'].setValue(image);
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file: File = event.target.files[i];
+      if (file) {
+        this.newPhotos.push(file);
+        // this.fileName = file.name;
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          this.photosArr.push(event.target.result);
+          // this.imgFlag[1].push(false);
+        };
+      }
     }
+    console.log('New photos:', this.newPhotos);
   }
 
   add() {
@@ -90,8 +108,8 @@ export class UpdateproductComponent implements OnInit {
       fd.append('delete', this.publicId[i]);
     }
 
-    for (let i = 0; i < this.imageForm.value.photos.length; i++) {
-      fd.append('new_images', this.imageForm.value.photos[i]);
+    for (let i = 0; i < this.newPhotos.length; i++) {
+      fd.append('new_images', this.newPhotos[i]);
     }
 
     console.log('products/images/' + this.id);
@@ -156,6 +174,12 @@ export class UpdateproductComponent implements OnInit {
   reset() {
     this.myForm.reset();
   }
+
+  removeImg(i){
+    this.newPhotos.splice(i, 1);
+    this.photosArr.splice(i, 1);
+  }
+
   removeImage(i) {
     // this.product?.images.splice(i, 1);
     // console.log(this.product?.images[i].public_id);

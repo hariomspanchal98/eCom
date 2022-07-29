@@ -1,6 +1,6 @@
 carousel{
-  padding: 10px;
-  margin: 10px;
+  padding: 10px ;
+  margin: 10px ;
   /* height: 50%; */
   z-index: 0;
 }
@@ -14,6 +14,7 @@ carousel-cell
   padding: 20px;
   height: auto;
   width: auto;
+  min-width: 700px;
   justify-content: center;
   margin: 2% 20% 2% 20%;
 }
@@ -40,4 +41,18 @@ carousel-cell
   height: 300px;
   display: flex;
   justify-content: center;
+}
+/* .carousel-arrow{
+  background-color: blue;
+}
+::ng-deep .carousel-arrow.carousel-arrow-prev{
+ background-image: url('https://apufpel.com.br/assets/img/seta_ult.png')
+} */
+/* .carousel-arrow-prev[_ngcontent-qob-c58] {
+  left: 10px;
+  background-image: url(https://apufpel.com.br/assets/img/seta_ult.png);
+} */
+.carousel-arrow-prev
+{
+  background-color: black;
 }

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http/http.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -55,7 +56,7 @@ export class ListComponent implements OnInit {
         this.users = data;
 
         console.log(this.users.results);
-        
+
         this.subusers = this.users.results;
         // console.log(this.users?.results);
         this.length = this.users.totalResults;
@@ -105,4 +106,26 @@ export class ListComponent implements OnInit {
     );
     // console.log('users/'+ (url));
   }
+
+  sweetAlert(abc){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.remove(abc);
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+
 }

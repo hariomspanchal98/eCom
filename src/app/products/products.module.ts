@@ -12,7 +12,6 @@ import { TrialComponent } from './trial/trial.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { SearchfilterPipe } from '../searchfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { SearchfilterPipe } from '../searchfilter.pipe';
     TrialComponent,
     ProductdetailsComponent,
     UpdateproductComponent,
-    SearchfilterPipe,
   ],
   imports: [
     CommonModule,

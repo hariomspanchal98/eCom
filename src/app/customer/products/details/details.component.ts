@@ -65,6 +65,14 @@ export class DetailsComponent implements OnInit {
           'success'
         )
       }
+      if (!(result.isConfirmed)) {
+        Swal.fire(
+          '2nd block executed  Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+
     })
   }
 

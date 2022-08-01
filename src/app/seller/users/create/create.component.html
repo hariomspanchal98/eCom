@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="parent">
+
+  <form class="child" [formGroup]="myForm">
+    <h4 style="text-align: center; font-weight: bold;">Create New User</h4>
+    <hr>
+    <br>
+    <label >Full name</label>
+    <input type="text" class="validate" placeholder="Enter full name" formControlName="name">
+
+    <label>Role</label>
+    <input type="text" placeholder="Enter role" formControlName="role">
+
+    <label>Email</label>
+    <input type="email" placeholder="Enter your Email" formControlName="email">
+
+    <label>Password</label>
+    <input type="password" placeholder="Enter password here" formControlName="password">
+
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+      {{errorMsg}}
+    </div>
+
+    <button type="button" class="btn green" [disabled]="myForm.invalid" (click)="submit()" >Submit</button>
+    <button class="btn red">Reset</button>
+    <button class="btn red" [routerLink]="['/seller/user/profile']">Cancel</button>
+
+    <br>
+    <!-- <p>Already have an account, sign in <a [routerLink]="['/auth/login']" style="cursor: pointer;">here</a></p> -->
+  </form>
+</div>
+

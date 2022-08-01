@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  // {path: '',redirectTo:'auth', pathMatch: 'full'},
-  {path: '', loadChildren : () => import('./auth/auth.module').then(m => m.AuthModule)},
-  {path:'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
-  {path:'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule)},
-  {path:'products', loadChildren:() => import('./products/products.module').then(m => m.ProductsModule)},
-  {path: '**', redirectTo:'', pathMatch: 'full'}
+  // {path: '',redirectTo:'seller', pathMatch: 'full'},
+  // {path: '', loadChildren : () => import('./seller/seller.module').then(m => m.SellerModule)},
+  {path:'seller', loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule) },
+  // {path:'users', loadChildren: () => import('./seller/users/users.module').then(m => m.UsersModule)},
+  // {path:'products', loadChildren:() => import('./seller/products/products.module').then(m => m.ProductsModule)},
+  {path: '**', redirectTo:'seller', pathMatch: 'full'}
 ];
 
 @NgModule({

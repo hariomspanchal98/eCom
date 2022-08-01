@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="parent">
+
+  <form class="child" [formGroup]="myForm">
+    <h4 style="text-align: center; font-weight: bold;">Update Information</h4>
+    <hr>
+    <br>
+    <label >Full name</label>
+    <input type="text" class="validate" placeholder="Enter full name" formControlName="name" value={{this.user?.name}}>
+
+    <label>Role</label>
+    <input type="text" placeholder="user" disabled value={{this.user?.role}}>
+
+    <label>Email</label>
+    <input type="email" placeholder="Enter your Email" formControlName="email" value={{this.user?.email}}>
+
+    <label>Password</label>
+    <input type="password" placeholder="Enter password here" formControlName="password">
+
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+      {{errorMsg}}
+    </div>
+
+    <button type="button" class="btn green" (click)="submit()">Submit</button>
+    <button class="btn red" (click)="reset()">Reset</button>
+    <button class="btn red" [routerLink]="['/seller/users/details', user?._id]">Cancel</button>
+
+    <br>
+    <!-- <p>Already have an account, sign in <a [routerLink]="['/auth/login']" style="cursor: pointer;">here</a></p> -->
+  </form>
+</div>
+

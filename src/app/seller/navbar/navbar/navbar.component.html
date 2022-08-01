@@ -1,0 +1,48 @@
+<nav>
+  <div class="nav-wrapper black">
+    <a class="brand-logo center" [routerLink]="['/seller/auth/login']" style="height: 100%;display: block;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <ul id="nav-mobile" class="left">
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button"
+        style="background-color: black;"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px; margin-right: 0;" class="large material-icons">menu</i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['/seller/auth/login']" ><i class="large material-icons" >account_circle</i>My Profile</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/list']" > <i class="large material-icons" >group</i>All Users</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/create']"> <i class="large material-icons" >person_add</i>Create User</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/allproducts']"> <i class="large material-icons" >view_module</i> All Products</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/createproduct']"> <i class="large material-icons" >add_shopping_cart</i> Create Product</a>
+        </div>
+      </div>
+
+    </ul>
+    <ul class="right">
+      <a style="color: red;" (click)="clear()" >LogOut</a>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+<!-- <nav>
+  <div class="nav-wrapper black">
+    <a [routerLink]="['/auth/login']" style="margin-left: 20px;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <ul id="nav-mobile" class="right">
+
+      <li></li>
+      <li><a [routerLink]="['/users/create']">Create User</a></li>
+      <li><a [routerLink]="['/users/list']">All Users</a></li>
+      <li><a (click)="clear()">logOut</a></li>
+
+    </ul>
+  </div>
+</nav>
+<p><a [routerLink]="['/auth/login']">MyProfile</a></p>
+<p><a [routerLink]="['/products/allproducts']">All Products</a></p>
+<p><a [routerLink]="['/products/createproduct']">Create Product</a></p>
+<p><a [routerLink]="['/products/trial']" >Trial</a></p> -->

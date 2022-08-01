@@ -1,0 +1,71 @@
+<nav>
+  <div class="nav-wrapper black">
+    <a class="brand-logo center" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 70%;"></a>
+    <!-- <a class="brand-logo center">MyProfile</a> -->
+    <!-- <a class="brand-logo center" style="height: 100%;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a> -->
+    <ul id="nav-mobile" class="left">
+
+      <div class="dropdown">
+        <button style="background-color: black;" class="btn btn-secondary dropdown-toggle" type="button"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px; margin-right: 0;" class="large material-icons">menu</i>
+        </button>
+        <div style="justify-content: end;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['/seller/users/list']"> <i class="large material-icons">group</i>All
+            Users</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/create']"> <i
+              class="large material-icons">person_add</i>Create User</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/allproducts']"> <i
+              class="large material-icons">view_module</i> All Products</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/createproduct']"> <i
+              class="large material-icons">add_shopping_cart</i> Create Product</a>
+        </div>
+      </div>
+
+    </ul>
+    <ul class="right">
+      <a style="color: red;" (click)="clear()">LogOut</a>
+    </ul>
+  </div>
+</nav>
+
+<!-- <p>fgsd</p> -->
+<!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
+<h1 style="text-align: center; font-weight: bold;">My Profile</h1>
+<div class="parent">
+  <div class="child">
+    <div style="display: contents;">
+      <ngx-avatar class="my-avatar" size="76" name={{profileData?.name}}></ngx-avatar>
+    </div>
+    <table>
+
+      <tr>
+        <td>Name :</td>
+        <td>{{profileData?.name}}</td>
+      </tr>
+      <tr>
+        <td>Email :</td>
+        <td>{{profileData?.email}}</td>
+      </tr>
+      <tr>
+        <td>ID :</td>
+        <td>{{profileData?._id}}</td>
+      </tr>
+      <tr>
+        <td>Role :</td>
+        <td>{{profileData?.role}}</td>
+      </tr>
+      <tr>
+        <td>Email Verification:</td>
+        <td style="color: green;" *ngIf="profileData?.isEmailVerified">Done</td>
+        <td style="color: red;" *ngIf="!profileData?.isEmailVerified">Pending</td>
+      </tr>
+      <tr>
+        <td>Company :</td>
+        <td>{{profileData?._org.name}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -3,14 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { ProfileComponent } from './user/profile/profile.component';
+import { LoginComponent } from './seller/auth/login/login.component';
+import { RegisterComponent } from './seller/auth/register/register.component';
+import { ProfileComponent } from './seller/user/profile/profile.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthGuard } from './auth.guard';
-import { VerifyComponent } from './auth/verify/verify.component';
+import { VerifyComponent } from './seller/auth/verify/verify.component';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';

@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<div class="parent">
+  <div class="child">
+    <ngx-avatar name={{user?.name}} size="76"></ngx-avatar>
+    <table>
+
+      <tr>
+        <td>Name :</td>
+        <td>{{user?.name}}</td>
+      </tr>
+      <tr>
+        <td>Email :</td>
+        <td>{{user?.email}}</td>
+      </tr>
+      <tr>
+        <td>ID :</td>
+        <td>{{user?._id}}</td>
+      </tr>
+      <tr>
+        <td>Role :</td>
+        <td>{{user?.role}}</td>
+      </tr>
+      <tr>
+        <td>Email Verification Status :</td>
+        <td style="color: green;" *ngIf="user?.isEmailVerified">Done</td>
+        <td style="color: red;" *ngIf="!user?.isEmailVerified">Pending</td>
+      </tr>
+      <tr>
+        <td>Company :</td>
+        <td>{{user?._org.name}}</td>
+      </tr>
+    </table>
+
+    <button class="btn green" style="align-self: center;" [routerLink]="['/seller/users/update', user?._id]">Update</button>
+  </div>
+</div>

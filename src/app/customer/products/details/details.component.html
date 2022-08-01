@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+
+<div class="col"><div style="display: flex;justify-content: center;">
+  <h2 class="header">{{product?.name}}</h2>
+</div><div class="card horizontal" style="display: flex;flex-direction: row;">
+    <div class="card-image">
+      <div class="abc">
+        <img class="preview" src={{previewImgUrl}}>
+      </div>
+      <carousel [height]="50" [cellWidth]="60" [loop]="true" >
+        <div class="carousel-cell" *ngFor="let image of product?.images">
+          <img class="cardimg" (click)="(previewImgUrl = image?.url)" src={{image?.url}}>
+        </div>
+      </carousel>
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <p style="text-align: right;"> <a style="cursor: pointer;color: red;" (click)="sweetAlert(product?._id)"><i
+          class="material-icons">delete</i></a></p>
+          <br>
+        <h2>{{product?.name}}</h2>
+        <p>{{product?.description}}</p>
+      </div>
+      <!-- <div class="card-action">
+        <button class="btn green" [routerLink]="['/seller/products/updateproduct', product?._id]">Update</button>
+      </div> -->
+    </div>
+  </div>
+</div>

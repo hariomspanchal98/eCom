@@ -32,9 +32,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // window.location.reload();
+    console.log('ertgdxgfdrgrgrdgbdrgrdg5415425251');
 
-    if(this.service.loggedIn){
-      this.router.navigateByUrl('seller/user/profile');
+
+
+    if(!!(localStorage.getItem('token'))){
+      console.log(!!(localStorage.getItem('token')));
+      // this.router.navigateByUrl('/seller/user/profile');
+      this.router.navigate(['seller/user/profile']);
     }
 
     this.executeImportantAction();

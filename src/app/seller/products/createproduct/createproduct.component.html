@@ -6,11 +6,18 @@
     <h4 style="text-align: center; font-weight: bold;">Add New Product</h4>
     <hr>
     <br>
-    <label >Name</label>
+    <label>Name</label>
     <input type="text" class="validate" placeholder="Enter product name" formControlName="name">
 
     <label>Description</label>
     <input type="text" placeholder="Enter Description" formControlName="description">
+
+    <div style="display: flex;flex-wrap: wrap;">
+      <div *ngFor="let image of photosArr; let i = index" class="preview">
+        <img [src]=image>
+        <a class="remove-image" style="display: inline;" (click)="removeImg(i)">&#215;</a>
+      </div>
+    </div>
 
     <div class="mb-3">
       <label for="formFileMultiple" class="form-label">Choose Images</label>
@@ -21,7 +28,7 @@
       {{errorMsg}}
     </div>
 
-    <button type="button" class="btn green" [disabled]="myForm.invalid" (click)="submit()" >Submit</button>
+    <button type="button" class="btn green" [disabled]="myForm.invalid" (click)="submit()">Submit</button>
     <button class="btn red">Reset</button>
 
     <br>

@@ -15,6 +15,8 @@ export class CreateproductComponent implements OnInit {
   selectedFile;
   fd;
   errorMsg;
+  newPhotos=[];
+  photosArr=[];
 
   constructor(private service: HttpService, private http: HttpClient,
     private router:Router) {}
@@ -42,22 +44,36 @@ export class CreateproductComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    if(event.target.files && event.target.files[0])
-    {
-      const image = event.target.files;
-      // console.log(imageS);
-      this.myForm.controls['images'].setValue(image);
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file: File = event.target.files[i];
+      if (file) {
+        this.newPhotos.push(file);
+        // console.log(event.target.files);
+        // this.fileName = file.name;
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          this.photosArr.push(event.target.result);
+          // this.imgFlag[1].push(false);
+        };
+      }
     }
-
+    console.log('New photos:', this.newPhotos);
   }
+
+  removeImg(i){
+    this.newPhotos.splice(i, 1);
+    this.photosArr.splice(i, 1);
+  }
+
 
   submit() {
     // console.log(this.myForm.value);
     // console.log(this.selectedFile);
     // console.log(this.myForm.value.name);
     this.fd = new FormData();
-    for (let i = 0; i < this.myForm.value.images.length; i++) {
-      this.fd.append('images', this.myForm.value.images[i]);
+    for (let i = 0; i < this.newPhotos.length; i++) {
+      this.fd.append('images', this.newPhotos[i]);
     }
     // this.fd.append('images', this.selectedFile);
     this.fd.append('name', this.myForm.value.name);
@@ -83,4 +99,5 @@ export class CreateproductComponent implements OnInit {
 
 
   }
+
 }

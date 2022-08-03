@@ -41,3 +41,7 @@ carousel{
   width: 210px;
   /* background-color: rgb(0, 0, 0); */
 }
+.cart:hover{
+  background-color: rgb(34, 123, 224);
+  color: white;
+}

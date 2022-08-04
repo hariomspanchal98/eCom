@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 export class DetailsComponent implements OnInit {
 
   tempToken:any;
+  localStorageValue: any;
+  cart: any=[];
 
   constructor(private _Activatedroute:ActivatedRoute,private router: Router, private service: HttpService) { }
 
@@ -76,4 +78,52 @@ export class DetailsComponent implements OnInit {
     })
   }
 
+  addToCart(product) {
+    console.log(product);
+    let flag = false;
+    let duplicate = false;
+    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      console.log('if1 pre');
+      this.cart = [];
+      flag = true;
+      console.log('if1 post');
+    } else {
+      console.log('else1 pre');
+      this.cart = this.localStorageValue;
+      console.log('else1 post');
+    }
+
+    if (flag) {
+      product.count = 1;
+      this.cart.push(product);
+    }
+    else {
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i]._id == product._id) {
+          console.log('if pre');
+          this.cart[i].count = this.cart[i].count + 1;
+          console.log('if post');
+          duplicate=true;
+          break;
+        }
+        else {
+          duplicate=false;
+        }
+      }
+
+      if(!duplicate)
+      {
+        console.log('dup');
+          product.count = 1;
+          this.cart.push(product);
+          console.log('dup');
+      }
+
+      flag = false;
+    }
+
+    console.log(this.cart);
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
 }

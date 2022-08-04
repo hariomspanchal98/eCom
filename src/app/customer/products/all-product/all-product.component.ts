@@ -6,26 +6,30 @@ import { HttpService } from 'src/app/services/http/http.service';
 @Component({
   selector: 'app-all-product',
   templateUrl: './all-product.component.html',
-  styleUrls: ['./all-product.component.css']
+  styleUrls: ['./all-product.component.css'],
 })
 export class AllProductComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   tempToken;
+  cartAdd=false;
   products;
-  i=0;
-  index: number=this.service.pageNo;
+  i = 0;
+  index: number = this.service.pageNo;
   size: number;
   lengthy: any;
-  pageSize: any=this.service.limitNo;
+  pageSize: any = this.service.limitNo;
   sub: any;
-  searchTerm:'';
+  searchTerm: '';
+  cart: any = [];
+  localStorageValue: any;
 
-  constructor(private service:HttpService, private router:Router) { }
+  constructor(private service: HttpService, private router: Router) {}
 
   ngOnInit(): void {
-    this.tempToken = (localStorage.getItem('token'));
-    console.log("token is",this.tempToken);
+    this.tempToken = localStorage.getItem('token');
+    console.log('token is', this.tempToken);
+
     // this.service.get("auth/self",this.tempToken)
     // this.service.getProfileData(this.tempToken)
     // this.service.secureGet('products',this.tempToken).subscribe((res:any)=>{
@@ -51,7 +55,10 @@ export class AllProductComponent implements OnInit {
     this.index = index;
     this.size = size;
     this.service
-      .secureGet(`products?limit=${this.size}&page=${this.index}`, this.tempToken)
+      .secureGet(
+        `products?limit=${this.size}&page=${this.index}`,
+        this.tempToken
+      )
       .subscribe((data) => {
         // console.log(data);
         this.products = data;
@@ -91,10 +98,57 @@ export class AllProductComponent implements OnInit {
         // console.log(this.users?.results);
         // this.length= this.users.totalResults;
         // this.pageSize= this.users.limit;
-        this.service.pageNo=e.pageIndex+1;
-        this.service.limitNo=e.pageSize;
-
+        this.service.pageNo = e.pageIndex + 1;
+        this.service.limitNo = e.pageSize;
       });
   }
 
+  addToCart(product) {
+    console.log(product);
+    let flag = false;
+    let duplicate = false;
+    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      console.log('if1 pre');
+      this.cart = [];
+      flag = true;
+      console.log('if1 post');
+    } else {
+      console.log('else1 pre');
+      this.cart = this.localStorageValue;
+      console.log('else1 post');
+    }
+
+    if (flag) {
+      product.count = 1;
+      this.cart.push(product);
+    }
+    else {
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i]._id == product._id) {
+          console.log('if pre');
+          this.cart[i].count = this.cart[i].count + 1;
+          console.log('if post');
+          duplicate=true;
+          break;
+        }
+        else {
+          duplicate=false;
+        }
+      }
+
+      if(!duplicate)
+      {
+        console.log('dup');
+          product.count = 1;
+          this.cart.push(product);
+          console.log('dup');
+      }
+
+      flag = false;
+    }
+
+    console.log(this.cart);
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
 }

@@ -1,0 +1,104 @@
+<nav>
+  <div class="nav-wrapper black">
+    <a class="brand-logo center" [routerLink]="['/products/all-products']" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 70%;"></a>
+    <ul id="nav-mobile" class="left">
+
+      <div class="dropdown" *ngIf="check()">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="background-color: black;"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i style="margin-top: -22px; margin-right: 0;" class="large material-icons">menu</i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['/seller/auth/login']"><i
+              class="large material-icons">account_circle</i>My Profile</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/list']"> <i class="large material-icons">group</i>All
+            Users</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/create']"> <i
+              class="large material-icons">person_add</i>Create User</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/allproducts']"> <i
+              class="large material-icons">view_module</i> All Products</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/createproduct']"> <i
+              class="large material-icons">add_shopping_cart</i> Create Product</a>
+        </div>
+      </div>
+
+    </ul>
+
+    <ul class="right">
+
+      <a style="color: red;" (click)="clear()" *ngIf="check()">LogOut</a>
+      <a style="color: white;" [routerLink]="['/seller/auth/login']" *ngIf="!(check())">LogIn</a>
+    </ul>
+    <!-- <i class="fa badge fa-lg" value=8>&#xf07a;</i> -->
+
+  </div>
+</nav>
+
+<div style="display: flex;justify-content: center;">
+  <div class="card" style="max-width: 900px; width: 70%; min-width: 550px;">
+
+    <div style="display: flex;justify-content:center;" *ngIf="!(cart.length==0)">
+      <h1 style="text-align: center;margin: 20px;">Your Cart</h1>
+      <i class="small material-icons" style="margin-top: 20px;">shopping_cart</i>
+    </div>
+    <div style="display: flex;justify-content:center;" *ngIf="cart.length==0">
+      <h1 style="text-align: center;margin: 20px;">Your Cart is Empty</h1>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAACDCAMAAACZQ1hUAAAAclBMVEX///8nLDD8/Pz+/v79/f37+/skKS05PkETGiCGiIoVHCLy8vKnqKkJEhmSlJUAAAAAAAUcIic1Oj8ACxQAAAtucXPAwcJYW164ubrZ2trs7OxKTVDS09RjZmhRVFegoqN3eXvi4uNDRkkvNDevsbLJyspOq36AAAAMi0lEQVR4nMVbi3qiOhAeuUQEkVIUFW/F6vu/4gkzk5BAgtras/l2s7UO4c/cZ5KFEADiSE0BToGaom4KY5xCnobUUWBNBnUQ6hUja8UBdTf6lV0PDBcdUk9DiENw74yocfIs6udC4OWCTWhQO7mgqSF+DCF8UhCxD/AEBJbCa1wYUPt1IR4Iwic2pHGo4wPpTkAILeog9CzLuqBXfI4L8JQgvAzwUdsQXKzwCyIebM6pCz4uhLYgUCf12+XPGdnrjwQBU4LQOIIsG0AITQjtanvYLo6vGmX4glE2l+31/HUfOAVNG6/WuRAiLRZR5BLEO/xCXeWlEGVx2htcwNHRhjeRzGhUm0ld+IUg6kLQK8r8qwEYQDieE/5ajnw3MrO3GGUz79+RfC+1LiJtvFiXs34IAXrlXxqlhXWVmy9ZH/ZKEToIc/0lQUlWzwriFaNsE96heldxZEL5Z6E0oSxPSCDS5ucO2meUcMINivNV7Vh8ZsopNAX/Kj8f4YCEyRe82SIA7vSaqm0WCUu+WgJBgGVFmih2HSWBzO/wKoQHiUV8QBYnC/lze/rAD+UWSCdhkeJrVxGC+sJP5eG5lScipS0IuOBOxXeDNHdEJK4Z6SSs6K1HBAQNMSK5we+N0oDQfgrmPq14RgyHGKkD2K3VznFfZEGiJI/+pqyJ9V5uHGEyV8qTDlQpQsyXxNpw1gtuoBAPjHIgCBPCHvc5k9bY0YQtGejHTukkXHjnGeDed2SqZfsuXZAT2aXcN9Kw0okzPdI9FX4TI1YojQC2+EC6gQeu6fmsqf6gbe2R75ordyDq7oGa9bClRY9Vb59vyaCzK21yAcQu2iRbZkDWqVi1ZYayAn2/wzt2Ewt7nhGE3Qf57FY9QipDjEjrjv1hmFWE+wZ+XXjSKLupIS1f34hGcWWlCJmM/FS3c1z5kigt/b0glNsTh4j4ylz5zBS18qRrwnbhRa+lss9njHIawp4CxceRJM1OUNqlpibWwpJ33oToQ2q2zyP8In3l7WkzI2XbkO6dQyPPpUXDg9450m6UQbsgPCsIFDa5YTFriaVHDp9H05PzvmoyyHRP7G/JovP6x1kTUUNGCVy1Yn+ruTKGEKqAeSbWwoqFQyXJD41SLsvh55pFuOyNudKEPbVeFFp2VDuUBsQl4b+AD8ITuhBCS8FoTZEh5LRWrtrTBMaivPPvgKSxpA2I5nF48AlCLv9FenXgQMHvmGehAQGM+lPvnCSn07qJSDkNIVYamHfZq4TQ0sei1sxVzSBeFG46YOIDnNald/uB53Uh5lSl2wdRc0w4g6IOAxOCpIjPpX6iW/mrDy0/MMpuxVuu7BIJ7xQv06O9KUu6nPpKGlyZE+6q/olRdoTZd6/XXR1jcEXrAulkvy9ln3PUoEhp0Aw16JWUhalVAqe0nOzye6DltJSuKRtyVNWNloo/+wg30fTz5VisgeuaaBriynppcQFXtHScd/4ZE9mtUvJ8sekXmJGBCZkr83gIASwIUb9zpIjIsyYbeClSksGxdskEDgkVV+5+LjCOXa4exEX3JJzkPoDwWBcgO6gEjjIQndaOzJzZFqkpOKmdSy6ASm7KK3DWh6mXpiaafoJ+UqmK1EDKBkisYm/QBLwpEkgkRxzICfbpZzdmd8kV+bEp8aOMIjHSaEKcgtj6KdJTEGczfFAsae3s/I3LLiA2qFkA8s/xVBUfaqjCPP9Ydx8r/fHFseYHS/4orI/0u6I6oROWtlCZTZj/d5T5olOM1fox6R+OSmZu+/wx3Z8OGVO5+/DvRroAKjjK/F8MalBdAbGUm9tyMC56mv7dg2+c1Oob8kUzwpBf4F8MKucYAzYkrSQkfClrsqPpM8dzSLgaYfhVTeluoA0gDJKxMYYHEB6lrz0EH+BREjTCENohCPzTdKwaEPbUw6+DkSzi7P8fsaWT4vNwOFzn/+e4yjfyWQJsqUv+bwb6phOXdP9w5EvIPsVjuj8cZdcpu//D9KELVJjF7LdFzjDKFEfy10O9riq2rbRUmTPGxwtFj+/NVzcWfz6+CMJpuY8h4myZkn+swv6XccekpWi7ZJp+03lStJOkBm+M8HUpX3XQmMZjySWE0abtaLHaNc7znmn0GGfWjjAVOMIUYwVs3Kaq+tEdvA5Df4L0zHWaHwRrjlXU9Etr1fykRaMWoa0j+MNgrcWGDVnqjOgeafcv9mCqe1+B+s+mcFiXBxgHy3aaCyGEWJAL6giZCoHlYbqCh7rQ3VA4LRsNoWdAszwdtqt2Uhc6rBlaBeaPalPUT8WDk3IbPOpuXJK8FGU1q0eCqGeV/CZPlsZND+fx5x3VoVIXLSLdtKBThXUzsjUbwoJ6yDNR1GAT7tTFggJ73j5dAK7lu7PNgLVLSw67cOsdOCD0OO7qaJyPYXrCVp+lY7fCpwtynQxbY+UX+ae+bx9y30d+M9YFowm/7eNb16UyLrIYFwu64zufLsj37alZtwNTy4kMO4Hq9NfT6YKij3hSrw2jhLORAhTghxBxk6toel1UbAsiXEVWoP6mX9iYGK79SXAQxlcTQ+MTREe9JcsMFYTI6BLiuXd3muSDEEBsYQDTfiwMsZ8LkKHipLqi6fpRmhb70+IA4BYEYp71b+oOhwyxbXpNEbMJCFCTd7gbjszwu6hVZTMBgc/KabN3EwIbPY7q4hYEKy9hiMw2Yt+iQ0Elu4lIGcRn1a7o+idWaF8oeOk5Bi+EADChL7euowNpj5hiy4g6FSnbQ443F/JTPLCf+MTfHFq7AW0FNW7Ey2S696UmXDTcLrOYSlmyVVUUxWwZDk0YottMflOtxlww2cXt531vkbElOeysFvvJlEX+bfaZvbKmzvYNWCo2xkEx82CcCpl9ez46SC7+67e0XmgZpZkvRDBlEWiZWM6kXz2E0JCGpMBrCuXJfbz805TFpj5iJ/KjNiGAAQEaVPqkcUHQXHgtfR1Qc7lfNk4u4ANYZlQ7ny64IGgc/mBtXqKgmHmKrL49GFkTJVPl5pfpq5c6AkpbZUCweGZl0HhNQMyzXiHeqQuSkI5HCtMySRoGf/GYFU9M/IKYuP4LU4LoqFHYIrUhgBYEqgwmU90FhKdLGZ0MPcEFALqa9WVRDxSMjnpl3Bsej3khyJmz82cg0I2j5GZTDxalrHBN1cd0TdnZ8m51OlwPp8WuAX0wNGHCHDNFOwA8yB0xFUl16u/XBYjrbZWkpRCiTJN8u4undIGvKtNNvatVVocAQ6QJ2m9oiNjtEuprYvZvyvxaB87/StHbWEjXcWRlPRCbrWBKYtko8NiLNqf1sI0lPk7NJIQYanTU1RGmIMjwTqVODQ5B9Isu164eVrleUl/WacKqhBHzZrC9UfjF2MrWA4715BQvKs0EqQxl/6HCEzInF+REpVy5GQl54GwomerKDK9RZhuVtYlEXDeLzVXoC+LVJvNCYDnTPU2LuYPEjUuI9REGOt4vuuWKSqznVH5Dc5sr9ci3hnxtl88nv0Uz0jNLEPKBABlGd7WcZqZS6+T7BpqrcPvkShQvXLhYEQLf4w3AiNShAcGorKkq1hAGRhlyyZlvWg2hC1jNF2Hrrq64BBFGjVBdqAFzRxD4Qmd38O80M76OUOHpk+lsYFUxBpcgpILTHby8HnuRYRIfZeRIlk5dkNRdn0FUN0dZe5PmIord8NKlCql00SXPxtY2Tl+xMyW34wtTq3l6rZ2V9e6azo161QypwHkB30saZHij3JHV12Hp7Eu73N4FIcDc3qUL/e0Y7EINk8xxTXlEnq13E+nr8GpKP4VuXQB1mJkeLUEETp2UNeWVezWBTxrPpK+Ew0ivKIW6xo6G1yh91W4dlef5JN7nHYmaLVPtzF7WUcrQzc/10Qfh2cTN5ALfU1M9NztGOSTX6mutPy1lghEEdQUNHZsPQp81BSy6QxzZiz7QBdORjQCzkp1iB1aLC8qJ8v/I2AP8QhA2z450jXY13pTu29tZ07E3ZeeBcWD/RB97wlB/3dOw01GWaVf2rjoC+FLx7m3Hyje+2D1KryyFsPwdNdlE+baTZepiyRTK6fGcNWWt0pR3HipjzBzpAvR9+0H6uvmLE+h84+y/xiNdIK+fnd8PIjk3DkPTfftx+tpQp+99Q+RbgjBOFmCkCyqgLmdFkr5rJMVsCS4IZt/eFfv2l9W7xmUPHl0A3bd3pq9vHS6j1H37Hx+VPoiUmtpIQxyCUH37R02/J8LUKFK6qD0QwAthHPtei5QmF6YEYULwCqLngr/pNy22aQjP0g4iypALvY47peFatqcO/gPfS+QN9aAFWQAAAABJRU5ErkJggg==" style="height: 30px; margin-top: 18px;" >
+    </div>
+
+    <table class="table table-borderless" style="min-width: 450px;" *ngIf="!(cart.length==0)">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="text-align: center;">Item</th>
+          <th>Price</th>
+          <th style="text-align: center;">Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of cart;let i = index">
+        <tr class="preview">
+          <th *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;"><img src={{item.images[0]?.url}}
+              alt="https://www.shutterstock.com/search/no-picture-available"
+              style="max-height: 100px; max-width: 150px;margin: 10px;"></th>
+          <th *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;"><img
+              src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+              style="max-height: 100px; max-width: 150px;margin: 10px;"></th>
+          <td style="max-height: 100px;">
+            <p style="text-align: left; font-size: 24px;">{{item.name}}</p>
+            <p style="white-space: normal;text-align: left;
+              -webkit-box-orient: vertical;max-width: 400px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              text-overflow: ellipsis;word-wrap: break-word;">{{item.description}}</p>
+          </td>
+          <td style="padding-top: 20px;">{{(i+1)*45456%357%100}}</td>
+          <td>
+            <div class="btn-group" style="padding-top: 10px;">
+              <button class="btn" (click)="update(-1,i)" [disabled]="item.count<2">-1</button>
+              <button class="btn" style="background-color: rgb(212, 212, 212);">{{item.count}}</button>
+              <button class="btn" (click)="update(1,i)">+1</button>
+            </div>
+          </td>
+          <td style="padding-top: 20px;"> {{(i+1)*45456%357%100 * item.count}}</td>
+          <a class="remove-image" style="display: inline;" (click)="crop(i)">&#215;</a>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <div style="display: flex;justify-content: right;min-width: 250px;" *ngIf="!(cart.length==0)">
+      <h3 style="padding-right: 100px;font-weight: 500;">Total</h3>
+      <h3 style="padding-right: 50px;font-weight: 600;">{{total}}</h3>
+    </div>
+    <div *ngIf="(cart.length==0)" style="display: flex;justify-content: center;">
+      <img src="https://shop.millenniumbooksource.com/static/images/cart1.png" style="width: auto; height: 400px;margin-top: -30px;">
+    </div>
+    <div style="display: flex;justify-content: center;margin-top: -30px;" *ngIf="(cart.length==0)">
+      <button class="btn" [routerLink]="['/products/all-products']" >Continue Shopping</button>
+    </div>
+    <hr>
+  </div>
+</div>

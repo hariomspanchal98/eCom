@@ -81,3 +81,7 @@ carousel-cell
 {
   background-color: black;
 }
+.btn:hover{
+  background-color: rgb(34, 123, 224);
+  color: white;
+}

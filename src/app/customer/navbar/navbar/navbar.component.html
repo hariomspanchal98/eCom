@@ -1,27 +1,46 @@
 <nav>
   <div class="nav-wrapper black">
-    <a class="brand-logo center" [routerLink]="['/products/all-products']" style="height: 100%;display: block;"><img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 70%;"></a>
+    <a class="brand-logo center" [routerLink]="['/products/all-products']" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 70%;"></a>
     <ul id="nav-mobile" class="left">
 
       <div class="dropdown" *ngIf="check()">
-        <button class="btn btn-secondary dropdown-toggle" type="button"
-        style="background-color: black;"
-        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="background-color: black;"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i style="margin-top: -22px; margin-right: 0;" class="large material-icons">menu</i>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" [routerLink]="['/seller/auth/login']" ><i class="large material-icons" >account_circle</i>My Profile</a>
-          <a class="dropdown-item" [routerLink]="['/seller/users/list']" > <i class="large material-icons" >group</i>All Users</a>
-          <a class="dropdown-item" [routerLink]="['/seller/users/create']"> <i class="large material-icons" >person_add</i>Create User</a>
-          <a class="dropdown-item" [routerLink]="['/seller/products/allproducts']"> <i class="large material-icons" >view_module</i> All Products</a>
-          <a class="dropdown-item" [routerLink]="['/seller/products/createproduct']"> <i class="large material-icons" >add_shopping_cart</i> Create Product</a>
+          <a class="dropdown-item" [routerLink]="['/seller/auth/login']"><i
+              class="large material-icons">account_circle</i>My Profile</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/list']"> <i class="large material-icons">group</i>All
+            Users</a>
+          <a class="dropdown-item" [routerLink]="['/seller/users/create']"> <i
+              class="large material-icons">person_add</i>Create User</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/allproducts']"> <i
+              class="large material-icons">view_module</i> All Products</a>
+          <a class="dropdown-item" [routerLink]="['/seller/products/createproduct']"> <i
+              class="large material-icons">add_shopping_cart</i> Create Product</a>
         </div>
       </div>
 
     </ul>
-    <ul class="right" >
+
+    <ul class="right">
+
       <a style="color: red;" (click)="clear()" *ngIf="check()">LogOut</a>
       <a style="color: white;" [routerLink]="['/seller/auth/login']" *ngIf="!(check())">LogIn</a>
     </ul>
+
+    <div class="right" style="display: flex; justify-content: center;">
+      <button class="btn btn-secondary" type="button" style="background-color: black;margin-top: 15px;width: 60%;" [routerLink]="['/products/checkout']">
+          <i style="margin-top: -26px; margin-left: -16px;" class=" fa badge fa-lg" value=63>&#xf07a;</i>
+          <!-- <i *ngIf="cartNo>1" style="margin-top: -26px; margin-left: -16px;" class=" fa badge fa-lg" value=1+>&#xf07a;</i> -->
+          <!-- {{service.limitNo}} -->
+        </button>
+      <!-- <i class="fa badge fa-lg" style="height: 100%; width: 100%;" value=10>&#xf07a;</i> -->
+    </div>
+    <!-- <i class="fa badge fa-lg" value=8>&#xf07a;</i> -->
+
   </div>
 </nav>

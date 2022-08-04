@@ -24,15 +24,15 @@
         <p>{{product?.description}}</p>
       </div>
 
-      <div>
+      <!-- <div>
         <span class="fa-stack fa-2x has-badge" data-count="865">
           <i class="fa fa-shopping-cart fa-stack-2x red-cart"></i>
         </span>
-      </div>
-
-      <!-- <div class="card-action">
-        <button class="btn green" [routerLink]="['/seller/products/updateproduct', product?._id]">Update</button>
       </div> -->
+
+      <div class="card-action">
+        <button class="btn" (click)="addToCart(product)">Add To Cart</button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,59 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
+})
+export class CartComponent implements OnInit {
+
+  cart:any =[];
+  total:any=0;
+  localStorageValue:any;
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      this.cart = [];
+    } else {
+      this.cart = this.localStorageValue;
+    }
+
+    for(let i=0;i<this.cart.length; i++)
+    {
+      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+    }
+
+    console.log(this.cart);
+  }
+
+  check(){
+    return !!(localStorage.getItem('token'));
+  }
+
+  clear(){
+    localStorage.clear();
+  }
+  update(a, i){
+    this.cart[i].count = this.cart[i].count + a;
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.cart = JSON.parse(localStorage.getItem('cart'));
+    this.total=0;
+    for(let i=0;i<this.cart.length; i++)
+    {
+      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+    }
+  }
+  crop(i){
+    this.cart.splice(i,1);
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.cart = JSON.parse(localStorage.getItem('cart'));
+    this.total=0;
+    for(let i=0;i<this.cart.length; i++)
+    {
+      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+    }
+  }
+}

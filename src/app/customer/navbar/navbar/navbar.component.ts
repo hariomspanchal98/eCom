@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  cart:any=[];
+  localStorageValue:any;
+  cartNo:any;
+
+  constructor(private service:HttpService) { }
 
   ngOnInit(): void {
+    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      this.cart = [];
+    } else {
+      this.cart = this.localStorageValue;
+    }
+    console.log(this.cart);
+    this.cartNo = this.cart.length;
   }
 
   check(){

@@ -6,35 +6,84 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent implements OnInit {
-
-  tempToken:any;
+  tempToken: any;
   localStorageValue: any;
-  cart: any=[];
+  cart: any = [];
 
-  constructor(private _Activatedroute:ActivatedRoute,private router: Router, private service: HttpService) { }
+  constructor(
+    private _Activatedroute: ActivatedRoute,
+    private router: Router,
+    private service: HttpService
+  ) {}
 
-  id:any;
-  product:any;
+  id: any;
+  product: any;
   previewImgUrl;
+  buttonFlag: boolean = true;
 
   ngOnInit(): void {
-    this.tempToken = (localStorage.getItem('token'));
+    this.tempToken = localStorage.getItem('token');
 
-    this._Activatedroute.paramMap.subscribe(params => {
+    this._Activatedroute.paramMap.subscribe((params) => {
       this.id = params.get('id');
     });
 
-    this.service.get('products/'+this.id).subscribe((data:any)=>{
+    this.service.get('shop/products/' + this.id).subscribe((data: any) => {
       console.log(data);
-      this.product=data;
-      this.previewImgUrl= this.product?.images[0].url;
+      this.product = data;
+      this.previewImgUrl = this.product?.images[0].url;
       console.log(this.previewImgUrl);
-      // console.log(this.user);
-    })
+      console.log('this.user');
+
+      this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      console.log('if1 pre');
+      this.cart = [];
+      console.log('if1 post');
+    } else {
+      console.log(this.cart);
+      this.cart = this.localStorageValue;
+      console.log(this.cart);
+      console.log(this.product?._id);
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.product?._id == this.cart[i]._id) {
+          console.log('found');
+          this.buttonFlag = false;
+          break;
+        }
+      }
+      console.log('else1 post');
+      this.service.cartNo = this.cart.length;
+    }
+
+    });
+
+    // this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    // if (this.localStorageValue == null) {
+    //   console.log('if1 pre');
+    //   this.cart = [];
+    //   console.log('if1 post');
+    // } else {
+    //   console.log(this.cart);
+    //   this.cart = this.localStorageValue;
+    //   console.log(this.cart);
+    //   console.log(this.product?._id);
+    //   for (let i = 0; i < this.cart.length; i++) {
+    //     if (this.product?._id == this.cart[i]._id) {
+    //       console.log('found');
+    //       this.buttonFlag = false;
+    //       break;
+    //     }
+    //   }
+    //   console.log('else1 post');
+    // }
+
+    this.service.cartNo = this.cart.length;
   }
+
   remove(url: any) {
     // console.log(url);
     this.service.del('products/' + url, this.tempToken).subscribe(
@@ -43,13 +92,12 @@ export class DetailsComponent implements OnInit {
         console.log('Deleted');
         this.router.navigateByUrl(`seller/products/allproducts`);
       },
-      (error) => {
-      }
+      (error) => {}
     );
     // console.log('users/'+ (url));
   }
 
-  sweetAlert(abc){
+  sweetAlert(abc) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -57,25 +105,20 @@ export class DetailsComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.remove(abc);
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }
-      if (!(result.isConfirmed)) {
+      if (!result.isConfirmed) {
         Swal.fire(
           '2nd block executed  Deleted!',
           'Your file has been deleted.',
           'success'
-        )
+        );
       }
-
-    })
+    });
   }
 
   addToCart(product) {
@@ -96,28 +139,32 @@ export class DetailsComponent implements OnInit {
 
     if (flag) {
       product.count = 1;
+      product.cart=true;
       this.cart.push(product);
-    }
-    else {
+      this.service.cartNo += 1;
+      this.buttonFlag = false;
+    } else {
       for (let i = 0; i < this.cart.length; i++) {
         if (this.cart[i]._id == product._id) {
           console.log('if pre');
+          this.buttonFlag = false;
           this.cart[i].count = this.cart[i].count + 1;
           console.log('if post');
-          duplicate=true;
+          duplicate = true;
           break;
-        }
-        else {
-          duplicate=false;
+        } else {
+          duplicate = false;
         }
       }
 
-      if(!duplicate)
-      {
+      if (!duplicate) {
         console.log('dup');
-          product.count = 1;
-          this.cart.push(product);
-          console.log('dup');
+        product.count = 1;
+        product.cart=true;
+        this.cart.push(product);
+        console.log('dup');
+        this.service.cartNo += 1;
+        this.buttonFlag = false;
       }
 
       flag = false;

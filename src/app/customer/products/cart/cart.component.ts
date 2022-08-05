@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +12,7 @@ export class CartComponent implements OnInit {
   total:any=0;
   localStorageValue:any;
 
-  constructor() { }
+  constructor(private service: HttpService) { }
 
   ngOnInit(): void {
     this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
@@ -23,7 +24,7 @@ export class CartComponent implements OnInit {
 
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+      this.total += (i+1)*45456%357%99 * this.cart[i].count;
     }
 
     console.log(this.cart);
@@ -43,7 +44,7 @@ export class CartComponent implements OnInit {
     this.total=0;
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+      this.total += (i+1)*45456%357%99 * this.cart[i].count;
     }
   }
   crop(i){
@@ -53,7 +54,8 @@ export class CartComponent implements OnInit {
     this.total=0;
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%100 * this.cart[i].count;
+      this.total += (i+1)*45456%357%99 * this.cart[i].count;
     }
+    this.service.cartNo -= 1;
   }
 }

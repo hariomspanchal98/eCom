@@ -2,7 +2,7 @@
 {
   width: 210px;
   padding: 10px;
-  margin-left: 40px;
+  margin: 20px;
 }
 .cardimg{
   justify-content: center;
@@ -44,4 +44,12 @@ carousel{
 .cart:hover{
   background-color: rgb(34, 123, 224);
   color: white;
+}
+.added:hover{
+  background-color: rgb(1, 192, 74);
+  color: white;
+}
+.carousel-arrow
+{
+  background-color: none;
 }

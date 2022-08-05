@@ -32,9 +32,11 @@
       <a style="color: white;" [routerLink]="['/seller/auth/login']" *ngIf="!(check())">LogIn</a>
     </ul>
 
-    <div class="right" style="display: flex; justify-content: center;">
-      <button class="btn btn-secondary" type="button" style="background-color: black;margin-top: 15px;width: 60%;" [routerLink]="['/products/checkout']">
-          <i style="margin-top: -26px; margin-left: -16px;" class=" fa badge fa-lg" value=63>&#xf07a;</i>
+    <div class="right " style="display: flex; justify-content: center;">
+      <button class="btn btn-secondary" type="button" style="background-color: black;margin-top: 15px;width: 70%;position: relative; display: flex;justify-content: center;" [routerLink]="['/products/cart']">
+          <!-- <i style="margin-top: -26px; margin-left: -16px;" class=" fa badge fa-lg">&#xf07a;</i> -->
+          <i class="large material-icons" style="margin-top: -19px;margin-left: 15px;">shopping_cart</i>
+          <a class="remove-image" style="display: inline;">{{service.cartNo}}</a>
           <!-- <i *ngIf="cartNo>1" style="margin-top: -26px; margin-left: -16px;" class=" fa badge fa-lg" value=1+>&#xf07a;</i> -->
           <!-- {{service.limitNo}} -->
         </button>

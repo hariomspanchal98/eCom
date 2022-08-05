@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   localStorageValue:any;
   cartNo:any;
 
-  constructor(private service:HttpService) { }
+  constructor(public service:HttpService) { }
 
   ngOnInit(): void {
     this.localStorageValue = JSON.parse(localStorage.getItem('cart'));

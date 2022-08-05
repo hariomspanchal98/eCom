@@ -85,3 +85,7 @@ carousel-cell
   background-color: rgb(34, 123, 224);
   color: white;
 }
+.added:hover{
+  background-color: rgb(1, 192, 74);
+  color: white;
+}

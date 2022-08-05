@@ -12,8 +12,9 @@ export class AllProductComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   tempToken;
-  cartAdd=false;
+  cartAdd = false;
   products;
+  x=false;
   i = 0;
   index: number = this.service.pageNo;
   size: number;
@@ -49,6 +50,18 @@ export class AllProductComponent implements OnInit {
     console.log(this.service.limitNo);
     // );
     this.getData(this.service.pageNo, this.service.limitNo);
+
+    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    if (this.localStorageValue == null) {
+      console.log('if1 pre');
+      this.cart = [];
+      console.log('if1 post');
+    } else {
+      console.log('else1 pre');
+      this.cart = this.localStorageValue;
+      console.log('else1 post');
+    }
+    this.service.cartNo = this.cart.length;
   }
 
   getData(index, size) {
@@ -56,12 +69,21 @@ export class AllProductComponent implements OnInit {
     this.size = size;
     this.service
       .secureGet(
-        `products?limit=${this.size}&page=${this.index}`,
+        `shop/products?limit=${this.size}&page=${this.index}`,
         this.tempToken
       )
       .subscribe((data) => {
         // console.log(data);
         this.products = data;
+
+        for (let i = 0; i < this.products.results.length; i++) {
+          for (let j = 0; j < this.cart.length; j++) {
+            if (this.cart[j]._id == this.products.results[i]?._id) {
+              this.products.results[i].cart = true;
+              break;
+            } else this.products.results[i].cart = false;
+          }
+        }
 
         console.log(this.products.results);
 
@@ -86,7 +108,7 @@ export class AllProductComponent implements OnInit {
     // console.log(environment.baseUrl+'users?page='+index+'&limit='+e.pageSize);
     this.service
       .secureGet(
-        'products?page=' + this.index + '&limit=' + e.pageSize,
+        'shop/products?page=' + this.index + '&limit=' + e.pageSize,
         this.tempToken
       )
       .subscribe((data) => {
@@ -121,28 +143,29 @@ export class AllProductComponent implements OnInit {
 
     if (flag) {
       product.count = 1;
+      product.cart = true;
       this.cart.push(product);
-    }
-    else {
+      this.service.cartNo += 1;
+    } else {
       for (let i = 0; i < this.cart.length; i++) {
         if (this.cart[i]._id == product._id) {
           console.log('if pre');
           this.cart[i].count = this.cart[i].count + 1;
           console.log('if post');
-          duplicate=true;
+          duplicate = true;
           break;
-        }
-        else {
-          duplicate=false;
+        } else {
+          duplicate = false;
         }
       }
 
-      if(!duplicate)
-      {
+      if (!duplicate) {
         console.log('dup');
-          product.count = 1;
-          this.cart.push(product);
-          console.log('dup');
+        product.count = 1;
+        product.cart = true;
+        this.cart.push(product);
+        console.log('dup');
+        this.service.cartNo += 1;
       }
 
       flag = false;

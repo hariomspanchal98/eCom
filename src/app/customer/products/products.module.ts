@@ -11,13 +11,15 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { DetailsComponent } from './details/details.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
   declarations: [
     AllProductComponent,
     DetailsComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,

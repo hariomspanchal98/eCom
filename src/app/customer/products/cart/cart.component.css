@@ -43,14 +43,14 @@ i
   }
   .remove-image:hover {
     background: #E54E4E;
-     padding: 3px 7px 5px;
-     top: -30px;
-   left: -30px;
+     /* padding: 3px 7px 5px; */
+     top: 0px;
+   left: 0px;
    }
    .remove-image:active {
     background: #E54E4E;
-     top: -30px;
-   left: -31px;
+     top: 0px;
+   left: 0px;
    }
 .btn:hover{
   background-color: rgb(34, 123, 224);

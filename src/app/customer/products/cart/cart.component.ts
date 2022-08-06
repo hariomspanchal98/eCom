@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
 
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%99 * this.cart[i].count;
+      this.total += this.cart[i].price * this.cart[i].count;
     }
 
     console.log(this.cart);
@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
     this.total=0;
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%99 * this.cart[i].count;
+      this.total += this.cart[i].price * this.cart[i].count;
     }
   }
   crop(i){
@@ -54,7 +54,7 @@ export class CartComponent implements OnInit {
     this.total=0;
     for(let i=0;i<this.cart.length; i++)
     {
-      this.total += (i+1)*45456%357%99 * this.cart[i].count;
+      this.total += this.cart[i].price * this.cart[i].count;
     }
     this.service.cartNo -= 1;
   }

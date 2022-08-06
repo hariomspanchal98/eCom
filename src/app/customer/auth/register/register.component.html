@@ -1,4 +1,12 @@
-<app-navbar></app-navbar>
+<nav>
+  <div class="nav-wrapper black">
+    <a class="brand-logo center" [routerLink]="['/products/all-products']" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 70%;">
+      </a>
+  </div>
+</nav>
+
 
 <div class="parent">
 
@@ -6,13 +14,13 @@
     <h4 style="text-align: center; font-weight: bold;">Register</h4>
     <hr>
     <br>
-    <label>Name</label>
+    <span>Name</span>
     <input type="text" class="validate" placeholder="Enter full name" formControlName="name">
 
-    <label>Email</label>
+    <span>Email</span>
     <input type="email" placeholder="Enter your Email" formControlName="email">
 
-    <label>Password</label>
+    <span>Password</span>
     <input type="password" placeholder="Enter password here" formControlName="password">
 
     <div style="
@@ -22,16 +30,31 @@
     padding: 10px;
     /* margin: 10px; */
     border-radius: 20px;">
-    <span style="margin-left: -10px;">Address</span>
+      <span style="margin-left: -10px;">Address</span>
       <form formGroupName="address">
         <label>Street</label>
         <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
 
         <label>Line2</label>
-        <input type="text" class="validate" placeholder="Enter full a" formControlName="addressLine2">
+        <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
 
-        <label>Name</label>
-        <input type="text" class="validate" placeholder="Enter full name" formControlName="name">
+        <div style="display: flex;justify-content: center;">
+          <div style="padding: 5px;">
+            <label>City</label>
+            <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+          </div>
+
+          <div style="padding: 5px;">
+            <label>State</label>
+            <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+          </div>
+
+          <div style="padding: 5px;">
+            <label>PinCode</label>
+            <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+          </div>
+        </div>
+
       </form>
     </div>
 
@@ -43,24 +66,9 @@
     <br>
 
     <button type="button" class="btn green" [disabled]="myForm.invalid" (click)="submit()">Submit</button>
-    <button class="btn red">Reset</button>
+    <button class="btn red" (click)="reset()">Reset</button>
 
     <br>
-    <p>Already have an account, sign in <a [routerLink]="['/seller/auth/login']" style="cursor: pointer;">here</a></p>
+    <p>Already have an account, sign in <a [routerLink]="['/auth/login']" style="cursor: pointer;">here</a></p>
   </form>
-</div>
-
-<div class="parent" *ngIf="verify">
-  <div class="child" style="text-align: center;">
-    <!-- <div class="spinner-border text-success" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div> -->
-    <br>
-    <p>Please check your email to verify email address. </p><br>
-    <br>
-    <p> Click
-      <a [routerLink]="['/seller/auth/login']" style="cursor: pointer;"> here </a>
-      , to go to login page.
-    </p>
-  </div>
 </div>

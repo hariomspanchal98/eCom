@@ -13,19 +13,16 @@ export class RegisterComponent implements OnInit {
   myForm: any;
   error;
   errorMsg;
-  register: boolean = true;
-  verify: boolean = false;
   tokenId: string;
   recaptcha;
 
   constructor(
     private router: Router,
     private service: HttpService,
-    private recaptchaV3Service: ReCaptchaV3Service
-  ) {}
+    ) {}
 
   ngOnInit(): void {
-    this.executeImportantAction();
+
 
     this.myForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -36,7 +33,7 @@ export class RegisterComponent implements OnInit {
         addressLine2: new FormControl('',[Validators.required]),
         city: new FormControl('',[Validators.required]),
         state: new FormControl('',[Validators.required]),
-        pin: new FormControl('',[Validators.required]),
+        pin: new FormControl('',[Validators.required, Validators.pattern("[0-9]{6}")]),
       }),
     });
   }
@@ -45,8 +42,8 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get('name');
   }
 
-  get company() {
-    return this.myForm.get('company');
+  get street() {
+    return this.myForm.address.get('street');
   }
 
   get email() {
@@ -57,93 +54,38 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get('password');
   }
 
-  get captcha() {
-    return this.myForm.get('captcha');
+  get addressLine2() {
+    return this.myForm.address.get('addressLine2');
+  }
+
+  get city() {
+    return this.myForm.address.get('city');
+  }
+
+  get pin() {
+    return this.myForm.address.get('pin');
+  }
+
+  get state() {
+    return this.myForm.address.get('state');
   }
 
   submit() {
-    // console.log(this.myForm.value)
-    this.myForm.patchValue({
-      captcha: this.recaptcha,
-    });
 
-    // console.log('recaptcha in submit....',this.recaptcha);
-
-    // console.log(this.myForm.value);
-
-    this.service.post('auth/register', this.myForm.value).subscribe({
+    this.service.post('shop/auth/register?captcha=false', this.myForm.value).subscribe({
       next: (data: any) => {
-        // console.log(data.token);
-        this.tokenId = data.token;
-        // console.log(' print zala',this.tokenId, 'register madhe ');
-        this.executeImportantAction();
-        setTimeout(() => {
-          this.service
-            .securePost('auth/send-verification-email', this.tokenId, {
-              captcha: this.recaptcha,
-            })
-            .subscribe(
-              () => {
-                console.log('email req sent');
-              },
-              (error: any) => {
-                // console.log('Error in login is: ', error);
-                this.errorMsg = error.error.message;
-                this.executeImportantAction();
-                // this.registerForm.markAsPristine();
-              }
-            );
-        }, 2000);
-
-        // this.verifyMail = 'Check your email for verification link';
-        // this.router.navigate(['/login']);
-        this.register = false;
-        this.verify = true;
+        console.log('Created Succesfully');
+        console.log(data);
+        this.reset();
       },
       error: (error) => {
-        // console.log('Error in login is: ', error);
         this.errorMsg = error.error.message;
-        this.executeImportantAction();
-        // this.registerForm.markAsPristine();
       },
     });
-    this.register = false;
-    this.verify = true;
   }
 
-  public executeImportantAction(): void {
-    this.recaptchaV3Service.execute('importantAction').subscribe((token) => {
-      // console.log(token);
-      this.recaptcha = token;
-      // console.log(this.recaptcha)
-    });
+  reset()
+  {
+    this.myForm.reset();
   }
-  // submit(){
-  //   console.log(this.myForm.value)
-  //   this.service.register(this.myForm.value).subscribe(
-  //     (data:any)=>{
-  //     // console.log(data);
-  //     console.log('tegjfkhskuhhkgsuiehfkhsdekhc segedgg',data);
-  //     // this.tokenId=data.token;
-  //     // console.log(this.tokenId);
-  //     // this.service.verification(this.tokenId);
-  //     // this.router.navigateByUrl('/login');
-  // },
-  // (error:any)=>
-  //     {
-  //       // console.log('Erroytyhfd', error);
-  //       this.errorMsg= error;
-  //     }
-  //   );
-  //   // this.service.login(this.myForm.value).subscribe(
-  //   //   (data:any)=>{
-  //   //   // console.log(data);
-  //   //   // localStorage.setItem('profileData', JSON.stringify(data));
-  //   //   // localStorage.setItem('tokenId',JSON.stringify(data.token))
-  //   //   this.tokenId=(data.token)
-  //   //   ;})
-  //   // console.log(this.tokenId);
-  //   this.register=false;
-  //   this.verify=true;
-  //   }
 }

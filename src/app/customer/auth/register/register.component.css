@@ -13,13 +13,14 @@ body { height: 100%;
 .parent {
 height: 200px;
 /* background: #CCCCCC; */
+margin-top: 35px;
 display: flex;
 align-items: center;
 justify-content: center;
 }
 .child {
 /* background-color: #FFFF00; */
-width: 320px;
+width: 600px;
 height: auto;
 border: solid 3px;
 padding: 20px;

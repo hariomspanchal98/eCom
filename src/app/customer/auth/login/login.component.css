@@ -1,0 +1,60 @@
+.main{
+  padding: 10px;
+  margin: 10px;
+  border: solid 1px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+html,
+body { height: 100%;
+}
+.parent {
+height: 200px;
+/* background: #CCCCCC; */
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.child {
+/* background-color: #FFFF00; */
+width: 300px;
+height: auto;
+border: solid 3px;
+border-radius: 20px;
+padding: 10px;
+margin: 10px;
+margin-top: 500px;
+}
+button
+{
+  padding: auto;
+  margin: 10px;
+}
+img{
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.social{
+  display: flex;
+  align-items: center;
+}
+.all
+{
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.reg{
+cursor: pointer;
+}
+asl-google-signin-button{
+  margin-left: 65px;
+}

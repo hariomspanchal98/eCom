@@ -1,2 +1,35 @@
-<app-navbar></app-navbar>
-<p>login works!</p>
+<nav>
+  <div class="nav-wrapper black">
+    <a class="brand-logo center" [routerLink]="['/products/all-products']" style="height: 100%;display: block;"><img
+        src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds"
+        style="height: 85%; width: auto;margin-top: 5px;">
+      </a>
+  </div>
+</nav>
+
+<div class="parent">
+  <div class="child">
+    <img src="https://emoji.slack-edge.com/T0B4MLUM9/am-icon/08c37469129f7584.png" alt="AngularMinds" style="height: 30%; width: 30%; ">
+    <h4 style="text-align: center; text-decoration: underline; color: black; font-weight: bold;">Log In</h4>
+    <hr>
+    <br>
+    <form [formGroup]="myForm">
+    <label>Email</label>
+    <input type="text" placeholder="Enter Email Id here" formControlName="email">
+
+    <label>Password</label>
+    <input type="password" placeholder="Enter Password here" formControlName="password">
+
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+      {{errorMsg}}
+      {{errorStatus}}
+    </div>
+
+    <button class="btn blue" (click)="login()" style="align-self: center;">LogIn</button>
+
+    <hr>
+    <p>Don't have an account? <a style="cursor: pointer;" [routerLink]="['/auth/register']">Register Here</a></p>
+  </form>
+  </div>
+</div>
+<br>

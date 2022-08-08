@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.executeImportantAction();
 
     if(!!(localStorage.getItem('token'))){
       console.log(!!(localStorage.getItem('token')));
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
     this.myForm = new FormGroup({
       email: new FormControl('',[Validators.required]),
       password:new FormControl('',[Validators.required]),
+      captcha: new FormControl('',[Validators.required]),
     })
   }
 
@@ -57,21 +59,39 @@ export class LoginComponent implements OnInit {
     return this.myForm.get('password');
   }
 
+  get captcha(){
+    return this.myForm.get('captcha');
+  }
 
   login(){
-    this.service.post('auth/login?captcha=false', this.myForm.value).subscribe({
+    this.myForm.patchValue({
+      captcha : this.recaptcha,
+    });
+
+    this.service.post('shop/auth/login', this.myForm.value).subscribe({
       next: (data:any)=>{
-      localStorage.setItem('token',data.token);
-      console.log('LogIn dkjsfhsiudghfo');
-      this.router.navigateByUrl('/seller/user/profile');
+      console.log('data',data);
+      console.log('LogIn succes');
+      localStorage.setItem('customerToken', data.token);
+      this.router.navigateByUrl('/account/profile');
       },
       error: (error:any)=>
       {
         console.log('Erroytyhfd', error.error.message);
         this.errorMsg= error.error.message;
         this.errorStatus=error.code;
+        this.executeImportantAction();
       }
     })
+  }
+  public executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction')
+      .subscribe((token) =>
+        {this.recaptcha=token
+        // console.log(this.recaptcha)
+        }
+        );
+      // console.log(this.recaptcha);
   }
 }
 

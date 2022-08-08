@@ -19,10 +19,11 @@ export class RegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private service: HttpService,
+    private recaptchaV3Service: ReCaptchaV3Service,
     ) {}
 
   ngOnInit(): void {
-
+    this.executeImportantAction();
 
     this.myForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -35,6 +36,7 @@ export class RegisterComponent implements OnInit {
         state: new FormControl('',[Validators.required]),
         pin: new FormControl('',[Validators.required, Validators.pattern("[0-9]{6}")]),
       }),
+      captcha: new FormControl('',[Validators.required]),
     });
   }
 
@@ -72,14 +74,16 @@ export class RegisterComponent implements OnInit {
 
   submit() {
 
-    this.service.post('shop/auth/register?captcha=false', this.myForm.value).subscribe({
+    this.service.post('shop/auth/register', this.myForm.value).subscribe({
       next: (data: any) => {
         console.log('Created Succesfully');
         console.log(data);
         this.reset();
+        this.router.navigateByUrl('/account/profile');
       },
       error: (error) => {
         this.errorMsg = error.error.message;
+        this.executeImportantAction();
       },
     });
   }
@@ -87,5 +91,16 @@ export class RegisterComponent implements OnInit {
   reset()
   {
     this.myForm.reset();
+    this.executeImportantAction();
+  }
+
+  public executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction')
+      .subscribe((token) =>
+        {this.recaptcha=token
+        // console.log(this.recaptcha)
+        }
+        );
+      // console.log(this.recaptcha);
   }
 }

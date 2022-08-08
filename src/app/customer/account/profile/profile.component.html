@@ -1,0 +1,153 @@
+<app-navbar></app-navbar>
+
+<div style="display: flex; justify-content: center;">
+  <div class="card">
+    <div style="display: flex;" *ngIf="!(profileEdit)">
+      <div style="width: 50%;display: flex; justify-content: center;">
+        <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 150px;margin-top: 15px;">
+      </div>
+      <div style="margin: 15px;padding: 15px;width: 50%;">
+        <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons"
+              (click)="editProfile()">edit</i></a></p>
+        <h1 style="font-size: 200%;">{{profileData?.name}}</h1>
+        <p>{{profileData?.email}}</p>
+      </div>
+    </div>
+    <div style="display: flex;justify-content: center;" *ngIf="(profileEdit)">
+      <div>
+        <div style="width: 50%;display: flex;">
+          <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 150px;margin-top: 15px;">
+          <!-- <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons">edit</i></a></p> -->
+          <div class="btn-group" role="group" style="max-width: 50%;">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" style="background-color: white;border: none;box-shadow: none;">
+              <a style="cursor: pointer;color: rgb(56, 108, 250); margin-left: 10px;"><i
+                  class="material-icons">edit</i></a>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="background-color: none;border: none;">
+              <a class="dropdown-item" (click)="updatePhoto=true">Update</a>
+              <a class="dropdown-item" style="color: red;" (click)="deleteProfilePhoto()">Delete</a>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="updatePhoto" style="max-height: 200px;max-width: 200px;margin-top: 15px;">
+          <!-- <label for="formFile" class="form-label">Default file input example</label> -->
+          <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+        </div>
+      </div>
+      <div style="margin-left: 90px;padding: 15px;width: 50%;">
+
+        <form [formGroup]="profileForm">
+          <label>Name:</label>
+          <input type="text" value="{{profileData?.name}}" formControlName="name">
+
+          <label>Email:</label>
+          <input type="text" value="{{profileData?.email}}" formControlName="email">
+        </form>
+
+        <div class="btn-group">
+          <button class="btn" (click)="submitProfile()">Submit</button>
+          <button class="btn" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <div>
+      <div id="accordion">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+              style="width: 100%;text-align: left;color: black;text-decoration: none; box-shadow: none;"
+              (click)="getAdd()">
+              Address Book
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <p style="text-align: right;padding-right: 10px; "> <a style="cursor: pointer;color: rgb(56, 108, 250);"
+              (click)="addAdd()" *ngIf="!(addAddress)">+ Add
+              New</a></p>
+          <div *ngIf="addAddress && !(editAddress)" class="card" style="max-width: 100%;">
+            <form [formGroup]="addressForm">
+              <label>Street</label>
+              <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+              <label>Line2</label>
+              <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+              <div style="display: flex;justify-content: center;">
+                <div style="padding: 5px;">
+                  <label>City</label>
+                  <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+                </div>
+
+                <div style="padding: 5px;">
+                  <label>State</label>
+                  <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+                </div>
+
+                <div style="padding: 5px;">
+                  <label>PinCode</label>
+                  <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button class="btn" (click)="submitAdd()">Add</button>
+                <button class="btn" (click)="addAddress=false">Cancel</button>
+              </div>
+
+            </form>
+          </div>
+          <div *ngIf="!(addAddress)">
+            <div *ngFor="let address of addresses;let i=index" class="card" style="max-width: 100%;" >
+              <p style="text-align: end;padding-right: 10px; ">
+                <a style="cursor: pointer;color: rgb(56, 108, 250);" (click)="editAdd(i)"><i class="material-icons"
+                    >edit</i> </a>
+                <a style="cursor: pointer;color: red;margin-left: 10px;"> <i class="material-icons"
+                    (click)="delAdd(address?._id)">delete</i></a>
+              </p>
+              <p>Address {{i+1}} </p>
+              <p>{{address?.street}}, {{address?.addressLine2}}, {{address?.city}}, {{address?.state}}-{{address?.pin}}
+              </p>
+              <p></p>
+            </div>
+          </div>
+          <div class="card" style="max-width: 100%;" *ngIf="editAddress">
+            <form [formGroup]="addressForm">
+              <label>Street</label>
+              <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+              <label>Line2</label>
+              <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+              <div style="display: flex;justify-content: center;">
+                <div style="padding: 5px;">
+                  <label>City</label>
+                  <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+                </div>
+
+                <div style="padding: 5px;">
+                  <label>State</label>
+                  <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+                </div>
+
+                <div style="padding: 5px;">
+                  <label>PinfdgfdgCode</label>
+                  <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button class="btn" >Add</button>
+                <button class="btn" (click)="cancel()">Cancel</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

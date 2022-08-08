@@ -29,7 +29,7 @@ export class AllProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.tempToken = localStorage.getItem('token');
-    console.log('token is', this.tempToken);
+    // console.log('token is', this.tempToken);
 
     // this.service.get("auth/self",this.tempToken)
     // this.service.getProfileData(this.tempToken)
@@ -46,20 +46,20 @@ export class AllProductComponent implements OnInit {
     //   // this.clear();
     //   // this.registerForm.markAsPristine();
     // },
-    console.log(this.service.pageNo);
-    console.log(this.service.limitNo);
+    // console.log(this.service.pageNo);
+    // console.log(this.service.limitNo);
     // );
     this.getData(this.service.pageNo, this.service.limitNo);
 
     this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
     if (this.localStorageValue == null) {
-      console.log('if1 pre');
+      // console.log('if1 pre');
       this.cart = [];
-      console.log('if1 post');
+      // console.log('if1 post');
     } else {
-      console.log('else1 pre');
+      // console.log('else1 pre');
       this.cart = this.localStorageValue;
-      console.log('else1 post');
+      // console.log('else1 post');
     }
     this.service.cartNo = this.cart.length;
   }
@@ -85,7 +85,7 @@ export class AllProductComponent implements OnInit {
           }
         }
 
-        console.log(this.products.results);
+        // console.log(this.products.results);
 
         this.sub = this.products.results;
         // console.log(this.users?.results);
@@ -126,19 +126,19 @@ export class AllProductComponent implements OnInit {
   }
 
   addToCart(product) {
-    console.log(product);
+    // console.log(product);
     let flag = false;
     let duplicate = false;
     this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
     if (this.localStorageValue == null) {
-      console.log('if1 pre');
+      // console.log('if1 pre');
       this.cart = [];
       flag = true;
-      console.log('if1 post');
+      // console.log('if1 post');
     } else {
-      console.log('else1 pre');
+      // console.log('else1 pre');
       this.cart = this.localStorageValue;
-      console.log('else1 post');
+      // console.log('else1 post');
     }
 
     if (flag) {
@@ -149,9 +149,9 @@ export class AllProductComponent implements OnInit {
     } else {
       for (let i = 0; i < this.cart.length; i++) {
         if (this.cart[i]._id == product._id) {
-          console.log('if pre');
+          // console.log('if pre');
           this.cart[i].count = this.cart[i].count + 1;
-          console.log('if post');
+          // console.log('if post');
           duplicate = true;
           break;
         } else {
@@ -160,18 +160,18 @@ export class AllProductComponent implements OnInit {
       }
 
       if (!duplicate) {
-        console.log('dup');
+        // console.log('dup');
         product.count = 1;
         product.cart = true;
         this.cart.push(product);
-        console.log('dup');
+        // console.log('dup');
         this.service.cartNo += 1;
       }
 
       flag = false;
     }
 
-    console.log(this.cart);
+    // console.log(this.cart);
     localStorage.setItem('cart', JSON.stringify(this.cart));
   }
 }

@@ -21,12 +21,12 @@ export class NavbarComponent implements OnInit {
     } else {
       this.cart = this.localStorageValue;
     }
-    console.log(this.cart);
+    // console.log(this.cart);
     this.cartNo = this.cart.length;
   }
 
   check(){
-    return !!(localStorage.getItem('token'));
+    return !!(localStorage.getItem('customerToken'));
   }
 
   clear(){

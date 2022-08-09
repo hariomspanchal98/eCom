@@ -140,7 +140,7 @@
               </div>
 
               <div class="btn-group">
-                <button class="btn" >Add</button>
+                <button class="btn" (click)="updateAdd()">Add</button>
                 <button class="btn" (click)="cancel()">Cancel</button>
               </div>
 
@@ -148,6 +148,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div>
+      <br>
+     <p style="text-align: center;"> <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="sweetAlert()" > Delete account </a></p>
     </div>
   </div>
 </div>

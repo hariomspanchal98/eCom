@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      address: new FormGroup({
+      addresses: new FormGroup({
         street: new FormControl('',[Validators.required]),
         addressLine2: new FormControl('',[Validators.required]),
         city: new FormControl('',[Validators.required]),
@@ -38,6 +38,8 @@ export class RegisterComponent implements OnInit {
       }),
       captcha: new FormControl('',[Validators.required]),
     });
+
+
   }
 
   get name() {
@@ -45,7 +47,7 @@ export class RegisterComponent implements OnInit {
   }
 
   get street() {
-    return this.myForm.address.get('street');
+    return this.myForm.addresses.get('street');
   }
 
   get email() {
@@ -57,26 +59,28 @@ export class RegisterComponent implements OnInit {
   }
 
   get addressLine2() {
-    return this.myForm.address.get('addressLine2');
+    return this.myForm.addresses.get('addressLine2');
   }
 
   get city() {
-    return this.myForm.address.get('city');
+    return this.myForm.addresses.get('city');
   }
 
   get pin() {
-    return this.myForm.address.get('pin');
+    return this.myForm.addresses.get('pin');
   }
 
   get state() {
-    return this.myForm.address.get('state');
+    return this.myForm.addresses.get('state');
   }
 
   submit() {
+    console.log(this.myForm.value);
 
     this.service.post('shop/auth/register', this.myForm.value).subscribe({
       next: (data: any) => {
         console.log('Created Succesfully');
+        localStorage.setItem('customerToken', data.token)
         console.log(data);
         this.reset();
         this.router.navigateByUrl('/account/profile');
@@ -99,6 +103,9 @@ export class RegisterComponent implements OnInit {
       .subscribe((token) =>
         {this.recaptcha=token
         // console.log(this.recaptcha)
+        this.myForm.patchValue({
+          captcha : this.recaptcha,
+        });
         }
         );
       // console.log(this.recaptcha);

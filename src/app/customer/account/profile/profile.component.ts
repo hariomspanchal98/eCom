@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http/http.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -21,11 +22,13 @@ export class ProfileComponent implements OnInit {
   updatePhoto: boolean = false;
   addAddress: boolean = false;
   editAddress: boolean = false;
+  delPhoto:boolean = false;
   profileForm: any;
   profilePhoto: any;
   profilePhotoUrl: any;
   addresses: any;
   addressForm: any;
+  tempAddId:any;
 
   constructor(
     private router: Router,
@@ -35,6 +38,12 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (!(!!localStorage.getItem('customerToken'))) {
+      console.log(!!localStorage.getItem('customerToken'));
+      // this.router.navigateByUrl('/seller/user/profile');
+      this.router.navigate(['auth/login']);
+    }
+
     this.tempToken = localStorage.getItem('customerToken');
 
     this.service.secureGet('shop/auth/self', this.tempToken).subscribe(
@@ -52,9 +61,10 @@ export class ProfileComponent implements OnInit {
 
   submitProfile() {
     // console.log(this.profileForm.value);
-
     let formData = new FormData();
-    formData.append('picture', this.profilePhoto);
+    if (!(this.delPhoto)) {
+      formData.append('picture', this.profilePhoto);
+    }
 
     this.service
       .securePost('customers/profile-picture', this.tempToken, formData)
@@ -81,7 +91,7 @@ export class ProfileComponent implements OnInit {
         }
       );
 
-      this.cancel();
+    this.cancel();
   }
 
   onFileSelected(event) {
@@ -104,6 +114,9 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile() {
+
+    this.delPhoto = false;
+
     this.profileForm = new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
@@ -122,6 +135,7 @@ export class ProfileComponent implements OnInit {
       (data: any) => {
         console.log('Deleted');
         this.profilePhotoUrl = 'https://i.imgur.com/CR1iy7U.png';
+        this.delPhoto = true;
       },
       (error) => {
         console.log('Error in Delete is: ', error);
@@ -132,7 +146,9 @@ export class ProfileComponent implements OnInit {
   getAdd() {
     this.service.secureGet('customers/address', this.tempToken).subscribe(
       (res: any) => {
+        // console.log(res);
         this.addresses = res;
+        // console.log('address got');
       },
       (error) => {
         console.log('Error ...>', error.error.message);
@@ -192,5 +208,58 @@ export class ProfileComponent implements OnInit {
       state: this.addresses[i].state,
       pin: this.addresses[i].pin,
     });
+
+    this.tempAddId = this.addresses[i]._id;
+  }
+
+  updateAdd(){
+
+    this.service.securePut('customers/address/'+this.tempAddId, this.tempToken, this.addressForm.value).subscribe(
+      (data: any) => {
+        console.log('updated');
+        this.tempAddId = '';
+        this.getAdd();
+        this.cancel();
+      },
+      (error) => {
+        console.log('Error in update is: ', error);
+      }
+    )
+  }
+
+  delete() {
+    // console.log(url);
+    this.service.del('customers/account', this.tempToken).subscribe(
+      (data: any) => {
+        // console.log(data);
+        localStorage.clear();
+        console.log('Deleted');
+        this.router.navigateByUrl(`products/all-products`);
+      },
+      (error) => {
+      }
+    );
+    // console.log('users/'+ (url));
+  }
+
+  sweetAlert(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete();
+        Swal.fire(
+          'Deleted!',
+          'Your Account has been deleted.',
+          'success'
+        )
+      }
+    })
   }
 }

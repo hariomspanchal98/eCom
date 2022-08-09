@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
   }
 
   check(){
-    return !!(localStorage.getItem('token'));
+    return !!(localStorage.getItem('customerToken'));
   }
 
   clear(){

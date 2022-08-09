@@ -1,4 +1,4 @@
-import { SocialUser, SocialAuthService, FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { SocialUser, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.executeImportantAction();
 
-    if(!!(localStorage.getItem('token'))){
-      console.log(!!(localStorage.getItem('token')));
-      // this.router.navigateByUrl('/seller/user/profile');
-      this.router.navigate(['user/profile']);
+    if(!!(localStorage.getItem('customerToken'))){
+      console.log(!!(localStorage.getItem('customerToken')));
+      this.router.navigateByUrl('/account/profile');
+      // this.router.navigate(['account/profile']);
     }
 
     this.authService.authState.subscribe((user) => {

@@ -34,6 +34,12 @@ export class HttpService {
     return this.http.get(environment.baseUrl + url, {headers});
   }
 
+  securePut(url:string, token:any, data?:any){
+    let headers =this.setHeaders(token);
+    // console.log(headers);
+    return this.http.put(environment.baseUrl + url, data, {headers});
+  }
+
   secureGet(url:string, token:any){
     let headers =this.setHeaders(token);
     // console.log(headers);

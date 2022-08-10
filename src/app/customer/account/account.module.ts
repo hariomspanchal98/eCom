@@ -5,6 +5,8 @@ import { AccountRoutingModule } from './account-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 
 
 @NgModule({
@@ -15,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AccountRoutingModule,
     NavbarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule
   ]
 })
 export class AccountModule { }

@@ -35,6 +35,7 @@ export class UpdateproductComponent implements OnInit {
     this.myForm = new FormGroup({
       name: new FormControl(""),
       description: new FormControl(""),
+      price : new FormControl(''),
     });
 
     // this.myForm = new FormGroup({
@@ -47,7 +48,8 @@ export class UpdateproductComponent implements OnInit {
       this.product = data;
       this.myForm.patchValue({
         name:this.product?.name,
-        description:this.product.description
+        description:this.product.description,
+        price:this.product?.price,
       });
       // console.log(this.myForm.value);
     });
@@ -61,6 +63,10 @@ export class UpdateproductComponent implements OnInit {
 
   get name() {
     return this.myForm.get('name');
+  }
+
+  get price() {
+    return this.myForm.get('price');
   }
 
   get description() {

@@ -1,4 +1,5 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { NgSwitchDefault } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,6 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import {
+  base64ToFile,
+  Dimensions,
+  ImageCroppedEvent,
+  ImageTransform,
+} from 'ngx-image-cropper';
 import { HttpService } from 'src/app/services/http/http.service';
 import Swal from 'sweetalert2';
 
@@ -22,13 +29,22 @@ export class ProfileComponent implements OnInit {
   updatePhoto: boolean = false;
   addAddress: boolean = false;
   editAddress: boolean = false;
-  delPhoto:boolean = false;
+  delPhoto: boolean = false;
+  swapImage: boolean = false;
+  finalImage: boolean = false;
+  updateImg: boolean = true;
   profileForm: any;
   profilePhoto: any;
   profilePhotoUrl: any;
   addresses: any;
   addressForm: any;
-  tempAddId:any;
+  tempAddId: any;
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  scale = 1;
+  showCropper = false;
+  containWithinAspectRatio = false;
+  transform: ImageTransform = {};
 
   constructor(
     private router: Router,
@@ -38,7 +54,12 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!(!!localStorage.getItem('customerToken'))) {
+
+    let string='{}[vcbcvb{()[(cvbvc)()]vcbcv}]()';
+
+    this.check(string);
+
+    if (!!!localStorage.getItem('customerToken')) {
       console.log(!!localStorage.getItem('customerToken'));
       // this.router.navigateByUrl('/seller/user/profile');
       this.router.navigate(['auth/login']);
@@ -59,11 +80,49 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  check(inputString){
+    let flag=true;
+    let tempArray=[];
+    for(let i=0; i<inputString.length; i++)
+    {
+      switch(inputString[i]) {
+        case '{':
+          tempArray.push('{');
+          break;
+        case '[':
+          tempArray.push('[');
+          break;
+        case '(':
+          tempArray.push('(');
+            break;
+        case '}':
+          if(tempArray[tempArray.length-1]=='{')
+            tempArray.pop();
+          else flag=false;
+          break;
+        case ']':
+          if(tempArray[tempArray.length-1]=='[')
+            tempArray.pop();
+          else flag=false;
+          break;
+        case ')':
+          if(tempArray[tempArray.length-1]=='(')
+            tempArray.pop();
+          else flag=false;
+          break;
+        default:
+          continue;
+      }
+    }
+    console.log(flag);
+  }
+
+
   submitProfile() {
     // console.log(this.profileForm.value);
     let formData = new FormData();
-    if (!(this.delPhoto)) {
-      formData.append('picture', this.profilePhoto);
+    if (!this.delPhoto) {
+      formData.append('picture', base64ToFile(this.croppedImage));
     }
 
     this.service
@@ -95,15 +154,8 @@ export class ProfileComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    console.log(event);
-    this.profilePhoto = event.target.files[0];
-
-    let reader = new FileReader();
-    reader.readAsDataURL(this.profilePhoto);
-    reader.onload = (event) => {
-      this.profilePhotoUrl = event.target.result;
-      // this.imgFlag[1].push(false);
-    };
+    this.imageChangedEvent = event;
+    this.swapImage = true;
   }
 
   cancel() {
@@ -114,7 +166,6 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile() {
-
     this.delPhoto = false;
 
     this.profileForm = new FormGroup({
@@ -212,19 +263,24 @@ export class ProfileComponent implements OnInit {
     this.tempAddId = this.addresses[i]._id;
   }
 
-  updateAdd(){
-
-    this.service.securePut('customers/address/'+this.tempAddId, this.tempToken, this.addressForm.value).subscribe(
-      (data: any) => {
-        console.log('updated');
-        this.tempAddId = '';
-        this.getAdd();
-        this.cancel();
-      },
-      (error) => {
-        console.log('Error in update is: ', error);
-      }
-    )
+  updateAdd() {
+    this.service
+      .securePut(
+        'customers/address/' + this.tempAddId,
+        this.tempToken,
+        this.addressForm.value
+      )
+      .subscribe(
+        (data: any) => {
+          console.log('updated');
+          this.tempAddId = '';
+          this.getAdd();
+          this.cancel();
+        },
+        (error) => {
+          console.log('Error in update is: ', error);
+        }
+      );
   }
 
   delete() {
@@ -236,13 +292,12 @@ export class ProfileComponent implements OnInit {
         console.log('Deleted');
         this.router.navigateByUrl(`products/all-products`);
       },
-      (error) => {
-      }
+      (error) => {}
     );
     // console.log('users/'+ (url));
   }
 
-  sweetAlert(){
+  sweetAlert() {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -250,16 +305,41 @@ export class ProfileComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.delete();
-        Swal.fire(
-          'Deleted!',
-          'Your Account has been deleted.',
-          'success'
-        )
+        Swal.fire('Deleted!', 'Your Account has been deleted.', 'success');
       }
-    })
+    });
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    console.log(event, '<fsiodhgoshdo>', base64ToFile(event.base64));
+    // console.log('croppedImage---->', this.croppedImage);
+  }
+
+  imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+  }
+
+  cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+  }
+
+  loadImageFailed() {
+    console.log('Load failed');
+  }
+
+  toggleContainWithinAspectRatio() {
+    this.containWithinAspectRatio = !this.containWithinAspectRatio;
+  }
+
+  finalImg() {
+    this.finalImage = true;
+    this.swapImage = true;
+    this.updatePhoto = false;
   }
 }

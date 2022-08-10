@@ -11,6 +11,9 @@
 
     <label>Description</label>
     <input type="text" placeholder="Enter Description" formControlName="description">
+
+    <label>Price</label>
+    <input type="text" class="validate" placeholder="Enter product name" formControlName="price">
     <div style="display: flex;flex-wrap: wrap;">
       <div *ngFor="let image of product?.images; let i = index" class="preview">
         <img [src]=image?.url>

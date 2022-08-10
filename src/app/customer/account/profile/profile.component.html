@@ -2,9 +2,9 @@
 
 <div style="display: flex; justify-content: center;">
   <div class="card">
-    <div style="display: flex;" *ngIf="!(profileEdit)">
-      <div style="width: 50%;display: flex; justify-content: center;">
-        <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 150px;margin-top: 15px;">
+    <div style="display: flex; height: auto;" *ngIf="!(profileEdit)">
+      <div style="width: 50%;display: flex; justify-content: center;flex-wrap: wrap;">
+        <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 100%;margin-top: 15px;">
       </div>
       <div style="margin: 15px;padding: 15px;width: 50%;">
         <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons"
@@ -15,10 +15,20 @@
     </div>
     <div style="display: flex;justify-content: center;" *ngIf="(profileEdit)">
       <div>
-        <div style="width: 50%;display: flex;">
-          <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 150px;margin-top: 15px;">
+        <div style="width: 100%;display: flex;">
+          <img *ngIf="!(swapImage) && !(finalImage)" src={{profilePhotoUrl}}
+            style="max-height: 150px;max-width: 100%;margin-top: 15px;">
+          <img *ngIf="swapImage && finalImage" [src]="croppedImage"
+            style="max-height: 150px;max-width: 100%;margin-top: 15px;" />
+          <image-cropper style="max-height: 150px;width: 100%;margin-top: 15px;" *ngIf="swapImage && !(finalImage)"
+            [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+            [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1 / 1" [onlyScaleDown]="true"
+            [roundCropper]="false" [transform]="transform" [alignImage]="'center'"
+            [style.display]="showCropper ? null : 'none'" format="png" (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()">
+          </image-cropper>
           <!-- <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons">edit</i></a></p> -->
-          <div class="btn-group" role="group" style="max-width: 50%;">
+          <div class="btn-group" role="group" style="max-width: 50%;" *ngIf="!(updatePhoto)">
             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" style="background-color: white;border: none;box-shadow: none;">
               <a style="cursor: pointer;color: rgb(56, 108, 250); margin-left: 10px;"><i
@@ -33,6 +43,12 @@
         <div class="mb-3" *ngIf="updatePhoto" style="max-height: 200px;max-width: 200px;margin-top: 15px;">
           <!-- <label for="formFile" class="form-label">Default file input example</label> -->
           <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+          <button (click)="toggleContainWithinAspectRatio()">Fit</button>
+          <button (click)="finalImg()">Done</button>
+
+          <div>
+
+          </div>
         </div>
       </div>
       <div style="margin-left: 90px;padding: 15px;width: 50%;">
@@ -101,10 +117,10 @@
             </form>
           </div>
           <div *ngIf="!(addAddress)">
-            <div *ngFor="let address of addresses;let i=index" class="card" style="max-width: 100%;" >
+            <div *ngFor="let address of addresses;let i=index" class="card" style="max-width: 100%;">
               <p style="text-align: end;padding-right: 10px; ">
-                <a style="cursor: pointer;color: rgb(56, 108, 250);" (click)="editAdd(i)"><i class="material-icons"
-                    >edit</i> </a>
+                <a style="cursor: pointer;color: rgb(56, 108, 250);" (click)="editAdd(i)"><i
+                    class="material-icons">edit</i> </a>
                 <a style="cursor: pointer;color: red;margin-left: 10px;"> <i class="material-icons"
                     (click)="delAdd(address?._id)">delete</i></a>
               </p>
@@ -151,7 +167,8 @@
     </div>
     <div>
       <br>
-     <p style="text-align: center;"> <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="sweetAlert()" > Delete account </a></p>
+      <p style="text-align: center;"> <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="sweetAlert()">
+          Delete account </a></p>
     </div>
   </div>
 </div>

@@ -20,6 +20,7 @@ export class CheckoutComponent implements OnInit {
   registerFlag: boolean = false;
   addressFlag:boolean = false;
   addSelectedFlag:boolean = false;
+  addNewAddress:boolean = false;
   recaptcha: any;
   errorMsg: any;
   errorStatus: any;
@@ -180,6 +181,36 @@ export class CheckoutComponent implements OnInit {
         console.log('Error ...>', error.error.message);
       }
     );
+  }
+  addNewAdd(){
+    this.addNewAddress = true;
+
+    this.addressForm = new FormGroup({
+      street: new FormControl('', [Validators.required]),
+      addressLine2: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
+      state: new FormControl('', [Validators.required]),
+      pin: new FormControl('', [Validators.required, Validators.pattern("[0-9]{6}")]),
+    })
+  }
+
+  addAdd(){
+    this.service
+      .securePost('customers/address', this.tempToken, this.addressForm.value)
+      .subscribe({
+        next: (data: any) => {
+          console.log('Created Succesfully');
+          console.log(data?._id);
+          this.checkoutForm.patchValue({
+            address: data?._id,
+          });
+          this.addNewAddress = false;
+          this.address();
+        },
+        error: (error) => {
+          error.error.message;
+        },
+      });
   }
 
   afterAddress(){

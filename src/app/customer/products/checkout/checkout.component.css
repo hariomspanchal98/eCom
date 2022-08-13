@@ -1,0 +1,8 @@
+a{
+    cursor: pointer;
+}
+
+.abc:hover{
+    color: white;
+    background-color: rgb(34, 123, 224);
+}

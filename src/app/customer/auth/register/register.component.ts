@@ -46,16 +46,16 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get('name');
   }
 
-  get street() {
-    return this.myForm.addresses.get('street');
-  }
-
   get email() {
     return this.myForm.get('email');
   }
 
   get password() {
     return this.myForm.get('password');
+  }
+
+  get street() {
+    return this.myForm.addresses.get('street');
   }
 
   get addressLine2() {

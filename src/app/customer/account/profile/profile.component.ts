@@ -55,10 +55,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let string='{}[vcbcvb{()[(cvbvc)()]vcbcv}]()';
-
-    this.check(string);
-
     if (!!!localStorage.getItem('customerToken')) {
       console.log(!!localStorage.getItem('customerToken'));
       // this.router.navigateByUrl('/seller/user/profile');
@@ -79,44 +75,6 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-
-  check(inputString){
-    let flag=true;
-    let tempArray=[];
-    for(let i=0; i<inputString.length; i++)
-    {
-      switch(inputString[i]) {
-        case '{':
-          tempArray.push('{');
-          break;
-        case '[':
-          tempArray.push('[');
-          break;
-        case '(':
-          tempArray.push('(');
-            break;
-        case '}':
-          if(tempArray[tempArray.length-1]=='{')
-            tempArray.pop();
-          else flag=false;
-          break;
-        case ']':
-          if(tempArray[tempArray.length-1]=='[')
-            tempArray.pop();
-          else flag=false;
-          break;
-        case ')':
-          if(tempArray[tempArray.length-1]=='(')
-            tempArray.pop();
-          else flag=false;
-          break;
-        default:
-          continue;
-      }
-    }
-    console.log(flag);
-  }
-
 
   submitProfile() {
     // console.log(this.profileForm.value);

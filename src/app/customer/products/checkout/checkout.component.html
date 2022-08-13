@@ -1,19 +1,181 @@
 <app-navbar></app-navbar>
 
-
-<div class="accordion" id="accordionExample" style="margin: 10px; min-width: 70%;">
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <span data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </span>
-      </h2>
+<div style="display: flex;justify-content: center; margin: 10px;padding: 10px; align-items: flex-start;">
+  <div class="card" style="min-width: 70%; margin: 10px;padding: 10px;height: auto;  padding: 15px;">
+    <br>
+    <div *ngIf="check()" style="margin: 20px;">
+      <p>Hello <span style="font-weight: bold;">{{profileData?.name}}</span>,</p>
+      <p>Please confirm the order.</p>
     </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+    <div *ngIf="!(check())" style="margin: 20px;">
+      <p style="font-weight: bold;">Please <a style="color: blue;" (click)="loginClick()">Login</a> or <a
+          style="color: blue;" (click)="registerClick()">Register</a> to confirm the order.</p>
+    </div>
+
+    <div>
+      <hr>
+      <br>
+      <table style="width: 90%;">
+        <thead style="margin: -10px;">
+          <tr>
+            <th style="margin: -10px;"></th>
+            <th style="margin: -10px;">Name</th>
+            <th style="margin: -10px;">Price</th>
+            <th style="margin: -10px;">Quantity</th>
+            <th style="margin: -10px;">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of cart;let i = index" style="margin: -10px;">
+          <tr style="margin: -10px;">
+            <td *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;margin: -10px;"><img
+                src={{item.images[0]?.url}} alt={{item?.name}}
+                style="max-height: 100px; max-width: 150px;margin: 10px;"></td>
+            <td *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;margin: -10px;"><img
+                src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                style="max-height: 100px; max-width: 150px;margin: 10px;"></td>
+            <td style="margin: -10px;">{{item?.name}}</td>
+            <td style="margin: -10px;">{{item?.price}}</td>
+            <td style="margin: -10px;">{{item?.count}}</td>
+            <td style="margin: -10px;">Rs. {{item?.price * item?.count}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <div style="display: flex;justify-content: right;margin-right: 15%;">
+        <h3 style="padding-right: 25px;font-weight: 500;">Total:-</h3>
+        <h3 style="padding-right: 25px;font-weight: 600;">Rs. {{total}}</h3>
       </div>
+
+      <div style="display: flex;justify-content: center;" *ngIf="!(check())">
+        <button class="btn " disabled>Continue</button>
+      </div>
+      <div style="display: flex;justify-content: center;" *ngIf="(check() && !(addressFlag) && !(addSelectedFlag))">
+        <button class="btn abc" (click)="address()">Continue</button>
+      </div>
+
+      <div *ngIf="addressFlag" style="margin: 30px;">
+        <p>Please choose the address,</p>
+        <form [formGroup]="checkoutForm">
+          <div *ngFor="let add of addressArray">
+            <label>
+              <input type="radio" value={{add?._id}} formControlName="address">
+              <span>
+                <p>{{add?.street}}, {{add?.addressLine2}}, {{add?.city}}, {{add?.state}}-{{add?.pin}}</p>
+              </span>
+            </label>
+          </div>
+          <div style="display: flex;justify-content: center;" *ngIf="(check())">
+            <button class="btn abc" (click)="afterAddress()" [disabled]="checkoutForm.invalid"> Continue </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="addSelectedFlag" style="margin: 30px; display: flex;">
+        <div style="margin: 15px;">Address:- </div>
+        <div style="margin: 15px;">
+          <p>{{selectedAdd?.street}},</p>
+          <p>{{selectedAdd?.addressLine2}},</p>
+          <p> {{selectedAdd?.city}},</p>
+          <p> {{selectedAdd?.state}}-{{selectedAdd?.pin}} </p>
+        </div>
+      </div>
+
+
+      <div style="display: flex;justify-content: center;" *ngIf="!(addressFlag) && addSelectedFlag">
+        <button class="btn abc">Continue</button>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="card" *ngIf="loginFlag || registerFlag" style="min-width: 30%;margin: 10px;padding: 10px;height: auto;">
+    <div *ngIf="loginFlag" style="margin: 10px;padding: 10px;">
+      <form [formGroup]="myForm">
+        <label>Email</label>
+        <input type="text" placeholder="Enter Email Id here" formControlName="email">
+
+        <label>Password</label>
+        <input type="password" placeholder="Enter Password here" formControlName="password">
+
+        <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+          {{errorMsg}}
+          {{errorStatus}}
+        </div>
+
+        <button class="btn blue" (click)="login()" style="align-self: center;">LogIn</button>
+
+        <hr>
+        <p>Don't have an account? <a style="cursor: pointer;color: blue;" (click)="registerClick()">Register Here</a>
+        </p>
+      </form>
+    </div>
+    <div *ngIf="registerFlag" style="margin: 10px;padding: 10px;">
+      <form class="child" [formGroup]="myForm">
+        <h4 style="text-align: center; font-weight: bold;">Register</h4>
+        <hr>
+        <br>
+        <span>Name</span>
+        <input type="text" class="validate" placeholder="Enter full name" formControlName="name">
+
+        <span>Email</span>
+        <input type="email" placeholder="Enter your Email" formControlName="email">
+
+        <span>Password</span>
+        <input type="password" placeholder="Enter password here" formControlName="password">
+      </form>
+      <div style="padding: 10px; border-radius: 20px;">
+        <span style="margin-left: -10px;">Address</span>
+        <form [formGroup]='addressForm'>
+          <label>Street</label>
+          <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+          <label>Line2</label>
+          <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+          <div style="display: flex;justify-content: center;">
+            <div style="padding: 5px;">
+              <label>City</label>
+              <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>State</label>
+              <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>PinCode</label>
+              <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+        {{errorMsg}}
+      </div>
+
+      <br>
+
+      <button type="button" class="btn green" (click)="register()" style="margin: 5px;">Submit</button>
+      <button class="btn red" style="margin: 5px;" (click)="reset()">Cancel</button>
+
+      <br>
+      <p>Already have an account, sign in <a style="cursor: pointer;color: blue;" (click)="loginClick()">here</a></p>
+
     </div>
   </div>
 </div>

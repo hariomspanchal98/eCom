@@ -31,6 +31,8 @@
       </div> -->
 
       <div class="card-action">
+        <button class="btn" style="margin-right: 10px;" (click)="buyNow(product)">Buy Now!</button>
+
         <button class="btn" (click)="addToCart(product)" *ngIf="buttonFlag">Add To Cart</button>
         <button class="btn added" [routerLink]="['/products/cart']" *ngIf="!(buttonFlag)">Go To Cart</button>
       </div>

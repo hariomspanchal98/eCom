@@ -21,6 +21,8 @@ export class CheckoutComponent implements OnInit {
   addressFlag:boolean = false;
   addSelectedFlag:boolean = false;
   addNewAddress:boolean = false;
+  editAdd:boolean = false;
+  editAddress:any = [];
   recaptcha: any;
   errorMsg: any;
   errorStatus: any;
@@ -29,14 +31,25 @@ export class CheckoutComponent implements OnInit {
   addressArray:any =[];
   checkoutForm:any;
   selectedAdd:any;
+  tempAddId:any;
 
   constructor(public service: HttpService, private router: Router, private authService: SocialAuthService, private recaptchaV3Service: ReCaptchaV3Service) { }
 
   ngOnInit(): void {
     this.executeImportantAction();
 
-    this.cart = JSON.parse(localStorage.getItem('cart'));
-    console.log(this.cart);
+    if(this.service.cart){
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+      console.log(this.cart);
+    }
+    else
+    {
+      this.cart = JSON.parse(localStorage.getItem('buyNow'));
+      console.log(this.cart);
+    }
+
+    // this.cart = JSON.parse(localStorage.getItem('cart'));
+    // console.log(this.cart);
 
     for(let i=0;i<this.cart.length; i++)
     {
@@ -164,6 +177,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   address(){
+
+    this.tempToken = localStorage.getItem('customerToken');
+
     this.checkoutForm.patchValue({
       cart: this.cart,
     });
@@ -175,7 +191,12 @@ export class CheckoutComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.addressArray = res;
-        // console.log('address got');
+
+        this.editAddress=[];
+        for(let i=0; i<this.addressArray.length; i++){
+          this.editAddress.push(false);
+        }
+        console.log(this.editAddress);
       },
       (error) => {
         console.log('Error ...>', error.error.message);
@@ -192,6 +213,53 @@ export class CheckoutComponent implements OnInit {
       state: new FormControl('', [Validators.required]),
       pin: new FormControl('', [Validators.required, Validators.pattern("[0-9]{6}")]),
     })
+  }
+
+  selectEditAdd(i){
+    this.editAddress[i] = true;
+    for(let j=0; j<this.editAddress.length; j++){
+      if(i!=j)
+      this.editAddress[j] = false;
+    }
+    this.addNewAddress = false;
+  }
+
+  edit(i){
+    this.editAdd = true;
+    this.addNewAdd();
+    this.addNewAddress = false;
+
+    this.addressForm.patchValue({
+      street : this.addressArray[i].street,
+      addressLine2 : this.addressArray[i].addressLine2,
+      city : this.addressArray[i].city,
+      state : this.addressArray[i].state,
+      pin : this.addressArray[i].pin,
+    })
+
+    this.tempAddId= this.addressArray[i]._id;
+
+    console.log(this.addressForm.value);
+  }
+
+  updateAdd(){
+    this.service
+      .securePut(
+        'customers/address/' + this.tempAddId,
+        this.tempToken,
+        this.addressForm.value
+      )
+      .subscribe(
+        (data: any) => {
+          console.log('updated');
+          this.tempAddId = '';
+          this.address();
+          this.editAdd = false;
+        },
+        (error) => {
+          console.log('Error in update is: ', error);
+        }
+      );
   }
 
   addAdd(){

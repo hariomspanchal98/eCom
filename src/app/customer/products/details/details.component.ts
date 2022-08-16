@@ -61,26 +61,6 @@ export class DetailsComponent implements OnInit {
 
     });
 
-    // this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
-    // if (this.localStorageValue == null) {
-    //   console.log('if1 pre');
-    //   this.cart = [];
-    //   console.log('if1 post');
-    // } else {
-    //   console.log(this.cart);
-    //   this.cart = this.localStorageValue;
-    //   console.log(this.cart);
-    //   console.log(this.product?._id);
-    //   for (let i = 0; i < this.cart.length; i++) {
-    //     if (this.product?._id == this.cart[i]._id) {
-    //       console.log('found');
-    //       this.buttonFlag = false;
-    //       break;
-    //     }
-    //   }
-    //   console.log('else1 post');
-    // }
-
     this.service.cartNo = this.cart.length;
   }
 
@@ -90,7 +70,7 @@ export class DetailsComponent implements OnInit {
       (data: any) => {
         // console.log(data);
         console.log('Deleted');
-        this.router.navigateByUrl(`seller/products/allproducts`);
+        this.router.navigateByUrl(`products/allproducts`);
       },
       (error) => {}
     );
@@ -119,6 +99,16 @@ export class DetailsComponent implements OnInit {
         );
       }
     });
+  }
+
+  buyNow(product:any){
+    let buyNowProduct:any = [];
+    product.count = 1;
+    buyNowProduct.push(product);
+    localStorage.setItem('buyNow', JSON.stringify(buyNowProduct));
+    this.service.cart = false;
+    console.log('added');
+    this.router.navigateByUrl(`products/checkout`);
   }
 
   addToCart(product) {

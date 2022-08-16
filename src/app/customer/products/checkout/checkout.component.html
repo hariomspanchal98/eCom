@@ -54,53 +54,86 @@
       </div>
 
       <div *ngIf="addressFlag" style="margin: 30px;">
-        <p>Please choose the address,</p>
-        <form [formGroup]="checkoutForm">
-          <div *ngFor="let add of addressArray">
+        <div *ngIf="!(editAdd)">
+          <p>Please choose the address,</p>
+          <form [formGroup]="checkoutForm">
+            <div *ngFor="let add of addressArray;let i= index">
+              <label>
+                <input type="radio" value={{add?._id}} formControlName="address" (click)="selectEditAdd(i)">
+                <span>
+                  {{add?.street}}, {{add?.addressLine2}}, {{add?.city}}, {{add?.state}}-{{add?.pin}}
+                  <a *ngIf="editAddress[i]" (click)="edit(i)" style="color: blue;">  Edit <i class="tiny material-icons">edit</i></a>
+                </span>
+              </label>
+            </div>
             <label>
-              <input type="radio" value={{add?._id}} formControlName="address">
-              <span>
-                <p>{{add?.street}}, {{add?.addressLine2}}, {{add?.city}}, {{add?.state}}-{{add?.pin}}</p>
-              </span>
-            </label>
-          </div>
-          <label>
-            <input type="radio"  formControlName="address">
+              <input type="radio" formControlName="address">
               <a style="color: blue;" (click)="addNewAdd()">+ Add New Address</a>
               <div *ngIf="addNewAddress">
                 <form [formGroup]='addressForm'>
                   <label>Street</label>
                   <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
-        
+
                   <label>Line2</label>
                   <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
-        
+
                   <div style="display: flex;justify-content: center;">
                     <div style="padding: 5px;">
                       <label>City</label>
                       <input type="text" class="validate" placeholder="Enter city" formControlName="city">
                     </div>
-        
+
                     <div style="padding: 5px;">
                       <label>State</label>
                       <input type="text" class="validate" placeholder="Enter State" formControlName="state">
                     </div>
-        
+
                     <div style="padding: 5px;">
                       <label>PinCode</label>
                       <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
                     </div>
                   </div>
-                 <div style="display: flex;justify-content: center;">
-                  <button class="btn" (click)="addAdd()">Submit</button>
-                 </div>
+                  <div style="display: flex;justify-content: center;">
+                    <button class="btn" (click)="addAdd()">Submit</button>
+                  </div>
                 </form>
               </div>
-          </label>
-          <div style="display: flex;justify-content: center;" *ngIf="(check())">
-            <button class="btn abc" (click)="afterAddress()" [disabled]="checkoutForm.invalid"> Continue </button>
-          </div>
-        </form>
+            </label>
+            <div style="display: flex;justify-content: center;" *ngIf="(check())">
+              <button class="btn abc" (click)="afterAddress()" [disabled]="checkoutForm.invalid"> Continue </button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="(editAdd)">
+          <p>Update Address </p>
+          <form [formGroup]='addressForm'>
+            <label>Street</label>
+            <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+            <label>Line2</label>
+            <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+            <div style="display: flex;justify-content: center;">
+              <div style="padding: 5px;">
+                <label>City</label>
+                <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+              </div>
+
+              <div style="padding: 5px;">
+                <label>State</label>
+                <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+              </div>
+
+              <div style="padding: 5px;">
+                <label>PinCode</label>
+                <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+              </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+              <button class="btn" (click)="updateAdd()">Update</button>
+            </div>
+          </form>
+        </div>
       </div>
 
       <div *ngIf="addSelectedFlag" style="margin: 30px; display: flex;">

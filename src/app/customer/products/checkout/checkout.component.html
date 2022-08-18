@@ -20,30 +20,30 @@
           <tr>
             <th style="margin: -10px;"></th>
             <th style="margin: -10px;">Name</th>
-            <th style="margin: -10px;">Price</th>
-            <th style="margin: -10px;">Quantity</th>
-            <th style="margin: -10px;">Amount</th>
+            <th style="margin: -10px; text-align: center;">Price</th>
+            <th style="margin: -10px; text-align: center;">Quantity</th>
+            <th style="margin: -10px; text-align: center;">Amount</th>
           </tr>
         </thead>
         <tbody *ngFor="let item of cart;let i = index" style="margin: -10px;">
           <tr style="margin: -10px;">
-            <td *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;margin: -10px;"><img
+            <td *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;margin: -13px;"><img
                 src={{item.images[0]?.url}} alt={{item?.name}}
-                style="max-height: 100px; max-width: 150px;margin: 10px;"></td>
-            <td *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;margin: -10px;"><img
+                style="height: 56px; width: 92px;border: 1px solid;"></td>
+            <td *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;margin: -13px;"><img
                 src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
-                style="max-height: 100px; max-width: 150px;margin: 10px;"></td>
+                style="height: 56px; width: 92px;border: 1px solid;"></td>
             <td style="margin: -10px;">{{item?.name}}</td>
-            <td style="margin: -10px;">{{item?.price}}</td>
-            <td style="margin: -10px;">{{item?.count}}</td>
-            <td style="margin: -10px;">Rs. {{item?.price * item?.count}}</td>
+            <td style="margin: -10px; text-align: center;">{{item?.price | number:'1.2-2'}}</td>
+            <td style="margin: -10px; text-align: center;">{{item?.count}}</td>
+            <td style="margin: -10px; text-align: center;">Rs. {{(item?.price * item?.count) | number:'1.2-2'}}</td>
           </tr>
         </tbody>
       </table>
       <hr>
       <div style="display: flex;justify-content: right;margin-right: 15%;">
         <h3 style="padding-right: 25px;font-weight: 500;">Total:-</h3>
-        <h3 style="padding-right: 25px;font-weight: 600;">Rs. {{total}}</h3>
+        <h3 style="padding-right: 25px;font-weight: 600;">Rs. {{total | number:'1.2-2'}}</h3>
       </div>
 
       <div style="display: flex;justify-content: center;" *ngIf="!(check())">

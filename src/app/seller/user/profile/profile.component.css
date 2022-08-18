@@ -10,7 +10,7 @@
 html,
 body { height: 100%;
 }
-.my-avatar /deep/ .avatar-content {
+.my-avatar deep .avatar-content {
   background-color : orangered!important;
 }
 .parent {

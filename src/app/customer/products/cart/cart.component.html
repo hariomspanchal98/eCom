@@ -14,7 +14,7 @@
 </nav>
 
 <div style="display: flex;justify-content: center;">
-  <div class="card" style="max-width: 900px; width: 70%; min-width: 550px;">
+  <div class="card" style="max-width: 900px; width: 70%; min-width: 750px;">
 
     <div style="display: flex;justify-content:center;" *ngIf="!(cart.length==0)">
       <h1 style="text-align: center;margin: 20px;">Your Cart</h1>
@@ -27,7 +27,7 @@
         style="height: 30px; margin-top: 18px;">
     </div>
 
-    <table class="table table-borderless" style="min-width: 450px;" *ngIf="!(cart.length==0)">
+    <table class="table table-borderless" style="min-width: 500px;" *ngIf="!(cart.length==0)">
       <thead>
         <tr>
           <th></th>
@@ -54,7 +54,7 @@
               overflow: hidden;
               text-overflow: ellipsis;word-wrap: break-word;">{{item.description}}</p>
           </td>
-          <td style="padding-top: 20px;">{{item.price}}</td>
+          <td style="padding-top: 20px;">{{item.price | number:'1.2-2'}}</td>
           <td>
             <div class="btn-group" style="padding-top: 10px;">
               <button class="btn" (click)="update(-1,i)" [disabled]="item.count<2">-1</button>
@@ -62,7 +62,7 @@
               <button class="btn" (click)="update(1,i)">+1</button>
             </div>
           </td>
-          <td style="padding-top: 20px;"> {{item.price * item.count}}</td>
+          <td style="padding-top: 20px;"> {{item.price * item.count | number:'1.2-2'}}</td>
           <a class="remove-image" style="display: inline;" (click)="crop(i)">&#215;</a>
         </tr>
       </tbody>
@@ -70,7 +70,7 @@
     <hr>
     <div style="display: flex;justify-content: right;min-width: 250px;" *ngIf="!(cart.length==0)">
       <h3 style="padding-right: 100px;font-weight: 500;">Total</h3>
-      <h3 style="padding-right: 50px;font-weight: 600;">{{total}}</h3>
+      <h3 style="padding-right: 50px;font-weight: 600;">{{total | number:'1.2-2'}}</h3>
 
     </div>
     <div *ngIf="(cart.length==0)" style="display: flex;justify-content: center;">

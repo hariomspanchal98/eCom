@@ -11,6 +11,12 @@
 
 <div style="display: flex;
             flex-wrap: wrap;justify-content: center;">
+            <div *ngIf="(products?.results.length==0)">
+              <div class="card" style="width: 90%;display: flex;justify-content: center; height: auto; border: none;box-shadow: none;">
+                <img style="height:max-content;width: max-content;"
+                src="https://foodworldmd.com/templates/default-new/images/no-product-found.png" alt="">
+              </div>
+            </div>
   <div *ngFor="let product of products?.results">
     <div class="card" style="width: 16.5rem; height: 380px;">
       <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" [arrows]="((product?.images?.length>1))"
@@ -19,10 +25,6 @@
           <img class="cardimg" src={{image?.url}}>
         </div>
       </carousel>
-      <!-- <div class="carousel-cell">
-        <img style=" max-width: fit-content;" class="single" *ngIf="(product?.images.length<=1)"
-          [src]=product?.images[0].url>
-      </div> -->
       <div class="card-body" [routerLink]="['/products/details', product?._id]">
         <div style="height: 150px; padding: 3px;">
           <h5 class="card-title" style="font-weight: 500;">{{product?.name}}</h5>
@@ -52,26 +54,7 @@
   </div>
 </div>
 
-<!-- <div style="justify-content: center;"> -->
-<!-- <div style="display: flex; width: 40%;">
-  <img style="height: 150px; width: 100px; margin: auto;" src="https://xsgames.co/randomusers/avatar.php?g=male">
-  <img style="height: 150px; width: 100px; margin: auto;" src="https://xsgames.co/randomusers/avatar.php?g=female">
-
-  <img src="https://picsum.photos/200/300" >
-  <img src="https://source.unsplash.com/random" >
-  <span style="z-index:50;font-size:0.9em;">
-    <img src="http://api.paperquotes.com/static/images" height="20" width="20" />
-    <a href="http://paperquotes.com" title="Powered by quotes from paperquotes.com" style="color: #9fcc25; margin-left: 4px; vertical-align: middle;">paperquotes.com
-    </a>
-  </span>
-</div> -->
-<!-- </div> -->
-<!-- <a style="display: flex; justify-content: center;">
-  <i class="large material-icons" >add_shopping_cart</i>
-  <span class="badge rounded-pill badge-notification bg-danger">1</span>
-</a> -->
-
-<mat-paginator [length]=lengthy [pageSize]=pageSize [pageIndex]=index-1
+<mat-paginator [length]=lengthy [pageSize]=pageSize [pageIndex]=index-1 style="position:relative; bottom:0;"
   [pageSizeOptions]="[ 5, 10, 25, 100, lengthy]" aria-label="Select page" (page)="changeTable($event)">
 
 </mat-paginator>

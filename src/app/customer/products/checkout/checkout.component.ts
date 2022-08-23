@@ -203,6 +203,12 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
+  back1(){
+    this.addressFlag = false;
+    this.checkoutForm.reset();
+  }
+
   addNewAdd(){
     this.addNewAddress = true;
 
@@ -260,6 +266,23 @@ export class CheckoutComponent implements OnInit {
           console.log('Error in update is: ', error);
         }
       );
+  }
+
+  cancelUpdate(){
+    this.editAdd = false;
+  }
+
+  cancelAddAdd(){
+    this.addNewAddress = false;
+  }
+
+  cancelSelectedAdd(){
+    this.editAdd = false;
+    this.addNewAddress = false;
+    this.addressFlag = true;
+    this.addSelectedFlag = false;
+    this.checkoutForm.address.reset();
+    console.log(this.checkoutForm.value);
   }
 
   addAdd(){

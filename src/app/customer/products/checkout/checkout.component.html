@@ -29,10 +29,10 @@
           <tr style="margin: -10px;">
             <td *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;margin: -13px;"><img
                 src={{item.images[0]?.url}} alt={{item?.name}}
-                style="height: 56px; width: 92px;border: 1px solid;"></td>
+                style="max-height: 56px; width: auto;"></td>
             <td *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;margin: -13px;"><img
                 src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
-                style="height: 56px; width: 92px;border: 1px solid;"></td>
+                style="max-height: 56px; width: auto;"></td>
             <td style="margin: -10px;">{{item?.name}}</td>
             <td style="margin: -10px; text-align: center;">{{item?.price | number:'1.2-2'}}</td>
             <td style="margin: -10px; text-align: center;">{{item?.count}}</td>
@@ -48,10 +48,14 @@
 
       <div style="display: flex;justify-content: center;" *ngIf="!(check())">
         <button class="btn " disabled>Continue</button>
+        <button class="btn">Back</button>
       </div>
       <div style="display: flex;justify-content: center;" *ngIf="(check() && !(addressFlag) && !(addSelectedFlag))">
         <button class="btn abc" (click)="address()">Continue</button>
+        <button class="btn abc" style="margin-left: 15px;" [routerLink]="['/products/cart']">Back</button>
       </div>
+
+
 
       <div *ngIf="addressFlag" style="margin: 30px;">
         <div *ngIf="!(editAdd)">
@@ -94,13 +98,15 @@
                     </div>
                   </div>
                   <div style="display: flex;justify-content: center;">
-                    <button class="btn" (click)="addAdd()">Submit</button>
+                    <button class="btn abc" (click)="addAdd()">Submit</button>
+                    <button class="btn abc" (click)="cancelAddAdd()" > Cancel</button>
                   </div>
                 </form>
               </div>
             </label>
             <div style="display: flex;justify-content: center;" *ngIf="(check())">
               <button class="btn abc" (click)="afterAddress()" [disabled]="checkoutForm.invalid"> Continue </button>
+              <button class="btn abc" style="margin-left: 15px;" (click)="back1()">Back</button>
             </div>
           </form>
         </div>
@@ -109,32 +115,31 @@
           <form [formGroup]='addressForm'>
             <label>Street</label>
             <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
-
             <label>Line2</label>
             <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
-
             <div style="display: flex;justify-content: center;">
               <div style="padding: 5px;">
                 <label>City</label>
                 <input type="text" class="validate" placeholder="Enter city" formControlName="city">
               </div>
-
               <div style="padding: 5px;">
                 <label>State</label>
                 <input type="text" class="validate" placeholder="Enter State" formControlName="state">
               </div>
-
               <div style="padding: 5px;">
                 <label>PinCode</label>
                 <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
               </div>
             </div>
             <div style="display: flex;justify-content: center;">
-              <button class="btn" (click)="updateAdd()">Update</button>
+              <button class="btn abc" (click)="updateAdd()">Update</button>
+              <button class="btn abc" (click)="cancelUpdate()">Cancel</button>
             </div>
           </form>
         </div>
       </div>
+
+
 
       <div *ngIf="addSelectedFlag" style="margin: 30px; display: flex;">
         <div style="margin: 15px;">Address:- </div>
@@ -149,11 +154,11 @@
 
       <div style="display: flex;justify-content: center;" *ngIf="!(addressFlag) && addSelectedFlag">
         <button class="btn abc">Continue</button>
+        <button class="btn abc" (click)="cancelSelectedAdd()">Back</button>
       </div>
 
     </div>
   </div>
-
 
 
 

@@ -1,9 +1,10 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpService } from 'src/app/services/http/http.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -18,42 +19,74 @@ export class CheckoutComponent implements OnInit {
   profilePhotoUrl: any;
   loginFlag: boolean = false;
   registerFlag: boolean = false;
-  addressFlag:boolean = false;
-  addSelectedFlag:boolean = false;
-  addNewAddress:boolean = false;
-  editAdd:boolean = false;
-  editAddress:any = [];
+  addressFlag: boolean = false;
+  addSelectedFlag: boolean = false;
+  addNewAddress: boolean = false;
+  editAdd: boolean = false;
+  paymentStatus: boolean = false;
+  editAddress: any = [];
   recaptcha: any;
   errorMsg: any;
   errorStatus: any;
-  total:any = 0;
-  cart:any = [];
-  addressArray:any =[];
-  checkoutForm:any;
-  selectedAdd:any;
-  tempAddId:any;
+  total: any = 0;
+  cart: any = [];
+  addressArray: any = [];
+  orderForm: any;
+  selectedAdd: any;
+  tempAddId: any;
+  itemForm: any;
+  items: any = [];
+  deliveryFee: any = 0;
+  orderAddress: any = {
+    city: '',
+    state: '',
+    addressLine2: '',
+    pin: '',
+    street: '',
+  };
+  cardForm: any;
+  orderConfirm: boolean = false;
 
-  constructor(public service: HttpService, private router: Router, private authService: SocialAuthService, private recaptchaV3Service: ReCaptchaV3Service) { }
+  constructor(public service: HttpService,
+    private router: Router,
+    private authService: SocialAuthService,
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.executeImportantAction();
 
-    if(this.service.cart){
-      this.cart = JSON.parse(localStorage.getItem('cart'));
-      console.log(this.cart);
+    if (this.service.cart) {
+      if (!!localStorage.getItem('cart')) {
+        this.cart = JSON.parse(localStorage.getItem('cart'));
+        console.log(this.cart);
+      }
+      else {
+        this.router.navigateByUrl(`products/all-products`);
+      }
     }
-    else
-    {
+    else {
       this.cart = JSON.parse(localStorage.getItem('buyNow'));
       console.log(this.cart);
     }
 
+
+    // console.log('creATING ORDER FORM', this.cart);
+
+    this.addItems();
+
     // this.cart = JSON.parse(localStorage.getItem('cart'));
     // console.log(this.cart);
 
-    for(let i=0;i<this.cart.length; i++)
-    {
+    for (let i = 0; i < this.cart.length; i++) {
       this.total += this.cart[i].price * this.cart[i].count;
+    }
+
+    this.service.orderValue = this.total;
+
+    if (this.total < 999) {
+      this.deliveryFee = 99;
+      this.service.orderValue = this.total + this.deliveryFee;
     }
 
     if (!!localStorage.getItem('customerToken')) {
@@ -74,10 +107,16 @@ export class CheckoutComponent implements OnInit {
       );
     }
 
-    this.checkoutForm = new FormGroup({
-      cart: new FormControl('', [Validators.required]),
+
+    this.orderForm = new FormGroup({
+      items: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
+      deliveryFee: new FormControl(this.deliveryFee, [Validators.required]),
+      total: new FormControl(this.total, [Validators.required]),
     })
+
+    // this.orderForm.patchValue({})
+
 
   }
 
@@ -176,15 +215,52 @@ export class CheckoutComponent implements OnInit {
     this.registerFlag = false;
   }
 
-  address(){
+  createItem() {
+    this.itemForm = new FormControl({
+      productId: '',
+      name: '',
+      price: '',
+      qty: '',
+      subTotal: '',
+    });
+  }
+
+  addItems() {
+    for (let i = 0; i < this.cart.length; i++) {
+      this.createItem();
+      this.itemForm.patchValue({
+        productId: this.cart[i]._id,
+        name: this.cart[i].name,
+        price: this.cart[i].price,
+        qty: this.cart[i].count,
+        subTotal: this.cart[i].price * this.cart[i].count,
+      })
+      this.items.push(this.itemForm.value);
+      console.log(this.itemForm.value);
+    }
+
+    console.log(this.items);
+
+    // this.orderForm.patchValue({
+    //   items: this.items,
+    // })
+
+    // console.log(this.orderForm);
+  }
+
+  address() {
 
     this.tempToken = localStorage.getItem('customerToken');
 
-    this.checkoutForm.patchValue({
-      cart: this.cart,
-    });
+    // this.orderForm.patchValue({
+    //   items: this.cart,
+    // });
 
-    console.log(this.checkoutForm.value);
+    this.orderForm.patchValue({
+      items: this.items,
+    })
+
+    console.log(this.orderForm.value);
 
     this.addressFlag = true;
     this.service.secureGet('customers/address', this.tempToken).subscribe(
@@ -192,8 +268,8 @@ export class CheckoutComponent implements OnInit {
         console.log(res);
         this.addressArray = res;
 
-        this.editAddress=[];
-        for(let i=0; i<this.addressArray.length; i++){
+        this.editAddress = [];
+        for (let i = 0; i < this.addressArray.length; i++) {
           this.editAddress.push(false);
         }
         console.log(this.editAddress);
@@ -204,12 +280,12 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  back1(){
+  back1() {
     this.addressFlag = false;
-    this.checkoutForm.reset();
+    this.orderForm.reset();
   }
 
-  addNewAdd(){
+  addNewAdd() {
     this.addNewAddress = true;
 
     this.addressForm = new FormGroup({
@@ -221,34 +297,34 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  selectEditAdd(i){
+  selectEditAdd(i) {
     this.editAddress[i] = true;
-    for(let j=0; j<this.editAddress.length; j++){
-      if(i!=j)
-      this.editAddress[j] = false;
+    for (let j = 0; j < this.editAddress.length; j++) {
+      if (i != j)
+        this.editAddress[j] = false;
     }
     this.addNewAddress = false;
   }
 
-  edit(i){
+  edit(i) {
     this.editAdd = true;
     this.addNewAdd();
     this.addNewAddress = false;
 
     this.addressForm.patchValue({
-      street : this.addressArray[i].street,
-      addressLine2 : this.addressArray[i].addressLine2,
-      city : this.addressArray[i].city,
-      state : this.addressArray[i].state,
-      pin : this.addressArray[i].pin,
+      street: this.addressArray[i].street,
+      addressLine2: this.addressArray[i].addressLine2,
+      city: this.addressArray[i].city,
+      state: this.addressArray[i].state,
+      pin: this.addressArray[i].pin,
     })
 
-    this.tempAddId= this.addressArray[i]._id;
+    this.tempAddId = this.addressArray[i]._id;
 
     console.log(this.addressForm.value);
   }
 
-  updateAdd(){
+  updateAdd() {
     this.service
       .securePut(
         'customers/address/' + this.tempAddId,
@@ -268,32 +344,37 @@ export class CheckoutComponent implements OnInit {
       );
   }
 
-  cancelUpdate(){
+  cancelUpdate() {
     this.editAdd = false;
   }
 
-  cancelAddAdd(){
+  cancelAddAdd() {
     this.addNewAddress = false;
   }
 
-  cancelSelectedAdd(){
+  cancelSelectedAdd() {
     this.editAdd = false;
     this.addNewAddress = false;
     this.addressFlag = true;
     this.addSelectedFlag = false;
-    this.checkoutForm.address.reset();
-    console.log(this.checkoutForm.value);
+    this.orderForm.address.reset();
+    console.log(this.orderForm.value);
   }
 
-  addAdd(){
+  addAdd() {
     this.service
       .securePost('customers/address', this.tempToken, this.addressForm.value)
       .subscribe({
         next: (data: any) => {
           console.log('Created Succesfully');
           console.log(data?._id);
-          this.checkoutForm.patchValue({
-            address: data?._id,
+          this.orderAddress.street = data?.street;
+          this.orderAddress.addressLine2 = data?.addressLine2;
+          this.orderAddress.state = data?.state;
+          this.orderAddress.pin = data?.pin;
+          this.orderAddress.city = data?.city;
+          this.orderForm.patchValue({
+            address: this.orderAddress,
           });
           this.addNewAddress = false;
           this.address();
@@ -304,13 +385,21 @@ export class CheckoutComponent implements OnInit {
       });
   }
 
-  afterAddress(){
+  afterAddress() {
     this.addressFlag = false;
-    console.log(this.checkoutForm.value);
-    this.service.secureGet('customers/address/'+ this.checkoutForm.value.address, this.tempToken).subscribe(
+    console.log(this.orderForm.value);
+    this.service.secureGet('customers/address/' + this.orderForm.value.address, this.tempToken).subscribe(
       (res: any) => {
         console.log(res);
         this.selectedAdd = res;
+        this.orderAddress.street = res?.street;
+        this.orderAddress.addressLine2 = res?.addressLine2;
+        this.orderAddress.state = res?.state;
+        this.orderAddress.pin = res?.pin;
+        this.orderAddress.city = res?.city;
+        this.orderForm.patchValue({
+          address: this.orderAddress,
+        });
       },
       (error) => {
         console.log('Error ...>', error.error.message);
@@ -318,6 +407,46 @@ export class CheckoutComponent implements OnInit {
     );
     this.addSelectedFlag = true;
   }
+
+  sendOrder() {
+    this.service
+      .securePost('shop/orders', this.tempToken, this.orderForm.value)
+      .subscribe({
+        next: (data: any) => {
+          console.log('Order Created');
+          console.log(data, 'next');
+          this.service.orderId = data.order?._id;
+          console.log(this.service.orderId);
+          this.orderConfirm = true;
+        },
+        error: (error) => {
+          error.error.message;
+          console.log(error);
+        },
+      });
+
+    Swal.fire({
+      title: 'Order Created Successfully.',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Make Payment'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('cart');
+        this.service.cartNo =0;
+        this.router.navigateByUrl(`products/checkout/payment`);
+      }
+      else {
+        localStorage.removeItem('cart');
+        this.service.cartNo =0;
+        this.router.navigateByUrl(`products/all-products`);
+      }
+    })
+  }
+
+
 
   check() {
     return !!localStorage.getItem('customerToken');

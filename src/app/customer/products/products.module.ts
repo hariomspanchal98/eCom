@@ -12,6 +12,7 @@ import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { DetailsComponent } from './details/details.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     AllProductComponent,
     DetailsComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    PaymentComponent
   ],
   imports: [
     CommonModule,

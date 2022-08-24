@@ -28,8 +28,7 @@
         <tbody *ngFor="let item of cart;let i = index" style="margin: -10px;">
           <tr style="margin: -10px;">
             <td *ngIf="item.images[0]?.url" style="display: flex;justify-content:center;margin: -13px;"><img
-                src={{item.images[0]?.url}} alt={{item?.name}}
-                style="max-height: 56px; width: auto;"></td>
+                src={{item.images[0]?.url}} alt={{item?.name}} style="max-height: 56px; width: auto;"></td>
             <td *ngIf="!(item.images[0]?.url)" style="display: flex;justify-content:center;margin: -13px;"><img
                 src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
                 style="max-height: 56px; width: auto;"></td>
@@ -60,13 +59,14 @@
       <div *ngIf="addressFlag" style="margin: 30px;">
         <div *ngIf="!(editAdd)">
           <p>Please choose the address,</p>
-          <form [formGroup]="checkoutForm">
+          <form [formGroup]="orderForm">
             <div *ngFor="let add of addressArray;let i= index">
               <label>
                 <input type="radio" value={{add?._id}} formControlName="address" (click)="selectEditAdd(i)">
                 <span>
                   {{add?.street}}, {{add?.addressLine2}}, {{add?.city}}, {{add?.state}}-{{add?.pin}}
-                  <a *ngIf="editAddress[i]" (click)="edit(i)" style="color: blue;">  Edit <i class="tiny material-icons">edit</i></a>
+                  <a *ngIf="editAddress[i]" (click)="edit(i)" style="color: blue;"> Edit <i
+                      class="tiny material-icons">edit</i></a>
                 </span>
               </label>
             </div>
@@ -99,13 +99,13 @@
                   </div>
                   <div style="display: flex;justify-content: center;">
                     <button class="btn abc" (click)="addAdd()">Submit</button>
-                    <button class="btn abc" (click)="cancelAddAdd()" > Cancel</button>
+                    <button class="btn abc" (click)="cancelAddAdd()"> Cancel</button>
                   </div>
                 </form>
               </div>
             </label>
             <div style="display: flex;justify-content: center;" *ngIf="(check())">
-              <button class="btn abc" (click)="afterAddress()" [disabled]="checkoutForm.invalid"> Continue </button>
+              <button class="btn abc" (click)="afterAddress()" [disabled]="orderForm.invalid"> Continue </button>
               <button class="btn abc" style="margin-left: 15px;" (click)="back1()">Back</button>
             </div>
           </form>
@@ -137,27 +137,29 @@
             </div>
           </form>
         </div>
-      </div>
+      </div>  
 
-
-
-      <div *ngIf="addSelectedFlag" style="margin: 30px; display: flex;">
-        <div style="margin: 15px;">Address:- </div>
-        <div style="margin: 15px;">
-          <p>{{selectedAdd?.street}},</p>
-          <p>{{selectedAdd?.addressLine2}},</p>
-          <p> {{selectedAdd?.city}},</p>
-          <p> {{selectedAdd?.state}}-{{selectedAdd?.pin}} </p>
+      <div *ngIf="addSelectedFlag">
+        <div style="margin-left: 30px; display: flex;">
+          <div style="margin: 15px;">Address:- </div>
+          <div style="margin: 15px;">
+            <p>{{selectedAdd?.street}},</p>
+            <p>{{selectedAdd?.addressLine2}},</p>
+            <p> {{selectedAdd?.city}},</p>
+            <p> {{selectedAdd?.state}}-{{selectedAdd?.pin}} </p>
+          </div>
         </div>
+        <h3 style="margin-left: 30px;">Delivery Fees :  {{this.deliveryFee}}</h3>
       </div>
 
-
-      <div style="display: flex;justify-content: center;" *ngIf="!(addressFlag) && addSelectedFlag">
-        <button class="btn abc">Continue</button>
+      <div style="display: flex;justify-content: center;" *ngIf="!(addressFlag) && addSelectedFlag && !(orderConfirm)">
+        <button class="btn abc" (click)="sendOrder()">Confirm</button>
         <button class="btn abc" (click)="cancelSelectedAdd()">Back</button>
       </div>
-
     </div>
+
+    <!-- *ngIf="!(paymentStatus) && orderConfirm" -->
+
   </div>
 
 

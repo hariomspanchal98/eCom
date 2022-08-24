@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   base64ToFile,
@@ -45,13 +46,17 @@ export class ProfileComponent implements OnInit {
   showCropper = false;
   containWithinAspectRatio = false;
   transform: ImageTransform = {};
+  orders: any;
+  pageSize = 1;
+  pageLimit = 5;
+  orderDetails:any;
 
   constructor(
     private router: Router,
     private service: HttpService,
     private authService: SocialAuthService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -250,7 +255,7 @@ export class ProfileComponent implements OnInit {
         console.log('Deleted');
         this.router.navigateByUrl(`products/all-products`);
       },
-      (error) => {}
+      (error) => { }
     );
     // console.log('users/'+ (url));
   }
@@ -300,4 +305,72 @@ export class ProfileComponent implements OnInit {
     this.swapImage = true;
     this.updatePhoto = false;
   }
+
+  getOrder() {
+    this.service.secureGet(`shop/orders?page=${this.pageSize}&limit=${this.pageLimit}`, this.tempToken).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.orders = res;
+        console.log('orders got');
+        console.log(this.orders);
+        this.setFlag();
+      },
+      (error) => {
+        console.log('Error ...>', error.error.message);
+      }
+    );
+  }
+
+  setFlag()
+  {
+    for (let i = 0; i < this.orders?.results.length; i++) {
+      if (this.orders.results[i].status == "Pending") {
+        this.orders.results[i].details = false;
+        this.orders.results[i].flag = 'false';
+      }
+      else { this.orders.results[i].flag = 'true'; 
+      this.orders.results[i].details = false;
+    }
+    }
+  }
+
+  loadOrder() {
+    this.pageLimit += 5;
+    this.getOrder();
+  }
+
+  viewOrder(x: any, i:any) {
+    this.setFlag();
+    this.orders.results[i].details = true;
+    this.service.secureGet(`shop/orders/${x}`, this.tempToken).subscribe(
+      (res: any) => {
+        // console.log(res);
+        this.orderDetails = res[0];
+        console.log(this.orderDetails?.items);
+      },
+      (error) => {
+        console.log('Error ...>', error.error.message);
+      }
+    );
+  }
+
+  delOrder(id: any) {
+    // console.log(url);
+    this.service.del(`shop/orders/` + id, this.tempToken).subscribe(
+      (data: any) => {
+        console.log('deleted');
+        this.getOrder();
+      },
+      (error) => {
+        console.log('Error in order deletion is: ', error);
+      }
+    );
+  }
+
+  retryPayment(abc:any){
+    this.service.orderId = abc;
+    this.service.orderValue = this.orderDetails.total + this.orderDetails.deliveryFee;
+    this.router.navigateByUrl(`products/checkout/payment`);
+  }
+
 }

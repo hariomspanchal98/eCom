@@ -4,3 +4,11 @@
   max-width: 60%;
   min-width: 60%;
 }
+
+.true{
+  color: green;
+}
+
+.false{
+  color: red;
+}

@@ -15,6 +15,8 @@ export class HttpService {
   limitNo=12;
   cartNo=0;
   cart:boolean=true;
+  orderId:any;
+  orderValue:any;
 
   constructor(private http:HttpClient ) {
     //   this.headers = new HttpHeaders({

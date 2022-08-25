@@ -282,7 +282,7 @@ export class CheckoutComponent implements OnInit {
 
   back1() {
     this.addressFlag = false;
-    this.orderForm.reset();
+    this.orderForm.controls['address'].reset();
   }
 
   addNewAdd() {
@@ -357,7 +357,6 @@ export class CheckoutComponent implements OnInit {
     this.addNewAddress = false;
     this.addressFlag = true;
     this.addSelectedFlag = false;
-    this.orderForm.address.reset();
     console.log(this.orderForm.value);
   }
 

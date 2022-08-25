@@ -1,11 +1,16 @@
 <app-navbar></app-navbar>
 
 
-<div style="display: flex;justify-content: center;padding: 50px;">
+<div style="display: flex;justify-content: center;margin-top: -50px;">
     <div class="row d-flex justify-content-center py-5" style="width: 550px;">
-        <div class="card" style="border-radius: 15px;padding: 50px;">
+        <div class="card" style="border-radius: 15px;padding: 30px;">
             <div class="card-body p-4">
-                <form [formGroup]="cardForm">
+                <div>
+                    <h2>Order Summery,</h2>
+                        <p>Proceed to pay Rs. <span style="font-weight: bold;">{{service.orderValue}}</span> for your order(Order Id :- {{service.orderId}}). </p>
+                        <br>
+                </div>
+                <form [formGroup]="cardForm" class="card" style="padding: 20px;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-outline">
                             <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
@@ -13,7 +18,7 @@
                                 formControlName="cardNumber" />
                             <label class="form-label" for="typeText">Card Number</label>
                         </div>
-                        <!-- <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa" width="64px" /> -->
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa" width="64px" />
                     </div>
     
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -39,8 +44,8 @@
                     </div>
                     <br>
                     <div style="display: flex; justify-content: center;">
-                        <button type="button" class="btn btn-info btn-lg btn-rounded" style="width: 50%;" (click)="pay()">
-                            Pay {{service.orderValue}}<i class="fas fa-arrow-right"></i>
+                        <button type="button" class="btn btn-info btn-lg btn-rounded" style="width: 50%"(click)="pay()">
+                            Pay {{service.orderValue}} <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </form>

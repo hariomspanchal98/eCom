@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
       this.total += this.cart[i].price * this.cart[i].count;
     }
 
-    console.log(this.cart);
+    // console.log(this.cart);
   }
 
   check(){
@@ -73,7 +73,7 @@ export class CartComponent implements OnInit {
       // console.log(data);
       let temp = JSON.parse(JSON.stringify(data));
       this.cart = data ? [...temp] : [];
-      console.log('from store',this.cart);
+      // console.log('from store',this.cart);
       this.service.cartNo = this.cart.length;
       // console.log(this.cart[0]?.count);
     });

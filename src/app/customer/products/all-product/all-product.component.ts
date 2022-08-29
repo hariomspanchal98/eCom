@@ -104,7 +104,7 @@ export class AllProductComponent implements OnInit {
       });
   }
 
-  addToCart(i:any) {
+  addToCart(j:any) {
 
     // let flag = true;
     // let temp: any;
@@ -137,7 +137,7 @@ export class AllProductComponent implements OnInit {
     // this.store.dispatch(updateCart({ items: this.cart }));
     
 
-    console.log(this.products.results[i]);
+    // console.log(this.products.results[i]);
     let flag = false;
     let duplicate = false;
     // this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
@@ -147,16 +147,14 @@ export class AllProductComponent implements OnInit {
     }
 
     if (flag) {
-      this.products.results[i].count = 1;
-      this.products.results[i].cart = true;
-      this.cart.push(this.products.results[i]);
+      this.products.results[j].count = 1;
+      this.products.results[j].cart = true;
+      this.cart.push(this.products.results[j]);
       this.service.cartNo += 1;
     } else {
       for (let i = 0; i < this.cart.length; i++) {
-        if (this.cart[i]._id == this.products.results[i]._id) {
-          // console.log('if pre');
+        if (this.cart[i]._id == this.products.results[j]._id){
           this.cart[i].count = this.cart[i].count + 1;
-          // console.log('if post');
           duplicate = true;
           break;
         } else {
@@ -165,12 +163,9 @@ export class AllProductComponent implements OnInit {
       }
 
       if (!duplicate) {
-        // console.log('dup');
-        this.products.results[i].count = 1;
-        this.products.results[i].cart = true;
-        this.cart.push(this.products.results[i]);
-        // console.log('dup');
-        // this.service.cartNo += 1;
+        this.products.results[j].count = 1;
+        this.products.results[j].cart = true;
+        this.cart.push(this.products.results[j]);
       }
 
       flag = false;
@@ -187,7 +182,7 @@ export class AllProductComponent implements OnInit {
       // console.log(data);
       let temp = JSON.parse(JSON.stringify(data));
       this.cart = data ? [...temp] : [];
-      console.log('from store',this.cart);
+      // console.log('from store',this.cart);
       this.service.cartNo = this.cart.length;
       // console.log(this.cart[0]?.count);
     });

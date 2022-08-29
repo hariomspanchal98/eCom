@@ -97,7 +97,7 @@ export class CheckoutComponent implements OnInit {
     }
 
     if (!!localStorage.getItem('customerToken')) {
-      console.log(!!localStorage.getItem('customerToken'));
+      // console.log(!!localStorage.getItem('customerToken'));
       // this.router.navigateByUrl('/seller/user/profile');
       this.tempToken = localStorage.getItem('customerToken');
 
@@ -105,7 +105,7 @@ export class CheckoutComponent implements OnInit {
         (res: any) => {
           this.profileData = res;
           this.profilePhotoUrl = this.profileData?.picture;
-          console.log(res);
+          // console.log(res);
           // console.log(this.profileData);
         },
         (error) => {
@@ -135,7 +135,7 @@ export class CheckoutComponent implements OnInit {
       // console.log(data);
       let temp = JSON.parse(JSON.stringify(data));
       this.cart = data ? [...temp] : [];
-      console.log('from store', this.cart);
+      // console.log('from store', this.cart);
       this.service.cartNo = this.cart.length;
       // console.log(this.cart[0]?.count);
     });
@@ -257,10 +257,10 @@ export class CheckoutComponent implements OnInit {
         subTotal: this.cart[i].price * this.cart[i].count,
       })
       this.items.push(this.itemForm.value);
-      console.log(this.itemForm.value);
+      // console.log(this.itemForm.value);
     }
 
-    console.log(this.items);
+    // console.log(this.items);
 
     // this.orderForm.patchValue({
     //   items: this.items,

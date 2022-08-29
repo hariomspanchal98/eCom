@@ -25,6 +25,10 @@ import { AvatarModule } from 'ngx-avatar';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './customer/state/cart.reducer';
+import { MetaReducer } from "@ngrx/store";
+import { hydrationMetaReducer } from './customer/state/hydration.reducer';
+
+export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
   declarations: [
@@ -49,7 +53,7 @@ import { cartReducer } from './customer/state/cart.reducer';
     Ng2SearchPipeModule,
     AvatarModule,
     IvyCarouselModule,
-    StoreModule.forRoot({ cart:cartReducer }),
+    StoreModule.forRoot({ cart:cartReducer }, { metaReducers }),
   ],
   providers: [AuthGuard,
   {

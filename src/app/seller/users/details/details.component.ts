@@ -10,10 +10,10 @@ import { HttpService } from 'src/app/services/http/http.service';
 export class DetailsComponent implements OnInit {
   tempToken: any;
 
-  constructor(private _Activatedroute:ActivatedRoute,private router: Router, private service: HttpService) { }
+  constructor(private _Activatedroute: ActivatedRoute, private router: Router, private service: HttpService) { }
 
-  id:any;
-  user:any;
+  id: any;
+  user: any;
 
   ngOnInit(): void {
 
@@ -23,9 +23,9 @@ export class DetailsComponent implements OnInit {
       this.id = params.get('id');
     });
 
-    this.service.get('users/'+this.id).subscribe((data:any)=>{
+    this.service.get('users/' + this.id).subscribe((data: any) => {
       // console.log(data);
-      this.user=data;
+      this.user = data;
       // console.log(this.user);
     })
   }

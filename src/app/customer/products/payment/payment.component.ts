@@ -76,7 +76,7 @@ export class PaymentComponent implements OnInit {
     Swal.fire({
       title: 'Payment unsuccessful',
       text: abc,
-      icon: 'warning',
+      icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

@@ -1,5 +1,3 @@
-import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { NgSwitchDefault } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,7 +5,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   base64ToFile,
@@ -54,7 +51,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private service: HttpService,
-    private authService: SocialAuthService,
     private fb: FormBuilder
   ) { }
 

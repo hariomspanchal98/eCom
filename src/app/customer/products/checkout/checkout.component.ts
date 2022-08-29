@@ -1,6 +1,6 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
@@ -52,9 +52,7 @@ export class CheckoutComponent implements OnInit {
 
   constructor(public service: HttpService,
     private router: Router,
-    private authService: SocialAuthService,
     private recaptchaV3Service: ReCaptchaV3Service,
-    private formBuilder: FormBuilder,
     private store: Store) { }
 
   ngOnInit(): void {
@@ -353,7 +351,7 @@ export class CheckoutComponent implements OnInit {
         this.addressForm.value
       )
       .subscribe(
-        (data: any) => {
+        () => {
           console.log('updated');
           this.tempAddId = '';
           this.address();

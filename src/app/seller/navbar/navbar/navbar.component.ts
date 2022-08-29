@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService } from "@abacritt/angularx-social-login";
 import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
@@ -12,7 +11,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: SocialAuthService,
     private service: HttpService){}
 
   profileData :any;

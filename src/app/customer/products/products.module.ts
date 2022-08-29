@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { NavbarModule } from '../navbar/navbar.module';
-import { RouterModule } from '@angular/router';
 import { AllProductComponent } from './all-product/all-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';

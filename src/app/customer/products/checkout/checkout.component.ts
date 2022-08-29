@@ -2,9 +2,12 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpService } from 'src/app/services/http/http.service';
 import Swal from 'sweetalert2';
+import { updateCart } from '../../state/cart.action';
+import { getCartData } from '../../state/cart.selector';
 
 @Component({
   selector: 'app-checkout',
@@ -51,19 +54,23 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private authService: SocialAuthService,
     private recaptchaV3Service: ReCaptchaV3Service,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private store: Store) { }
 
   ngOnInit(): void {
     this.executeImportantAction();
 
     if (this.service.cart) {
-      if (!!localStorage.getItem('cart')) {
-        this.cart = JSON.parse(localStorage.getItem('cart'));
-        console.log(this.cart);
-      }
-      else {
+      this.getCartData();
+      if (this.cart.length == 0)
         this.router.navigateByUrl(`products/all-products`);
-      }
+      // if (!!localStorage.getItem('cart')) {
+      //   this.getCartData();
+      //   console.log(this.cart);
+      // }
+      // else {
+      //   this.router.navigateByUrl(`products/all-products`);
+      // }
     }
     else {
       this.cart = JSON.parse(localStorage.getItem('buyNow'));
@@ -118,6 +125,20 @@ export class CheckoutComponent implements OnInit {
     // this.orderForm.patchValue({})
 
 
+  }
+  //   this.store.dispatch(updateCart({ items: this.cart }));
+  // this.getCartData();
+
+  getCartData() {
+    this.store.select(getCartData).subscribe((data) => {
+      // this.cartProducts = data ? [...data] : [];
+      // console.log(data);
+      let temp = JSON.parse(JSON.stringify(data));
+      this.cart = data ? [...temp] : [];
+      console.log('from store', this.cart);
+      this.service.cartNo = this.cart.length;
+      // console.log(this.cart[0]?.count);
+    });
   }
 
   loginClick() {
@@ -433,13 +454,15 @@ export class CheckoutComponent implements OnInit {
       confirmButtonText: 'Make Payment'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem('cart');
-        this.service.cartNo =0;
+        // localStorage.removeItem('cart');
+        this.cart=[];
+        this.store.dispatch(updateCart({ items: this.cart }));
         this.router.navigateByUrl(`products/checkout/payment`);
       }
       else {
-        localStorage.removeItem('cart');
-        this.service.cartNo =0;
+        // localStorage.removeItem('cart');
+        this.cart=[];
+        this.store.dispatch(updateCart({ items: this.cart }));
         this.router.navigateByUrl(`products/all-products`);
       }
     })

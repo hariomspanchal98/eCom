@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { HttpService } from 'src/app/services/http/http.service';
+import { updateCart } from '../../state/cart.action';
+import { getCartData } from '../../state/cart.selector';
 
 @Component({
   selector: 'app-all-product',
@@ -25,30 +28,11 @@ export class AllProductComponent implements OnInit {
   cart: any = [];
   localStorageValue: any;
 
-  constructor(private service: HttpService, private router: Router) {}
+  constructor(private service: HttpService, private router: Router,private store:Store) {}
 
   ngOnInit(): void {
     this.tempToken = localStorage.getItem('token');
-    // console.log('token is', this.tempToken);
-
-    // this.service.get("auth/self",this.tempToken)
-    // this.service.getProfileData(this.tempToken)
-    // this.service.secureGet('products',this.tempToken).subscribe((res:any)=>{
-    //   console.log(res);
-    //   // let output = JSON.parse(res)
-    //   this.products = res;
-    //   console.log(this.products);
-    //   // console.log('profile data from service:- ',this.profileData);
-    //   // console.table(this.products?.results)
-    // },
-    // (error) => {
-    //   console.log('Error in login is: ', error)
-    //   // this.clear();
-    //   // this.registerForm.markAsPristine();
-    // },
-    // console.log(this.service.pageNo);
-    // console.log(this.service.limitNo);
-    // );
+    
     this.getData(this.service.pageNo, this.service.limitNo);
 
     this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
@@ -62,6 +46,7 @@ export class AllProductComponent implements OnInit {
       // console.log('else1 post');
     }
     this.service.cartNo = this.cart.length;
+    this.getCartData(); 
   }
 
   getData(index, size) {
@@ -101,54 +86,74 @@ export class AllProductComponent implements OnInit {
   }
 
   changeTable(e: PageEvent) {
-    // console.log(e);
     this.index = e.pageIndex + 1;
     this.size = e.pageSize;
-    // console.log(e);
-    // console.log(environment.baseUrl+'users?page='+index+'&limit='+e.pageSize);
     this.service
       .secureGet(
         'shop/products?page=' + this.index + '&limit=' + e.pageSize,
         this.tempToken
       )
       .subscribe((data) => {
-        // console.log(data);
-        // console.log(data);
+        
         this.products = data;
-        // console.log(this.users.results);
+        
         this.sub = this.products.results;
-        // console.log(this.users?.results);
-        // this.length= this.users.totalResults;
-        // this.pageSize= this.users.limit;
+        
         this.service.pageNo = e.pageIndex + 1;
         this.service.limitNo = e.pageSize;
       });
   }
 
-  addToCart(product) {
-    // console.log(product);
+  addToCart(i:any) {
+
+    // let flag = true;
+    // let temp: any;
+    // let count: any;
+    // console.log(this.products.results[i]);
+
+    // if (this.cart.length == 0) {
+    //   // this.cart.push(this.products.results[i]);
+    //   this.products.results[i].count = 1;
+    //   this.products.results[i].cart = true;
+    //   this.cart.push(this.products.results[i]);
+    //   this.service.cartNo += 1;
+    // }
+    // else {
+    //   for (let j = 0; j < this.cart.length; j++) {
+    //     if (this.cart[j]._id == this.products.results[i]._id) {
+    //       flag = false;
+    //       temp = j;
+    //       count = this.cart[j].count;
+    //     }
+    //   }
+
+    //   if (flag) {
+    //     this.cart.push(this.products.results[i]);
+    //   }
+    //   else {
+    //     this.cart[temp].count = count + 1;
+    //   }
+    // }
+    // this.store.dispatch(updateCart({ items: this.cart }));
+    
+
+    console.log(this.products.results[i]);
     let flag = false;
     let duplicate = false;
-    this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
-    if (this.localStorageValue == null) {
-      // console.log('if1 pre');
-      this.cart = [];
+    // this.localStorageValue = JSON.parse(localStorage.getItem('cart'));
+    
+    if (this.cart.length == 0) {
       flag = true;
-      // console.log('if1 post');
-    } else {
-      // console.log('else1 pre');
-      this.cart = this.localStorageValue;
-      // console.log('else1 post');
     }
 
     if (flag) {
-      product.count = 1;
-      product.cart = true;
-      this.cart.push(product);
+      this.products.results[i].count = 1;
+      this.products.results[i].cart = true;
+      this.cart.push(this.products.results[i]);
       this.service.cartNo += 1;
     } else {
       for (let i = 0; i < this.cart.length; i++) {
-        if (this.cart[i]._id == product._id) {
+        if (this.cart[i]._id == this.products.results[i]._id) {
           // console.log('if pre');
           this.cart[i].count = this.cart[i].count + 1;
           // console.log('if post');
@@ -161,17 +166,30 @@ export class AllProductComponent implements OnInit {
 
       if (!duplicate) {
         // console.log('dup');
-        product.count = 1;
-        product.cart = true;
-        this.cart.push(product);
+        this.products.results[i].count = 1;
+        this.products.results[i].cart = true;
+        this.cart.push(this.products.results[i]);
         // console.log('dup');
-        this.service.cartNo += 1;
+        // this.service.cartNo += 1;
       }
 
       flag = false;
     }
 
     // console.log(this.cart);
-    localStorage.setItem('cart', JSON.stringify(this.cart));
+    // localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.store.dispatch(updateCart({ items: this.cart }));
+  }
+
+  getCartData() {
+    this.store.select(getCartData).subscribe((data) => {
+      // this.cartProducts = data ? [...data] : [];
+      // console.log(data);
+      let temp = JSON.parse(JSON.stringify(data));
+      this.cart = data ? [...temp] : [];
+      console.log('from store',this.cart);
+      this.service.cartNo = this.cart.length;
+      // console.log(this.cart[0]?.count);
+    });
   }
 }

@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.0.5",
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
+    "@ngrx/store": "^14.3.0",
     "@types/jquery": "^2.0.47",
     "angular-in-memory-web-api": "^0.13.0",
     "angular-responsive-carousel": "^2.1.2",

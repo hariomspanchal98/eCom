@@ -17,7 +17,7 @@
                 src="https://foodworldmd.com/templates/default-new/images/no-product-found.png" alt="">
               </div>
             </div>
-  <div *ngFor="let product of products?.results">
+  <div *ngFor="let product of products?.results; let i=index">
     <div class="card" style="width: 16.5rem; height: 380px;">
       <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" [arrows]="((product?.images?.length>1))"
         [dots]="true" >
@@ -40,7 +40,7 @@
 
       </div>
       <!-- <button class="btn" style="background-color: #242c42; color: white;" [routerLink]="['/products/details', product?._id]">View Details</button> -->
-      <button class="btn cart" (click)="addToCart(product)" *ngIf="!(product?.cart)">Add to Cart <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+      <button class="btn cart" (click)="addToCart(i)" *ngIf="!(product?.cart)">Add to Cart <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
           fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
           <path
             d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />

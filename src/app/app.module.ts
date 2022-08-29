@@ -23,6 +23,8 @@ import { JwPaginationModule } from 'jw-angular-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AvatarModule } from 'ngx-avatar';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from './customer/state/cart.reducer';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     Ng2SearchPipeModule,
     AvatarModule,
     IvyCarouselModule,
+    StoreModule.forRoot({ cart:cartReducer }),
   ],
   providers: [AuthGuard,
   {

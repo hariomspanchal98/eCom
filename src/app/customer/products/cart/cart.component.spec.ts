@@ -1,4 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers } from 'src/app/app.module';
+import { cartReducer } from '../../state/cart.reducer';
 
 import { CartComponent } from './cart.component';
 
@@ -8,7 +12,9 @@ describe('CartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CartComponent ]
+      declarations: [ CartComponent ],
+      imports: [HttpClientModule , StoreModule.forRoot({ cart:cartReducer }, { metaReducers }),],
+      
     })
     .compileComponents();
 

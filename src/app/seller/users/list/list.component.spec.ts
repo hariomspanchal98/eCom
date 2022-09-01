@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { SearchfilterPipe } from 'src/app/searchfilter.pipe';
 
 import { ListComponent } from './list.component';
 
@@ -8,7 +11,8 @@ describe('ListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
+      declarations: [ ListComponent, SearchfilterPipe],
+      imports: [HttpClientModule, Ng2SearchPipeModule]
     })
     .compileComponents();
   });

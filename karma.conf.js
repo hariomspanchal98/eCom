@@ -25,6 +25,14 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
+      check: {
+        global: {
+          statements: 75,
+          branches: 75,
+          functions: 75,
+          lines: 75,
+        },
+      },
       dir: require('path').join(__dirname, './coverage/login'),
       subdir: '.',
       reporters: [

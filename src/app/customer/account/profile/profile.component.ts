@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
   pageSize = 1;
   pageLimit = 5;
   orderDetails:any;
-
+  
   constructor(
     private router: Router,
     private service: HttpService,
@@ -158,7 +158,7 @@ export class ProfileComponent implements OnInit {
       (res: any) => {
         // console.log(res);
         this.addresses = res;
-        // console.log('address got');
+        console.log('address got');
       },
       (error) => {
         console.log('Error ...>', error.error.message);

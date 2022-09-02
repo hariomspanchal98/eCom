@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" *ngIf="false">
   <div class="card">
     <div style="display: flex; height: auto;" *ngIf="!(profileEdit)">
       <div style="width: 50%;display: flex; justify-content: center;flex-wrap: wrap;">
@@ -285,6 +285,278 @@
       <br>
       <p style="text-align: center;"> <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="sweetAlert()">
           Delete account </a></p>
+    </div>
+  </div>
+</div>
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="Profile-tab" data-bs-toggle="tab" data-bs-target="#Profile" type="button" role="tab" aria-controls="Profile" aria-selected="true">Profile</button>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false" (click)="getAdd()">Address-Book</button>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false" (click)="getOrder()">Orders</button>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="false">Account</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  
+  <div class="tab-pane fade show active" id="Profile" role="tabpanel" aria-labelledby="Profile-tab">
+   <div style="display: flex; justify-content: center;">
+    <div style="margin-left: 20%;margin-right: 20%; margin-top: 50px;margin-bottom: 25px;border: 1px solid black;width: 40%;padding: 20px;">
+      <div style="display: flex; height: auto;" *ngIf="!(profileEdit)">
+        <div style="width: 50%;display: flex; justify-content: center;flex-wrap: wrap;">
+          <img src={{profilePhotoUrl}} style="max-height: 150px;max-width: 100%;margin-top: 15px;">
+        </div>
+        <div style="margin: 15px;padding: 15px;width: 50%;">
+          <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons"
+                (click)="editProfile()">edit</i></a></p>
+          <h1 style="font-size: 200%;">{{profileData?.name}}</h1>
+          <p>{{profileData?.email}}</p>
+        </div>
+      </div>
+      <div style="display: flex;justify-content: center;" *ngIf="(profileEdit)">
+        <div>
+          <div style="width: 100%;display: flex;">
+            <img *ngIf="!(swapImage) && !(finalImage)" src={{profilePhotoUrl}}
+              style="max-height: 150px;max-width: 100%;margin-top: 15px;">
+            <img *ngIf="swapImage && finalImage" [src]="croppedImage"
+              style="max-height: 150px;max-width: 100%;margin-top: 15px;" />
+            <image-cropper style="max-height: 150px;width: 100%;margin-top: 15px;" *ngIf="swapImage && !(finalImage)"
+              [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+              [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1 / 1" [onlyScaleDown]="true"
+              [roundCropper]="false" [transform]="transform" [alignImage]="'center'"
+              [style.display]="showCropper ? null : 'none'" format="png" (imageCropped)="imageCropped($event)"
+              (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()">
+            </image-cropper>
+            <!-- <p style="text-align: right;"> <a style="cursor: pointer;color: rgb(56, 108, 250);"><i class="material-icons">edit</i></a></p> -->
+            <div class="btn-group" role="group" style="max-width: 50%;" *ngIf="!(updatePhoto)">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style="background-color: white;border: none;box-shadow: none;">
+                <a style="cursor: pointer;color: rgb(56, 108, 250); margin-left: 10px;"><i
+                    class="material-icons">edit</i></a>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="background-color: none;border: none;">
+                <a class="dropdown-item" (click)="updatePhoto=true">Update</a>
+                <a class="dropdown-item" style="color: red;" (click)="deleteProfilePhoto()">Delete</a>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3" *ngIf="updatePhoto" style="max-height: 200px;max-width: 200px;margin-top: 15px;">
+            <!-- <label for="formFile" class="form-label">Default file input example</label> -->
+            <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+            <button (click)="toggleContainWithinAspectRatio()">Fit</button>
+            <button (click)="finalImg()">Done</button>
+  
+            <div>
+  
+            </div>
+          </div>
+        </div>
+        <div style="margin-left: 90px;padding: 15px;width: 50%;">
+  
+          <form [formGroup]="profileForm">
+            <label>Name:</label>
+            <input type="text" value="{{profileData?.name}}" formControlName="name">
+  
+            <label>Email:</label>
+            <input type="text" value="{{profileData?.email}}" formControlName="email">
+          </form>
+  
+          <div class="btn-group">
+            <button class="btn" (click)="submitProfile()">Submit</button>
+            <button class="btn" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+
+  <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+    <div style="padding-left: 20%;padding-right: 20%; padding-top: 50px;padding-bottom: 25px;">
+      <p style="text-align: right;padding-right: 10px; "> <a style="cursor: pointer;color: rgb(56, 108, 250);"
+          (click)="addAdd()" *ngIf="!(addAddress)">+ Add
+          New</a></p>
+      <div *ngIf="addAddress && !(editAddress)" class="card" style="max-width: 100%;">
+        <form [formGroup]="addressForm">
+          <label>Street</label>
+          <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+          <label>Line2</label>
+          <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+          <div style="display: flex;justify-content: center;">
+            <div style="padding: 5px;">
+              <label>City</label>
+              <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>State</label>
+              <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>PinCode</label>
+              <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn" (click)="submitAdd()">Add</button>
+            <button class="btn" (click)="addAddress=false">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+      <div *ngIf="!(addAddress)">
+        <div *ngFor="let address of addresses;let i=index" class="card" style="max-width: 100%;">
+          <p style="text-align: end;padding-right: 10px; ">
+            <a style="cursor: pointer;color: rgb(56, 108, 250);" (click)="editAdd(i)"><i
+                class="material-icons">edit</i> </a>
+            <a style="cursor: pointer;color: red;margin-left: 10px;"> <i class="material-icons"
+                (click)="delAdd(address?._id)">delete</i></a>
+          </p>
+          <p>Address {{i+1}} </p>
+          <p>{{address?.street}}, {{address?.addressLine2}}, {{address?.city}}, {{address?.state}}-{{address?.pin}}
+          </p>
+          <p></p>
+        </div>
+      </div>
+      <div class="card" style="max-width: 100%;" *ngIf="editAddress">
+        <form [formGroup]="addressForm">
+          <label>Street</label>
+          <input type="text" class="validate" placeholder="Enter Street name" formControlName="street">
+
+          <label>Line2</label>
+          <input type="text" class="validate" placeholder="Enter full address" formControlName="addressLine2">
+
+          <div style="display: flex;justify-content: center;">
+            <div style="padding: 5px;">
+              <label>City</label>
+              <input type="text" class="validate" placeholder="Enter city" formControlName="city">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>State</label>
+              <input type="text" class="validate" placeholder="Enter State" formControlName="state">
+            </div>
+
+            <div style="padding: 5px;">
+              <label>PinfdgfdgCode</label>
+              <input type="text" class="validate" placeholder="Enter pin-code" formControlName="pin">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn" (click)="updateAdd()">Add</button>
+            <button class="btn" (click)="cancel()">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+    <div style="padding-left: 20%;padding-right: 20%; padding-top: 50px;padding-bottom: 25px;">
+      <div *ngFor="let order of orders?.results;let i=index" class="card" style="max-width: 100%;">
+        <p style="text-align: end;padding-right: 10px;margin-top: 10px;">
+          <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="delOrder(order?._id)"> <i class="material-icons">delete</i></a>
+        </p>
+        <p style="text-align: end;padding-right: 10px;margin-top: 10px;">
+          <label>{{order?.createdAt | date:'medium'}}</label>  
+        </p>
+        <p>Order. {{i+1}} </p>
+        <p>Status :- <span class="{{order?.flag}}">{{order?.status}} </span></p>
+        <div *ngIf="!(order?.details)">
+          <div style="display: flex;">
+            <p>Items :- </p>
+            <div style="display: flex;flex-direction:column;">
+              <div *ngFor="let item of order?.items">
+                <span> {{item?.name}},</span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <p>Total :- {{order?.total + order?.deliveryFee}}</p>
+          <div style="display: flex;justify-content: center;">
+            <button class="btn" (click)="viewOrder(order?._id,i)">View Details</button>
+          </div>
+        </div>
+        <div *ngIf="(order?.details)">
+          <table>
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub-Total</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of orderDetails?.items; let i= index">
+              <tr>
+                <td>{{i+1}}.</td>
+                <td>{{item?.name}}</td>
+                <td>{{item?.qty}}</td>
+                <td>{{item?.price}}</td>
+                <td>{{item?.subTotal}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div style="display: flex;">
+            <div style="margin-left: 5px; display: flex;width: 50%;">
+              <div style="margin: 5px;">Address:- </div>
+              <div style="margin: 5px;">
+                <p>{{orderDetails?.address?.street}},</p>
+                <p>{{orderDetails?.address?.addressLine2}},</p>
+                <p> {{orderDetails?.address?.city}},</p>
+                <p> {{orderDetails?.address?.state}}-{{orderDetails?.address?.pin}} </p>
+              </div>
+            </div>
+            <div style="margin-left: 5px; display: flex;width: 50%;">
+              <div style="margin: 5px;">
+                <p>Total :- </p>
+                <p>Delivery Fees :- </p>
+                <br>
+                <p style="font-weight: bold;">Final Amount :-</p>
+              </div>
+              <div style="margin: 5px;">
+                <p>{{orderDetails?.total}}</p>
+                <p> {{orderDetails?.deliveryFee}}</p>
+                <br>
+                <p style="font-weight: bold;"> {{orderDetails?.total + orderDetails?.deliveryFee}} </p>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;justify-content: center;">
+            <button class="btn" (click)="retryPayment(orderDetails?._id)" *ngIf="(orderDetails?.paymentStatus == 'Pending')"> Retry Payment </button>
+            <button class="btn" (click)="setFlag()"> Back </button>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex;justify-content: center;" *ngIf="pageLimit<orders?.totalResults">
+        <button class="btn" (click)="loadOrder()">Load More</button>
+      </div>
+      <br>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+    <div style="padding-left: 20%;padding-right: 20%; padding-top: 50px;padding-bottom: 25px;">
+      <p style="text-align: center;"> <a style="cursor: pointer;color: red;margin-left: 10px;" (click)="sweetAlert()">
+        Delete account </a></p>
     </div>
   </div>
 </div>

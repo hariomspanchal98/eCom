@@ -7,7 +7,7 @@ import { VerifyComponent } from './verify/verify.component';
 const routes: Routes = [
   {path: '',redirectTo:'auth/login', pathMatch: 'full'},
   {path: 'auth/login', component:LoginComponent},
-  {path:'verify-email', component: VerifyComponent },
+  {path:'auth/verify-email', component: VerifyComponent },
   {path: 'auth/register', component:RegisterComponent},
 ];
 

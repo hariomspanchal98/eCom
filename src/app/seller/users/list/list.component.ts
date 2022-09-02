@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -20,7 +21,7 @@ export class ListComponent implements OnInit {
 
   users: any; //better to have your type
   a: any = 0;
-  constructor(private service: HttpService, private router: Router) {}
+  constructor(private service: HttpService, private router: Router) { }
 
   tempToken: any;
   length;
@@ -28,9 +29,11 @@ export class ListComponent implements OnInit {
   searchTerm = '';
   term = '';
   subusers;
-  index;
-  size;
+  index=1;
+  size=10;
   i = 1;
+  profileData: any;
+  roleForm: any;
 
   ngOnInit() {
     this.tempToken = localStorage.getItem('token');
@@ -43,7 +46,20 @@ export class ListComponent implements OnInit {
     //   this.length= this.users.totalResults;
     //   this.pageSize= this.users.limit;
     // })
-    this.getData(1, 10);
+
+    this.service.secureGet('auth/self', this.tempToken).subscribe((res: any) => {
+      // console.log(res);
+      // let output = JSON.parse(res)
+      this.profileData = res;
+      // console.log('profile data from service:- ',this.profileData);
+    },
+      (error) => {
+        // console.log('Error in login is: ', error);
+        // this.registerForm.markAsPristine();
+      },
+    );
+
+    this.getData(this.index, this.size);
   }
 
   getData(index, size) {
@@ -107,7 +123,7 @@ export class ListComponent implements OnInit {
     // console.log('users/'+ (url));
   }
 
-  sweetAlert(abc){
+  sweetAlert(abc) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -126,6 +142,28 @@ export class ListComponent implements OnInit {
         )
       }
     })
+  }
+
+  updateRole(r: string, id: any) {
+
+    this.roleForm = new FormGroup({
+      role: new FormControl('', Validators.required),
+    })
+
+    this.roleForm.patchValue({
+      role: r,
+    })
+    console.log(this.roleForm.value, id);
+
+    this.service.patch('users/role/' +id, this.roleForm.value,this.tempToken).subscribe(
+      (data:any)=>{
+        console.log(data);
+        this.getData(this.index,this.size);
+    },
+    (error)=>{
+    }
+    )
+
   }
 
 }

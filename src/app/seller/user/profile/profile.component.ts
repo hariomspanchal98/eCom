@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http/http.service';
 import { SocialAuthService } from "@abacritt/angularx-social-login";
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-profile',
@@ -12,10 +13,14 @@ export class ProfileComponent implements OnInit {
 
   profileData :any;
   tempToken : string;
+  recaptcha: any;
+  errorMsg:any;
+  flag=true;
 
-  constructor( private router : Router, private service: HttpService,private authService: SocialAuthService) { }
+  constructor( private router : Router, private service: HttpService,private authService: SocialAuthService, private recaptchaV3Service: ReCaptchaV3Service) { }
 
   ngOnInit(): void {
+    this.executeImportantAction();
     this.tempToken = (localStorage.getItem('token'));
     // console.log("token is",this.tempToken);
     // this.service.get("auth/self",this.tempToken)
@@ -32,6 +37,30 @@ export class ProfileComponent implements OnInit {
       // this.registerForm.markAsPristine();
     },
     );
+  }
+
+  sendVerificationMail(){
+    this.executeImportantAction();
+    this.service.securePost('auth/send-verification-email',this.tempToken, { "captcha" : this.recaptcha } ).subscribe(
+      ()=>{
+        console.log('email req sent');
+        this.flag = false;
+      },
+      (error:any)=>{
+        // console.log('Error in login is: ', error);
+        this.errorMsg = error.error.message;
+        this.executeImportantAction();
+        // this.registerForm.markAsPristine();
+      }
+    )
+  }
+  public executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction')
+      .subscribe((token) => {
+        // console.log(token);
+        this.recaptcha= token;
+        // console.log(this.recaptcha)
+      });
   }
 
   clear(){

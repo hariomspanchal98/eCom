@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 
-<div style="display: flex; justify-content: center; width: 100%;" >
+<div style="display: flex; justify-content: center; width: 100%;">
   <div class="card">
 
     <div style="
@@ -28,7 +28,12 @@
             <td>{{i+1}}</td>
             <td><a [routerLink]="['/seller/users/details', user?._id]">{{user?.name}}</a></td>
             <td>{{user?.email}}</td>
-            <td>{{user?.role}}</td>
+            <td>{{user?.role}} 
+              <span *ngIf="(profileData?.role == 'admin') && (profileData._id != user?._id)">
+                <i *ngIf="user?.role == 'user'" class="tiny material-icons"><a (click)="updateRole('admin', user?._id)">file_upload</a></i>
+                <i *ngIf="user?.role == 'admin'" class="tiny material-icons"><a (click)="updateRole('user', user?._id)">file_download</a></i>
+              </span>
+            </td>
             <td>{{user?.createdAt | date}}</td>
             <td><a [routerLink]="['/seller/users/update', user?._id]"
                 style="display: flex;justify-content: center; text-decoration: none;"><i

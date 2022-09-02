@@ -59,8 +59,9 @@
       </tr>
       <tr>
         <td>Email Verification:</td>
-        <td style="color: green;" *ngIf="profileData?.isEmailVerified">Done</td>
-        <td style="color: red;" *ngIf="!profileData?.isEmailVerified">Pending</td>
+        <td style="color: green;" *ngIf="profileData?.isEmailVerified">Done </td>
+        <td style="color: red;" *ngIf="!profileData?.isEmailVerified && flag">Pending <span>{{errorMsg}}</span><button class="btn" (click)="sendVerificationMail()">Verify</button></td>
+        <td *ngIf="!flag">Check Mail to Verify</td>
       </tr>
       <tr>
         <td>Company :</td>

@@ -89,4 +89,8 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  updatePassword(){
+    console.log('Update Clickd');
+  }
+
 }

@@ -1,6 +1,7 @@
 import { GoogleLoginProvider, FacebookLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 
 import { ProfileComponent } from './profile.component';
 
@@ -11,7 +12,7 @@ describe('ProfileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
-      imports: [HttpClientModule],
+      imports: [HttpClientModule,RecaptchaV3Module],
       providers: [
         {
           provide: 'SocialAuthServiceConfig',
@@ -35,6 +36,7 @@ describe('ProfileComponent', () => {
             }
           } as SocialAuthServiceConfig,
         },
+        { provide: RECAPTCHA_V3_SITE_KEY, useValue: "6LevmbQZAAAAAMSCjcpJmuCr4eIgmjxEI7bvbmRI" },
       ]
     })
     .compileComponents();

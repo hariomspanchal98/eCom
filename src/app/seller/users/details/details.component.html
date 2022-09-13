@@ -31,6 +31,6 @@
       </tr>
     </table>
 
-    <button class="btn green" style="align-self: center;" [routerLink]="['/seller/users/update', user?._id]">Update</button>
+    <button class="btn green" style="align-self: center;" [routerLink]="['/seller/users/update', user?._id]" *ngIf="profileData?.role == 'admin'">Update</button>
   </div>
 </div>

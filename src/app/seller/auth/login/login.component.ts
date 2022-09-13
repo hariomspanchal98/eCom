@@ -6,6 +6,7 @@ import { SocialAuthService } from "@abacritt/angularx-social-login";
 import { FacebookLoginProvider } from "@abacritt/angularx-social-login";
 import { SocialUser } from "@abacritt/angularx-social-login";
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,8 @@ export class LoginComponent implements OnInit {
   user: SocialUser;
   loggedIn: boolean;
   recaptcha;
+  resetPassword:any;
+  pass = false;
 
   constructor(
     private router:Router,
@@ -31,6 +34,8 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+
+    // this.trial();
     // window.location.reload();
     console.log('ertgdxgfdrgrgrdgbdrgrdg5415425251');
 
@@ -74,6 +79,11 @@ export class LoginComponent implements OnInit {
       email: new FormControl('',[Validators.required]),
       password:new FormControl('',[Validators.required]),
       captcha: new FormControl('',[Validators.required]),
+    })
+
+    this.resetPassword = new FormGroup({
+      captcha : new FormControl('', [Validators.required]),
+      email : new FormControl('', [Validators.required]),
     })
   }
   // get name(){
@@ -123,12 +133,23 @@ export class LoginComponent implements OnInit {
         // console.log(error.message);
       }
     })
+  }
 
-    // this.service.login().subscribe(
-    //   err =>{
-    //     console.log(err)
-    //   }
-    // )
+  resetPass(){
+    this.resetPassword.patchValue({
+      captcha : this.recaptcha,
+    });
+
+    this.service.post('auth/forgot-password', this.resetPassword.value ).subscribe(
+      ()=>{
+        console.log('email req sent')
+      },
+      (error:any)=>{
+        // console.log('Error in login is: ', error);
+        this.executeImportantAction();
+        // this.registerForm.markAsPristine();
+      }
+    )
   }
 
   signInWithFB(): void {
@@ -201,5 +222,28 @@ export class LoginComponent implements OnInit {
         }
         );
       // console.log(this.recaptcha);
+  }
+
+  trial(){
+    Swal.fire({
+      title: 'Submit your Email-Id',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Look up',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // console.log(result.value);
+        this.resetPassword.patchValue({
+          email: result.value,
+        }),
+        this.resetPass();
+        // console.log(this.resetPassword.value);
+      }
+    })
   }
 }

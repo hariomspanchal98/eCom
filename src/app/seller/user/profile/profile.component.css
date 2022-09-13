@@ -1,15 +1,4 @@
-.main{
-  padding: 10px;
-  margin: 10px;
-  border: solid 1px;
-  width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-html,
-body { height: 100%;
-}
+
 .my-avatar deep .avatar-content {
   background-color : orangered!important;
 }

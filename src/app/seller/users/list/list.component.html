@@ -1,11 +1,42 @@
 <app-navbar></app-navbar>
 
 
-<div style="display: flex; justify-content: center; width: 100%;">
-  <div class="card">
+<div class="parent">
+  <div class="child" *ngIf="!compUp">
+    <h3 style="text-align: center;">Company Details <a (click)="compUp = true" style="cursor: pointer;" *ngIf="profileData?.role == 'admin'"><i class="material-icons" style="font-size: 100%;color: rgb(0, 132, 255);">edit</i></a></h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <td>: {{profileData?._org?.name}}</td>
+        </tr>
+        <tr>
+          <th> Email</th>
+          <td>: {{profileData?._org?.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="child" *ngIf="compUp">
+    <h3>Update Company Info</h3>
+    <form [formGroup]="updateCompany">
+      <label>Name :-</label>
+      <input type="text" formControlName="name">
 
-    <div style="
-  display: flex;justify-content: center;margin: 0 15px 0 15px;">
+      <label>Email :-</label>
+      <input type="text" formControlName="email">
+
+      <button class="btn" (click)="cancelCompUp()">Cancel</button>
+      <button class="btn" (click)="updateComp()">Update</button>
+    </form>
+  </div>
+</div>
+
+
+<div style="display: flex; justify-content: center; width: 100%; margin-top: 30px;">
+  <div class="card" style="width: 100%; margin: 30px;">
+
+    <div style="display: flex;justify-content: center;margin: 0 15px 0 15px;">
       <input type="text" class="searchTerm" placeholder="Search Name" [(ngModel)]="searchTerm"
         (input)="search(searchTerm)">
       <i class="material-icons" style="cursor: pointer;">search</i>
@@ -20,7 +51,7 @@
             <th>Email</th>
             <th>Role</th>
             <th>Created@</th>
-            <th colspan="2" style="text-align: center; ">Actions</th>
+            <th colspan="2" style="text-align: center; " *ngIf="profileData?.role == 'admin'">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -28,17 +59,19 @@
             <td>{{i+1}}</td>
             <td><a [routerLink]="['/seller/users/details', user?._id]">{{user?.name}}</a></td>
             <td>{{user?.email}}</td>
-            <td>{{user?.role}} 
+            <td>{{user?.role}}
               <span *ngIf="(profileData?.role == 'admin') && (profileData._id != user?._id)">
-                <i *ngIf="user?.role == 'user'" class="tiny material-icons"><a (click)="updateRole('admin', user?._id)">file_upload</a></i>
-                <i *ngIf="user?.role == 'admin'" class="tiny material-icons"><a (click)="updateRole('user', user?._id)">file_download</a></i>
+                <i *ngIf="user?.role == 'user'" class="tiny material-icons"><a
+                    (click)="updateRole('admin', user?._id)">file_upload</a></i>
+                <i *ngIf="user?.role == 'admin'" class="tiny material-icons"><a
+                    (click)="updateRole('user', user?._id)">file_download</a></i>
               </span>
             </td>
             <td>{{user?.createdAt | date}}</td>
-            <td><a [routerLink]="['/seller/users/update', user?._id]"
+            <td *ngIf="profileData?.role == 'admin'"><a [routerLink]="['/seller/users/update', user?._id]"
                 style="display: flex;justify-content: center; text-decoration: none;"><i
                   class="material-icons">edit</i></a></td>
-            <td><a (click)="sweetAlert(user?._id)"
+            <td *ngIf="profileData?.role == 'admin'"><a (click)="sweetAlert(user?._id)"
                 style="color: Red; cursor:pointer; display: flex;justify-content: center;"><i
                   class="material-icons">delete</i></a></td>
           </tr>

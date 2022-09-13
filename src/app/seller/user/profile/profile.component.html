@@ -35,9 +35,9 @@
 <!-- <p>fgsd</p> -->
 <!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
 <h1 style="text-align: center; font-weight: bold;">My Profile</h1>
-<p style="text-align: end; font-weight: bold; margin-right: 20px; cursor: pointer;" (click)="updatePassword()">Update Password</p>
+<p style="text-align: end; font-weight: bold; margin-right: 20px;"><button class="btn" (click)="updatePassword = true" *ngIf="!updatePassword">Update Password</button></p>
 <!-- <a style="text-align: right;">Update Password</a> -->
-<div class="parent">
+<div class="parent" *ngIf="!updatePassword">
   <div class="child">
     <div style="display: contents;">
       <ngx-avatar class="my-avatar" size="76" name={{profileData?.name}}></ngx-avatar>
@@ -71,5 +71,25 @@
         <td>{{profileData?._org.name}}</td>
       </tr>
     </table>
+  </div>
+</div>
+
+
+
+
+<div class="parent" *ngIf="updatePassword">
+  <div class="child" style="width: 280px;">
+    <form [formGroup]="updatePass" >
+      <label>Old Password</label>
+      <input type="text" formControlName="old_password">
+    
+      <label>New Password</label>
+      <input type="text" formControlName="new_password">
+      
+      {{errorMsg1}}
+      <br>
+      <button class="btn" (click)="cancel()"> Cancel</button>
+      <button class="btn" (click)="submit()">Submit</button>
+    </form>
   </div>
 </div>

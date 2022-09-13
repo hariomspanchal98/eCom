@@ -1,0 +1,16 @@
+<div class="parent">
+    <div class="child">
+        <form [formGroup]="resetPass" >
+          
+            <label>Enter New Password</label>
+            <input type="text" formControlName="password">
+            
+            {{errorMsg}}
+
+            <br>
+
+            <button class="btn" (click)="cancel()"> Cancel</button>
+            <button class="btn" (click)="submit()">Submit</button>
+          </form>
+    </div>
+</div>

@@ -34,24 +34,21 @@ export class ListComponent implements OnInit {
   i = 1;
   profileData: any;
   roleForm: any;
+  updateCompany:any;
+  compUp= false;
 
   ngOnInit() {
     this.tempToken = localStorage.getItem('token');
-    // this.service.secureGet('users',this.tempToken).subscribe((data) => {
-    //   // console.log(data);
-    //   this.users = data;
-    //   // console.log(this.users.results);
-    //   this.subusers = this.users.results;
-    //   // console.log(this.users?.results);
-    //   this.length= this.users.totalResults;
-    //   this.pageSize= this.users.limit;
-    // })
 
     this.service.secureGet('auth/self', this.tempToken).subscribe((res: any) => {
       // console.log(res);
       // let output = JSON.parse(res)
       this.profileData = res;
       // console.log('profile data from service:- ',this.profileData);
+      this.updateCompany.patchValue({
+        email : this.profileData._org.email,
+        name : this.profileData._org.name,
+      })
     },
       (error) => {
         // console.log('Error in login is: ', error);
@@ -60,6 +57,11 @@ export class ListComponent implements OnInit {
     );
 
     this.getData(this.index, this.size);
+
+    this.updateCompany = new FormGroup({
+      email : new FormControl('', [Validators.required]),
+      name : new FormControl('', [Validators.required])
+    })
   }
 
   getData(index, size) {
@@ -84,6 +86,31 @@ export class ListComponent implements OnInit {
     this.users.results = this.subusers.filter((val) =>
       val.name.toLowerCase().includes(value)
     );
+  }
+
+  updateComp(){
+    console.log(this.updateCompany.value);
+
+    this.service.patch('users/org', this.updateCompany.value, this.tempToken).subscribe(
+      (data:any)=>{
+        console.log(data);
+        this.service.secureGet('auth/self', this.tempToken).subscribe((res: any) => {
+          this.profileData = res;
+        },
+          (error) => {
+            console.log(error.error);
+          },
+        );
+        this.compUp = false;
+      },
+      (error:any)=>{
+        console.log(error.error);
+      }
+    )
+  }
+
+  cancelCompUp(){
+    this.compUp = false;
   }
 
   changeTable(e: PageEvent) {

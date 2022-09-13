@@ -14,6 +14,7 @@ export class DetailsComponent implements OnInit {
 
   id: any;
   user: any;
+  profileData:any;
 
   ngOnInit(): void {
 
@@ -22,6 +23,14 @@ export class DetailsComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
+
+    this.service.secureGet('auth/self', this.tempToken).subscribe((res: any) => {
+      this.profileData = res;
+    },
+      (error) => {
+        console.log(error.error);
+      },
+    );
 
     this.service.get('users/' + this.id).subscribe((data: any) => {
       // console.log(data);

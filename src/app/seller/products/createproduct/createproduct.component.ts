@@ -78,7 +78,7 @@ export class CreateproductComponent implements OnInit {
 
 
   submit() {
-    // console.log(this.myForm.value);
+    console.log(this.myForm.value);
     // console.log(this.selectedFile);
     // console.log(this.myForm.value.name);
     this.fd = new FormData();

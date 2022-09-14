@@ -12,6 +12,8 @@ import { ProductdetailsComponent } from './productdetails/productdetails.compone
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { QuillModule } from 'ngx-quill';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     MdbCarouselModule,
     MatPaginatorModule,
     FormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    QuillModule.forRoot(),
+    NgDompurifyModule,
   ]
 })
 export class ProductsModule { }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import BlotFormatter from 'quill-blot-formatter';
 import { HttpService } from 'src/app/services/http/http.service';
+import Quill from 'quill';
+
+Quill.register('modules/blotFormatter', BlotFormatter);
 
 @Component({
   selector: 'app-updateproduct',
@@ -16,7 +20,42 @@ export class UpdateproductComponent implements OnInit {
     private _Activatedroute: ActivatedRoute,
     private router: Router,
     private service: HttpService
-  ) {}
+  ) {
+    this.modules = {
+      'emoji-shortname': true,
+      'emoji-textarea': false,
+      'emoji-toolbar': true,
+      blotFormatter: {
+        // empty object for default behaviour.
+      },
+      'toolbar': {
+        container: [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],
+
+          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+          [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+          [{ 'direction': 'rtl' }],                         // text direction
+
+          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+
+          ['clean'],                                         // remove formatting button
+
+          ['link', 'image', 'video'],                         // link and image, video
+          ['emoji'],
+        ],
+        handlers: { 'emoji': function () { } },
+
+      }
+    }
+  }
 
   id: any;
   product: any;
@@ -24,6 +63,7 @@ export class UpdateproductComponent implements OnInit {
   imageForm: any;
   publicId=[];
   errorMsg:any;
+  modules = {};
 
   ngOnInit(): void {
     this.tempToken = localStorage.getItem('token');

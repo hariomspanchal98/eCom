@@ -12,8 +12,8 @@
             flex-wrap: wrap;">
   <div *ngFor="let product of products?.results">
     <div class="card" style="width: 17rem; height: 380px;">
-      <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true"
-        [arrows]="((product?.images?.length>1))" [dots]="true">
+      <carousel [width]="210" [cellWidth]="210" [autoplay]="true" [loop]="true" [arrows]="((product?.images?.length>1))"
+        [dots]="true">
         <div class="carousel-cell" *ngFor="let image of product?.images">
           <img class="cardimg" src={{image?.url}}>
         </div>
@@ -31,20 +31,18 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
           overflow: hidden;
-          text-overflow: ellipsis;word-wrap: break-word;">{{product?.description}}</p>
+          text-overflow: ellipsis;word-wrap: break-word;" [innerHTML]="product?.description"></p>
           <!-- {{product?._id}} -->
         </div>
 
       </div>
-      <button class="btn" style="background-color: #242c42; color: white;" [routerLink]="['/seller/products/productdetails', product?._id]">View Details</button>
+      <button class="btn" style="background-color: #242c42; color: white;"
+        [routerLink]="['/seller/products/productdetails', product?._id]">View Details</button>
     </div>
   </div>
 </div>
 
-<mat-paginator [length]=lengthy
-                [pageSize]=pageSize
-                [pageIndex]=index-1
-                [pageSizeOptions]="[1, 5, 6, 10, 25, 100, lengthy]"
-  aria-label="Select page" (page)="changeTable($event)">
+<mat-paginator [length]=lengthy [pageSize]=pageSize [pageIndex]=index-1
+  [pageSizeOptions]="[1, 5, 6, 10, 25, 100, lengthy]" aria-label="Select page" (page)="changeTable($event)">
 
 </mat-paginator>

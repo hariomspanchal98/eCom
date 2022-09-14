@@ -9,8 +9,11 @@
     <label>Name</label>
     <input type="text" class="validate" placeholder="Enter product name" formControlName="name">
 
-    <label>Description</label>
-    <textarea type="text" placeholder="Enter Description" formControlName="description" style="height: 100px;"></textarea>
+    <!-- <label>Description</label>
+    <textarea type="text" placeholder="Enter Description" formControlName="description" style="height: 100px;"></textarea> -->
+
+    <quill-editor [styles]="{height: '200px'}" formControlName="description">
+    </quill-editor>
 
     <label>Price</label>
     <input type="text" class="validate" placeholder="Enter product name" formControlName="price">

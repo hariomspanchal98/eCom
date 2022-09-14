@@ -15,8 +15,12 @@
     <br>
 
     <label>Description</label>
-    <textarea type="text" placeholder="Enter Description" formControlName="description" style="height: 100px;"></textarea>
+    <!-- <textarea type="text" placeholder="Enter Description" formControlName="description" style="height: 100px;"></textarea> -->
     <br>
+
+    <quill-editor [styles]="{height: '200px'}" formControlName="description">
+
+    </quill-editor>
 
     <!-- <div style="display: flex;flex-wrap: wrap;">
       <div *ngFor="let image of photosArr; let i = index" class="preview">

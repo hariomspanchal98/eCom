@@ -11,6 +11,7 @@ import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     IvyCarouselModule,
     MdbCarouselModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    NgxDropzoneModule
   ]
 })
 export class ProductsModule { }

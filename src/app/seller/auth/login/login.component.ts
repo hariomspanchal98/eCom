@@ -142,7 +142,13 @@ export class LoginComponent implements OnInit {
 
     this.service.post('auth/forgot-password', this.resetPassword.value ).subscribe(
       ()=>{
-        console.log('email req sent')
+        console.log('email req sent');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Verification link sent to your mail.',
+          showConfirmButton: false,
+        })
       },
       (error:any)=>{
         // console.log('Error in login is: ', error);
@@ -242,6 +248,7 @@ export class LoginComponent implements OnInit {
           email: result.value,
         }),
         this.resetPass();
+
         // console.log(this.resetPassword.value);
       }
     })

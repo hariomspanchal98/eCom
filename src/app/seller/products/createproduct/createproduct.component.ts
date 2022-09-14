@@ -28,6 +28,7 @@ export class CreateproductComponent implements OnInit {
       name: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       images: new FormControl(''),
+      price : new FormControl('', Validators.required),
     });
   }
 
@@ -43,9 +44,18 @@ export class CreateproductComponent implements OnInit {
     return this.myForm.get('description');
   }
 
+  get price(){
+    return this.myForm.get('price');
+  }
+
   onFileSelected(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      const file: File = event.target.files[i];
+    
+    console.log(event);
+
+
+    for (let i = 0; i < event.addedFiles.length; i++) {
+    // for (let i = 0; i < event.target.files.length; i++) {
+      const file: File = event.addedFiles[i];
       if (file) {
         this.newPhotos.push(file);
         // console.log(event.target.files);
@@ -78,6 +88,7 @@ export class CreateproductComponent implements OnInit {
     // this.fd.append('images', this.selectedFile);
     this.fd.append('name', this.myForm.value.name);
     this.fd.append('description', this.myForm.value.description);
+    this.fd.append('price', this.myForm.value.price);
 
 
     // console.log(this.fd);

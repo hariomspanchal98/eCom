@@ -86,8 +86,8 @@ export class UpdateproductComponent implements OnInit {
   // }
 
   onFileSelected(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      const file: File = event.target.files[i];
+    for (let i = 0; i < event.addedFiles.length; i++) {
+      const file: File = event.addedFiles[i];
       if (file) {
         this.newPhotos.push(file);
         // this.fileName = file.name;

@@ -33,6 +33,7 @@ export class ProductdetailsComponent implements OnInit {
       // console.log(this.user);
     })
   }
+
   remove(url: any) {
     // console.log(url);
     this.service.del('products/' + url, this.tempToken).subscribe(

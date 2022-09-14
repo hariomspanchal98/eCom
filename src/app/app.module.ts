@@ -27,6 +27,7 @@ import { StoreModule } from '@ngrx/store';
 import { cartReducer } from './customer/state/cart.reducer';
 import { MetaReducer } from "@ngrx/store";
 import { hydrationMetaReducer } from './customer/state/hydration.reducer';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -54,6 +55,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     AvatarModule,
     IvyCarouselModule,
     StoreModule.forRoot({ cart:cartReducer }, { metaReducers }),
+    NgxDropzoneModule
   ],
   providers: [AuthGuard,
   {

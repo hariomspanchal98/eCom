@@ -86,7 +86,8 @@
       <label>New Password</label>
       <input type="text" formControlName="new_password">
       
-      {{errorMsg1}}
+      <p style="color: red;">{{errorMsg1}}</p>
+      
       <br>
       <button class="btn" (click)="cancel()"> Cancel</button>
       <button class="btn" (click)="submit()">Submit</button>

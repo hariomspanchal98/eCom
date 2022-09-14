@@ -20,7 +20,7 @@
           <br>
         <h2>{{product?.name}}</h2>
         <h4>Rs.   {{product?.price}}</h4>
-        <p>{{product?.description}}</p>
+        <p [innerHTML]="product?.description"></p>
       </div>
       <div class="card-action">
         <button class="btn green" [routerLink]="['/seller/products/updateproduct', product?._id]">Update</button>

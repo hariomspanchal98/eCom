@@ -34,7 +34,7 @@
 <br>
 <!-- <p>fgsd</p> -->
 <!-- <p>Registered at:- {{profileData.createdAt}}</p> -->
-<h1 style="text-align: center; font-weight: bold;">My Profile</h1>
+<h1 style="text-align: center; font-weight: bold;" [style.color]="color">My Profile</h1>
 <p style="text-align: end; font-weight: bold; margin-right: 20px;"><button class="btn" (click)="updatePassword = true" *ngIf="!updatePassword">Update Password</button></p>
 <!-- <a style="text-align: right;">Update Password</a> -->
 <div class="parent" *ngIf="!updatePassword">

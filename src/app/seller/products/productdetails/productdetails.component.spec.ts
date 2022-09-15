@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 
 import { ProductdetailsComponent } from './productdetails.component';
 
@@ -11,7 +12,7 @@ describe('ProductdetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ProductdetailsComponent ],
-      imports:[HttpClientModule, RouterModule.forRoot([]),]
+      imports:[HttpClientModule, RouterModule.forRoot([]),NgDompurifyModule]
     })
     .compileComponents();
 

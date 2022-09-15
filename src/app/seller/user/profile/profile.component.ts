@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   flag = true;
   updatePass: any;
   updatePassword = false;
+  color='black';
 
   constructor(private router: Router, private service: HttpService, private authService: SocialAuthService, private recaptchaV3Service: ReCaptchaV3Service) { }
 

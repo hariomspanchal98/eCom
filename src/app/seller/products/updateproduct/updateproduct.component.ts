@@ -196,19 +196,12 @@ export class UpdateproductComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.product= data;
-          // console.log(data.token);
-          // console.log(this.tokenId);
-          // this.verifyMail = 'Check your email for verification link';
-          // this.router.navigate(['/login']);
           setTimeout(() => {
             this.router.navigateByUrl(
               `seller/products/productdetails/${this.product._id}`
             );
             console.log('Suidsfghufhgil');
           }, 1100);
-          // this.router.navigateByUrl(
-          //   `products/productdetails/${this.product._id}`
-          // );
         },
         (error) => {
           // console.log('Error in login is: ', error);

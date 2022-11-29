@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: `https://ngminds.herokuapp.com/`,
+  baseUrl: `https://shop-api.ngminds.com/`,
 };

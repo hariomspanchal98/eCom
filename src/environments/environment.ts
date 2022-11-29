@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: `https://ngminds.herokuapp.com/`,
+  baseUrl: `https://shop-api.ngminds.com/`,
 };
 
 /*
